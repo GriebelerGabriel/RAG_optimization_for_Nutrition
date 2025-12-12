@@ -42,4 +42,6 @@ def create_llm(config: "LLMConfig") -> BaseLLM:
         model_name=model_name,
         temperature=config.temperature,
         max_tokens=config.max_tokens,
+        system_prompt=config.system_prompt,
+        context_template=config.context_template,
     )

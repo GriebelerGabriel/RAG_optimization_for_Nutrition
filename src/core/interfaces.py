@@ -124,6 +124,8 @@ class BaseLLM(ABC):
         self.config = kwargs
         self.model_name: str = kwargs.get("model_name", "unknown")
         self.temperature: float = kwargs.get("temperature", 0.1)
+        self.system_prompt: str | None = kwargs.get("system_prompt")
+        self.context_template: str | None = kwargs.get("context_template")
     
     @abstractmethod
     def generate(self, prompt: str) -> str:
@@ -148,13 +150,12 @@ class BaseLLM(ABC):
         Returns:
             Generated response.
         """
+        # Priority: explicit param > instance config > default
         if system_prompt is None:
-            system_prompt = self._default_system_prompt()
+            system_prompt = self.system_prompt or self._default_system_prompt()
         
-        context_text = "\n\n".join([
-            f"[Fonte {i+1}]: {doc.content}" 
-            for i, doc in enumerate(context)
-        ])
+        # Format context using template or default
+        context_text = self._format_context(context)
         
         full_prompt = f"""{system_prompt}
 
@@ -166,6 +167,27 @@ Pergunta do usuário: {query}
 Resposta:"""
         
         return self.generate(full_prompt)
+    
+    def _format_context(self, context: list[Document]) -> str:
+        """Format context documents using template or default format."""
+        if self.context_template:
+            # Custom template - supports {i}, {content}, {source}, {score} placeholders
+            formatted_chunks = []
+            for i, doc in enumerate(context):
+                chunk_text = self.context_template.format(
+                    i=i+1,
+                    content=doc.content,
+                    source=doc.metadata.get("source", "unknown"),
+                    score=doc.score or 0.0,
+                )
+                formatted_chunks.append(chunk_text)
+            return "\n\n".join(formatted_chunks)
+        
+        # Default format
+        return "\n\n".join([
+            f"[Fonte {i+1}]: {doc.content}" 
+            for i, doc in enumerate(context)
+        ])
     
     def _default_system_prompt(self) -> str:
         return """Você é um nutricionista especializado em educação alimentar.

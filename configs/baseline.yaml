@@ -24,3 +24,6 @@ llm:
   model_name: "gpt-4o-mini"
   temperature: 0.1
   max_tokens: 1024
+  # system_prompt and context_template are now configurable for A/B testing
+  # system_prompt: null  # Uses default if not set
+  # context_template: null  # Uses default "[Fonte {i}]: {content}" if not set

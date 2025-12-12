@@ -49,7 +49,7 @@ class RAGPipeline:
         # Create components
         chunker = create_chunker(config.chunker)
         embedder = create_embedder(config.embedding)
-        retriever = create_retriever(config.retriever, embedder)
+        retriever = create_retriever(config.retriever, embedder, full_config=config)
         reranker = create_reranker(config.reranker)
         llm = create_llm(config.llm)
         

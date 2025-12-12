@@ -1,0 +1,36 @@
+{
+  "description": "Evaluation dataset for RAG Nutrition system",
+  "version": "1.0",
+  "questions": [
+    {
+      "id": "q001",
+      "question": "Quais são os grupos alimentares recomendados pelo Guia Alimentar?",
+      "ideal_chunks": [],
+      "ideal_answer": "Os grupos alimentares incluem: cereais, leguminosas, frutas, verduras e legumes, carnes e ovos, leite e derivados, e óleos e gorduras."
+    },
+    {
+      "id": "q002",
+      "question": "Quantos litros de água devo beber por dia?",
+      "ideal_chunks": [],
+      "ideal_answer": "A recomendação geral é de aproximadamente 2 litros de água por dia, podendo variar conforme atividade física e clima."
+    },
+    {
+      "id": "q003",
+      "question": "Quais alimentos são ricos em fibras?",
+      "ideal_chunks": [],
+      "ideal_answer": "Alimentos ricos em fibras incluem: frutas, verduras, legumes, cereais integrais, leguminosas como feijão e lentilha."
+    },
+    {
+      "id": "q004",
+      "question": "O que são alimentos ultraprocessados?",
+      "ideal_chunks": [],
+      "ideal_answer": "Alimentos ultraprocessados são formulações industriais feitas principalmente de substâncias extraídas de alimentos, com adição de aditivos."
+    },
+    {
+      "id": "q005",
+      "question": "Qual a importância do café da manhã?",
+      "ideal_chunks": [],
+      "ideal_answer": "O café da manhã é importante para repor energia após o jejum noturno e fornecer nutrientes para as atividades do dia."
+    }
+  ]
+}

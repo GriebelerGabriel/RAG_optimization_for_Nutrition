@@ -1,0 +1,26 @@
+experiment_name: "hyde_retrieval"
+
+chunker:
+  type: "recursive"
+  chunk_size: 512
+  overlap: 50
+
+embedding:
+  type: "e5"
+  model_name: "intfloat/multilingual-e5-large"
+
+retriever:
+  type: "hyde"
+  top_k: 5
+  collection_name: "nutrition_docs"
+
+reranker:
+  type: "none"
+  model_name: ""
+  top_k: 5
+
+llm:
+  type: "openai"
+  model_name: "gpt-4o-mini"
+  temperature: 0.1
+  max_tokens: 1024

@@ -21,7 +21,7 @@ EMBEDDER_REGISTRY: dict[str, type[BaseEmbedder]] = {
 
 # Default model names for each type
 DEFAULT_MODELS: dict[str, str] = {
-    "e5": "intfloat/multilingual-e5-large",
+    "e5": "intfloat/multilingual-e5-base",
     "mpnet": "sentence-transformers/paraphrase-multilingual-mpnet-base-v2",
     "bge": "BAAI/bge-m3",
 }

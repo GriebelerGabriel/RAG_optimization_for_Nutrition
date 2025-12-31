@@ -19,7 +19,7 @@ class ChunkerConfig(BaseModel):
 class EmbedderConfig(BaseModel):
     """Configuration for embedding model."""
     type: str = "e5"
-    model_name: str = "intfloat/multilingual-e5-large"
+    model_name: str = "intfloat/multilingual-e5-base"
 
 
 class RetrieverConfig(BaseModel):

@@ -1,14 +1,23 @@
 """Streamlit chatbot interface for RAG Nutrition system."""
+import hashlib
+import logging
 import sys
+import time
 from pathlib import Path
-
-# Add src to path for imports
-sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
 import streamlit as st
 
+_PROJECT_ROOT = Path(__file__).resolve().parents[2]
+if str(_PROJECT_ROOT) not in sys.path:
+    sys.path.insert(0, str(_PROJECT_ROOT))
+
 from src.core.pipeline import RAGPipeline
 from src.core.config import Config
+
+
+logger = logging.getLogger(__name__)
+if not logger.handlers:
+    logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(name)s - %(message)s")
 
 
 # Page config
@@ -20,9 +29,14 @@ st.set_page_config(
 
 
 @st.cache_resource
-def load_pipeline(config_path: str) -> RAGPipeline:
+def load_pipeline(config_path: str, config_fingerprint: str) -> RAGPipeline:
     """Load and cache the RAG pipeline."""
     return RAGPipeline.from_config(config_path)
+
+
+def _get_file_fingerprint(path: str) -> str:
+    data = Path(path).read_bytes()
+    return hashlib.md5(data).hexdigest()
 
 
 def main():
@@ -42,10 +56,12 @@ def main():
         
         if config_files:
             config_options = {f.stem: str(f) for f in config_files}
+            option_keys = sorted(config_options.keys())
+            default_key = "baseline" if "baseline" in option_keys else option_keys[0]
             selected_config = st.selectbox(
                 "Configuração do RAG",
-                options=list(config_options.keys()),
-                index=0,
+                options=option_keys,
+                index=option_keys.index(default_key),
             )
             config_path = config_options[selected_config]
         else:
@@ -73,7 +89,7 @@ def main():
         if st.button("🗑️ Limpar conversa"):
             st.session_state.messages = []
             st.rerun()
-    
+
     # Initialize chat history
     if "messages" not in st.session_state:
         st.session_state.messages = []
@@ -98,11 +114,51 @@ def main():
         with st.chat_message("assistant"):
             if config_path is None:
                 st.error("Configure um arquivo de configuração primeiro.")
+            elif "pipeline_error" in st.session_state:
+                st.error(f"Erro ao carregar pipeline: {st.session_state['pipeline_error']}")
             else:
                 with st.spinner("Buscando informações..."):
                     try:
-                        pipeline = load_pipeline(config_path)
-                        response, sources = pipeline.query(prompt)
+                        config_fingerprint = _get_file_fingerprint(config_path)
+                        if st.session_state.get("pipeline_config_path") != config_path:
+                            st.session_state.pop("pipeline", None)
+                            st.session_state.pop("pipeline_error", None)
+                            st.session_state["pipeline_config_path"] = config_path
+                        pipeline = st.session_state.get("pipeline")
+                        if pipeline is None:
+                            t0 = time.perf_counter()
+                            pipeline = load_pipeline(config_path, config_fingerprint)
+                            st.session_state["pipeline"] = pipeline
+                            logger.info(
+                                "pipeline_loaded config=%s elapsed_ms=%.2f",
+                                config_path,
+                                (time.perf_counter() - t0) * 1000,
+                            )
+
+                        t_retrieve = time.perf_counter()
+                        sources = pipeline.retrieve(prompt)
+                        logger.info(
+                            "retrieved query=%r k=%d elapsed_ms=%.2f top_sources=%s",
+                            prompt,
+                            len(sources),
+                            (time.perf_counter() - t_retrieve) * 1000,
+                            [
+                                {
+                                    "id": d.id,
+                                    "score": float(d.score or 0.0),
+                                    "source": d.metadata.get("filename", d.metadata.get("source", "unknown")),
+                                }
+                                for d in sources[:5]
+                            ],
+                        )
+
+                        t_gen = time.perf_counter()
+                        response = pipeline.generate(prompt, sources)
+                        logger.info(
+                            "generated elapsed_ms=%.2f response_chars=%d",
+                            (time.perf_counter() - t_gen) * 1000,
+                            len(response or ""),
+                        )
                         
                         st.markdown(response)
                         

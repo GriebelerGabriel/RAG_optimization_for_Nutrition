@@ -9,7 +9,7 @@ from src.core.interfaces import BaseEmbedder
 class HuggingFaceEmbedder(BaseEmbedder):
     """Embedder using HuggingFace sentence-transformers models."""
     
-    def __init__(self, model_name: str = "intfloat/multilingual-e5-large", **kwargs: Any):
+    def __init__(self, model_name: str = "intfloat/multilingual-e5-base", **kwargs: Any):
         super().__init__(model_name=model_name, **kwargs)
         self.model_name = model_name
         self._model: SentenceTransformer | None = None

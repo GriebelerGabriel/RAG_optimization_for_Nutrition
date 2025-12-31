@@ -1,4 +1,7 @@
 """Hybrid retrieval combining BM25 and dense retrieval."""
+import json
+import re
+from pathlib import Path
 from typing import Any
 
 from rank_bm25 import BM25Okapi
@@ -27,6 +30,7 @@ class HybridRetriever(BaseRetriever):
         super().__init__(embedder=embedder, top_k=top_k, **kwargs)
         self.bm25_weight = bm25_weight
         self.dense_weight = dense_weight
+        self.persist_directory = persist_directory
         
         # Dense retriever
         self._dense_retriever = NaiveRetriever(
@@ -40,11 +44,16 @@ class HybridRetriever(BaseRetriever):
         self._documents: list[Document] = []
         self._bm25: BM25Okapi | None = None
         self._tokenized_corpus: list[list[str]] = []
+
+        # Persist BM25 corpus per collection, so hybrid retrieval works across restarts.
+        # Use the dense retriever's final collection name, which is already unique.
+        safe_collection = getattr(self._dense_retriever, "_collection_name", collection_name)
+        self._bm25_store_path = Path(persist_directory) / f"{safe_collection}__bm25.jsonl"
+        self._load_bm25_store()
     
     def _tokenize(self, text: str) -> list[str]:
         """Simple tokenization for BM25."""
         # Basic tokenization - lowercase and split on whitespace/punctuation
-        import re
         tokens = re.findall(r'\b\w+\b', text.lower())
         return tokens
     
@@ -55,6 +64,46 @@ class HybridRetriever(BaseRetriever):
         
         self._tokenized_corpus = [self._tokenize(doc.content) for doc in self._documents]
         self._bm25 = BM25Okapi(self._tokenized_corpus)
+
+    def _load_bm25_store(self) -> None:
+        """Load persisted BM25 corpus from disk and rebuild index."""
+        if not self._bm25_store_path.exists():
+            return
+
+        docs: list[Document] = []
+        try:
+            with self._bm25_store_path.open("r", encoding="utf-8") as f:
+                for line in f:
+                    line = line.strip()
+                    if not line:
+                        continue
+                    row = json.loads(line)
+                    docs.append(Document(
+                        id=row.get("id"),
+                        content=row.get("content", ""),
+                        metadata=row.get("metadata") or {},
+                    ))
+        except Exception:
+            # If corrupted, ignore loading rather than breaking runtime.
+            return
+
+        self._documents = docs
+        self._build_bm25_index()
+
+    def _append_to_bm25_store(self, documents: list[Document]) -> None:
+        """Append new documents to persisted BM25 corpus."""
+        if not documents:
+            return
+
+        self._bm25_store_path.parent.mkdir(parents=True, exist_ok=True)
+        with self._bm25_store_path.open("a", encoding="utf-8") as f:
+            for doc in documents:
+                payload = {
+                    "id": doc.id,
+                    "content": doc.content,
+                    "metadata": doc.metadata,
+                }
+                f.write(json.dumps(payload, ensure_ascii=False) + "\n")
     
     def add_documents(self, documents: list[Document]) -> None:
         """Add documents to both BM25 and dense indices.
@@ -67,6 +116,7 @@ class HybridRetriever(BaseRetriever):
         
         # Add to BM25 index
         self._documents.extend(documents)
+        self._append_to_bm25_store(documents)
         self._build_bm25_index()
     
     def _bm25_retrieve(self, query: str, top_k: int) -> list[Document]:
@@ -158,3 +208,9 @@ class HybridRetriever(BaseRetriever):
         self._documents = []
         self._bm25 = None
         self._tokenized_corpus = []
+
+        if self._bm25_store_path.exists():
+            try:
+                self._bm25_store_path.unlink()
+            except Exception:
+                pass

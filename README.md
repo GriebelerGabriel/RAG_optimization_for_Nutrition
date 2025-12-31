@@ -15,6 +15,13 @@ A modular, experiment-driven RAG (Retrieval-Augmented Generation) system for nut
 
 ## Quick Start
 
+### Using the Makefile (recommended)
+
+```bash
+make install-pip
+make ingest-and-run CONFIG=configs/baseline.yaml
+```
+
 ### 1. Install Dependencies
 
 ```bash
@@ -64,6 +71,14 @@ pipeline.ingest_documents(docs)
 streamlit run src/app/chatbot.py
 ```
 
+If you get `ModuleNotFoundError: No module named 'src'`, make sure you are running the command from the repository root. If needed, you can also run with:
+
+```bash
+PYTHONPATH=. streamlit run src/app/chatbot.py
+```
+
+Note: the first run may download embedding/reranking models from Hugging Face (potentially multiple GB depending on `embedding.model_name`).
+
 ## Configuration
 
 Configurations are YAML files in `configs/`. Example:
@@ -95,6 +110,16 @@ llm:
 
 ## Running Benchmarks
 
+Benchmarks read a golden evaluation dataset and compute retrieval metrics per question. Optionally, they can also run generation and compute generation-focused metrics.
+
+### Dataset
+
+The default dataset path used in examples is:
+
+`data/eval/golden_dataset.json`
+
+### Retrieval-only metrics (fast)
+
 ```python
 from src.evaluation import Benchmark
 
@@ -108,6 +133,26 @@ df = benchmark.run_all_configs("configs/")
 aggregated = benchmark.aggregate_results(df)
 benchmark.save_results(aggregated, "results/benchmark_results.csv")
 ```
+
+You can also run the same from the command line without creating a new script:
+
+```bash
+python -c "from src.evaluation import Benchmark; b=Benchmark('data/eval/golden_dataset.json'); df=b.run_all_configs('configs/'); agg=b.aggregate_results(df); b.save_results(agg,'results/benchmark_results.csv')"
+```
+
+Artifacts per question (retrieved chunks, prompt snapshots, etc.) are saved under:
+
+`results/artifacts/<experiment_name>/<timestamp>/`
+
+### Include generation metrics (slower)
+
+To also generate answers during benchmarking:
+
+```bash
+python -c "from src.evaluation import Benchmark; b=Benchmark('data/eval/golden_dataset.json'); df=b.run_all_configs('configs/', include_generation=True); agg=b.aggregate_results(df); b.save_results(agg,'results/benchmark_results_with_generation.csv')"
+```
+
+If you enable LLM-as-judge evaluation, you must have the appropriate API key configured in `.env`.
 
 ## Project Structure
 

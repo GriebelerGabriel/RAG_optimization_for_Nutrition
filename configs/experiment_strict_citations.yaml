@@ -7,7 +7,7 @@ chunker:
 
 embedding:
   type: "e5"
-  model_name: "intfloat/multilingual-e5-large"
+  model_name: "intfloat/multilingual-e5-base"
 
 retriever:
   type: "naive"

@@ -3,8 +3,11 @@ import os
 from typing import Any
 
 from openai import OpenAI
+from dotenv import load_dotenv
 
 from src.core.interfaces import BaseLLM
+
+load_dotenv()
 
 
 class OpenAILLM(BaseLLM):

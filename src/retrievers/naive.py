@@ -30,9 +30,7 @@ class NaiveRetriever(BaseRetriever):
         )
         
         # Create or get collection
-        # Use embedding model name in collection for uniqueness
-        model_safe = embedder.model_name.replace("/", "_").replace("-", "_")
-        self._collection_name = f"{collection_name}_{model_safe}"
+        self._collection_name = collection_name
         self._collection = self._client.get_or_create_collection(
             name=self._collection_name,
             metadata={"hnsw:space": "cosine"},

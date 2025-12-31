@@ -15,6 +15,7 @@ class OllamaLLM(BaseLLM):
         temperature: float = 0.1,
         max_tokens: int = 1024,
         base_url: str = "http://localhost:11434",
+        timeout_s: float = 600.0,
         **kwargs: Any
     ):
         super().__init__(
@@ -26,6 +27,7 @@ class OllamaLLM(BaseLLM):
         self.temperature = temperature
         self.max_tokens = max_tokens
         self.base_url = base_url
+        self.timeout_s = timeout_s
     
     def generate(self, prompt: str) -> str:
         """Generate text using Ollama API.
@@ -48,10 +50,36 @@ class OllamaLLM(BaseLLM):
             }
         }
         
-        with httpx.Client(timeout=120.0) as client:
-            response = client.post(url, json=payload)
-            response.raise_for_status()
-            result = response.json()
+        timeout = httpx.Timeout(self.timeout_s)
+
+        try:
+            with httpx.Client(timeout=timeout) as client:
+                response = client.post(url, json=payload)
+                response.raise_for_status()
+                result = response.json()
+        except httpx.ConnectError as e:
+            raise RuntimeError(
+                "Could not connect to Ollama. "
+                f"Is the Ollama server running at {self.base_url}? "
+                "Start it (e.g. `ollama serve`) and ensure the model is available "
+                f"(e.g. `ollama pull {self.model_name}`)."
+            ) from e
+        except httpx.ReadTimeout as e:
+            raise RuntimeError(
+                "Ollama request timed out while waiting for the model to generate a response. "
+                f"Current timeout is {self.timeout_s:.0f}s. "
+                "Try reducing `llm.max_tokens`, using a smaller model (e.g. `llama3.2:3b`), "
+                "or increase the timeout in the LLM configuration."
+            ) from e
+        except httpx.HTTPStatusError as e:
+            detail = ""
+            try:
+                detail = f" Response: {e.response.text}"
+            except Exception:
+                detail = ""
+            raise RuntimeError(
+                f"Ollama request failed (status {e.response.status_code}) for model '{self.model_name}'.{detail}"
+            ) from e
         
         return result.get("response", "")
     

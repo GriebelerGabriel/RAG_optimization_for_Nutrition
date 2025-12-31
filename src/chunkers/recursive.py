@@ -1,7 +1,10 @@
 """Recursive character text splitting strategy."""
 from typing import Any
 
-from langchain.text_splitter import RecursiveCharacterTextSplitter
+try:
+    from langchain_text_splitters import RecursiveCharacterTextSplitter
+except ModuleNotFoundError:  # pragma: no cover
+    from langchain.text_splitter import RecursiveCharacterTextSplitter
 
 from src.core.document import Document
 from src.core.interfaces import BaseChunker

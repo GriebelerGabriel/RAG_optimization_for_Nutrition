@@ -19,8 +19,10 @@ A modular, experiment-driven RAG (Retrieval-Augmented Generation) system for nut
 
 ```bash
 make install-pip
-make ingest-and-run CONFIG=configs/baseline.yaml
+make ingest-and-run CONFIG=configs/baseline.yaml PORT=8501
 ```
+
+Run the commands from the repository root (the folder that contains the `Makefile`).
 
 ### 1. Install Dependencies
 

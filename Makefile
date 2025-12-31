@@ -4,17 +4,23 @@ CONFIG ?= configs/baseline.yaml
 DATA_DIR ?= data/raw
 EVAL_DATASET ?= data/eval/golden_dataset.json
 RESULTS_DIR ?= results
+PORT ?= 8501
+ADDRESS ?= 0.0.0.0
 
 help:
 	@echo "Targets:"
 	@echo "  install-pip                Install dependencies with pip"
 	@echo "  install-poetry             Install dependencies with poetry"
 	@echo "  ingest CONFIG=...          Ingest PDFs from $(DATA_DIR) into ChromaDB using CONFIG"
-	@echo "  run-chatbot                Run Streamlit chatbot"
+	@echo "  run-chatbot                Run Streamlit chatbot (PORT=$(PORT) ADDRESS=$(ADDRESS))"
 	@echo "  ingest-and-run             Ingest then run Streamlit chatbot"
 	@echo "  benchmark                  Run retrieval-only benchmark for all configs"
 	@echo "  benchmark-generation       Run benchmark incl. generation for all configs"
 	@echo "  clean-chroma               Remove local ChromaDB folder (./chroma_db)"
+	@echo ""
+	@echo "Notes:"
+	@echo "  - Run make targets from the repository root (same folder as this Makefile)."
+	@echo "  - Override Streamlit port/address: make run-chatbot PORT=8501 ADDRESS=0.0.0.0"
 
 install-pip:
 	pip install -r requirements.txt
@@ -26,10 +32,10 @@ ingest:
 	python -c "from src.core.pipeline import RAGPipeline; from src.ingestion import PDFParser, TextPreprocessor; p=PDFParser(); docs=p.parse_directory('$(DATA_DIR)'); pre=TextPreprocessor(); [setattr(d,'content', pre.preprocess(d.content)) for d in docs]; pipe=RAGPipeline.from_config('$(CONFIG)'); pipe.ingest_documents(docs); print('ingested_docs=', len(docs))"
 
 run-chatbot:
-	streamlit run src/app/chatbot.py
+	streamlit run src/app/chatbot.py --server.port $(PORT) --server.address $(ADDRESS)
 
 run-chatbot-py:
-	PYTHONPATH=. streamlit run src/app/chatbot.py
+	PYTHONPATH=. streamlit run src/app/chatbot.py --server.port $(PORT) --server.address $(ADDRESS)
 
 ingest-and-run: ingest run-chatbot
 

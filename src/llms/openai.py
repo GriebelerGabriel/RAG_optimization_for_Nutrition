@@ -16,7 +16,7 @@ class OpenAILLM(BaseLLM):
     def __init__(
         self, 
         model_name: str = "gpt-4o-mini",
-        temperature: float = 0.1,
+        temperature: float = 0.3,
         max_tokens: int = 1024,
         **kwargs: Any
     ):

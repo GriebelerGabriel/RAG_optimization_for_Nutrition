@@ -12,7 +12,7 @@ class OllamaLLM(BaseLLM):
     def __init__(
         self, 
         model_name: str = "llama3.1:8b",
-        temperature: float = 0.1,
+        temperature: float = 0.3,
         max_tokens: int = 1024,
         base_url: str = "http://localhost:11434",
         timeout_s: float = 600.0,

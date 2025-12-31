@@ -7,7 +7,7 @@ chunker:
 
 embedding:
   type: "huggingface"
-  model_name: "sentence-transformers/all-MiniLM-L6-v2"
+  model_name: "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2"
 
 retriever:
   type: "naive"
@@ -20,10 +20,14 @@ reranker:
   top_k: 5
 
 llm:
-  type: "ollama"
-  model_name: "llama3.1:8b"
-  temperature: 0.1
+  type: "openai"
+  model_name: "gpt-4o-mini"
+  temperature: 0.3
   max_tokens: 256
-  # system_prompt and context_template are now configurable for A/B testing
-  # system_prompt: null  # Uses default if not set
-  # context_template: null  # Uses default "[Fonte {i}]: {content}" if not set
+  system_prompt: |
+    Você é um assistente especialista em nutrição.
+    Priorize responder com base no contexto fornecido.
+    Se houver qualquer contexto fornecido, NUNCA responda apenas "Não encontrei". Em vez disso, faça o melhor possível usando o que houver no contexto (mesmo que parcialmente) e explique qualquer limitação.
+    Somente use a frase "Não encontrei essa informação nas fontes disponíveis." quando o contexto estiver vazio.
+    Sempre que houver contexto, cite pelo menos uma fonte no formato [Fonte X].
+    Seja sempre sucinto e claro, evitando redundâncias e informações irrelevantes.

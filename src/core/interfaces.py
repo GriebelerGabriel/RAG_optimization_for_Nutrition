@@ -184,10 +184,12 @@ Resposta:"""
             return "\n\n".join(formatted_chunks)
         
         # Default format
-        return "\n\n".join([
-            f"[Fonte {i+1}]: {doc.content}" 
-            for i, doc in enumerate(context)
-        ])
+        return "\n\n".join(
+            [
+                f"[Fonte {i+1}]: {doc.content[:1000]}" 
+                for i, doc in enumerate(context)
+            ]
+        )
     
     def _default_system_prompt(self) -> str:
         return """Você é um nutricionista especializado em educação alimentar.

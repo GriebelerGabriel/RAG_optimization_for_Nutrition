@@ -56,13 +56,22 @@ class NaiveRetriever(BaseRetriever):
         contents = [doc.content for doc in documents]
         metadatas = [doc.metadata for doc in documents]
         
-        # Add to collection
-        self._collection.add(
-            ids=ids,
-            embeddings=embeddings,
-            documents=contents,
-            metadatas=metadatas,
-        )
+        # Add to collection (idempotent when re-ingesting the same chunks)
+        # Prefer upsert to avoid duplicate-id errors across runs/config variants.
+        if hasattr(self._collection, "upsert"):
+            self._collection.upsert(
+                ids=ids,
+                embeddings=embeddings,
+                documents=contents,
+                metadatas=metadatas,
+            )
+        else:
+            self._collection.add(
+                ids=ids,
+                embeddings=embeddings,
+                documents=contents,
+                metadatas=metadatas,
+            )
     
     def retrieve(self, query: str, top_k: int | None = None) -> list[Document]:
         """Retrieve documents using direct query embedding.

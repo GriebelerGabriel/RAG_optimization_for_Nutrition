@@ -36,8 +36,9 @@ def create_retriever(
     if retriever_class is None:
         raise ValueError(f"Unknown retriever type: {config.type}. Available: {list(RETRIEVER_REGISTRY.keys())}")
     
-    # Use config-hash-based collection name if full config provided
-    if full_config is not None:
+    # Use config-hash-based collection name if requested and full config provided.
+    # This prevents mixing embeddings/chunks across different configs.
+    if full_config is not None and getattr(config, "use_config_hash_collection", False):
         collection_name = full_config.get_unique_collection_name()
     else:
         collection_name = config.collection_name
@@ -46,4 +47,5 @@ def create_retriever(
         embedder=embedder,
         top_k=config.top_k,
         collection_name=collection_name,
+        persist_directory=getattr(config, "persist_directory", "./chroma_db"),
     )

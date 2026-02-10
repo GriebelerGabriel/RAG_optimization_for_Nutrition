@@ -27,6 +27,8 @@ class RetrieverConfig(BaseModel):
     type: str = "naive"
     top_k: int = 5
     collection_name: str = "nutrition_docs"
+    persist_directory: str = "./chroma_db"
+    use_config_hash_collection: bool = True
 
 
 class RerankerConfig(BaseModel):
@@ -86,7 +88,6 @@ class Config(BaseModel):
             "chunk_overlap": self.chunker.overlap,
             "embedder_type": self.embedding.type,
             "embedder_model": self.embedding.model_name,
-            "collection_name": self.retriever.collection_name,
         }
         hash_str = str(sorted(hash_components.items()))
         return hashlib.md5(hash_str.encode()).hexdigest()[:12]

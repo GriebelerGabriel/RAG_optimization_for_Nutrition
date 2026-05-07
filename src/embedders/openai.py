@@ -17,12 +17,12 @@ class OpenAIEmbedder(BaseEmbedder):
     
     @property
     def client(self) -> OpenAI:
-        """Lazy load the OpenAI client."""
+        """Lazy load the OpenAI client with built-in retry."""
         if self._client is None:
             api_key = os.getenv("OPENAI_API_KEY")
             if not api_key:
                 raise ValueError("OPENAI_API_KEY environment variable not set")
-            self._client = OpenAI(api_key=api_key)
+            self._client = OpenAI(api_key=api_key, max_retries=3)
         return self._client
     
     def embed(self, texts: list[str]) -> list[list[float]]:

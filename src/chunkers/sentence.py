@@ -5,6 +5,11 @@ from typing import Any
 from src.core.document import Document
 from src.core.interfaces import BaseChunker
 
+# Pre-compiled regex for sentence splitting (Portuguese/English uppercase letters)
+_SENTENCE_SPLIT_PATTERN = re.compile(
+    r'(?<=[.!?])\s+(?=[A-ZÁÀÂÃÉÈÊÍÌÎÓÒÔÕÚÙÛÇ])'
+)
+
 
 class SentenceChunker(BaseChunker):
     """Chunk text by grouping sentences together."""
@@ -12,14 +17,11 @@ class SentenceChunker(BaseChunker):
     def __init__(self, chunk_size: int = 512, overlap: int = 50, sentences_per_chunk: int = 5, **kwargs: Any):
         super().__init__(chunk_size=chunk_size, overlap=overlap, **kwargs)
         self.sentences_per_chunk = sentences_per_chunk
-        self.overlap_sentences = max(1, overlap // 100)  # Convert char overlap to sentence overlap
+        self.overlap_sentences = max(0, overlap // 100)  # Convert char overlap to sentence overlap
     
     def _split_sentences(self, text: str) -> list[str]:
         """Split text into sentences."""
-        # Simple sentence splitting for Portuguese/English
-        # Handles: . ! ? and common abbreviations
-        sentence_pattern = r'(?<=[.!?])\s+(?=[A-ZÁÀÂÃÉÈÊÍÌÎÓÒÔÕÚÙÛÇ])'
-        sentences = re.split(sentence_pattern, text)
+        sentences = _SENTENCE_SPLIT_PATTERN.split(text)
         return [s.strip() for s in sentences if s.strip()]
     
     def chunk(self, text: str, metadata: dict[str, Any] | None = None) -> list[Document]:
@@ -62,8 +64,7 @@ class SentenceChunker(BaseChunker):
                 chunk_index += 1
             
             # Move forward, accounting for overlap
-            i = end_idx - self.overlap_sentences
-            if i <= (chunks[-1].metadata["sentence_start"] if chunks else 0):
-                i = end_idx  # Prevent infinite loop
+            step = max(1, self.sentences_per_chunk - self.overlap_sentences)
+            i += step
         
         return chunks

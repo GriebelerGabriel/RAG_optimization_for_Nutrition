@@ -2,6 +2,16 @@
 import re
 from typing import Any
 
+# Pre-compiled regex patterns
+_PAGE_NUMBER_PATTERN = re.compile(r'^(página|page|pág\.?)\s*\d+$', re.IGNORECASE)
+_HEADER_FOOTER_PATTERNS = [
+    re.compile(r'^\s*\d+\s*$'),           # Just page numbers
+    re.compile(r'^\s*-\s*\d+\s*-\s*$'),   # - 1 -
+    re.compile(r'^\s*\[\s*\d+\s*\]\s*$'), # [1]
+]
+_MULTI_SPACE_PATTERN = re.compile(r'[ \t]+')
+_MULTI_NEWLINE_PATTERN = re.compile(r'\n{3,}')
+
 
 class TextPreprocessor:
     """Clean and preprocess text for RAG pipeline."""
@@ -53,26 +63,19 @@ class TextPreprocessor:
             # Skip if line is just a number or "Page X" pattern
             if stripped.isdigit():
                 continue
-            if re.match(r'^(página|page|pág\.?)\s*\d+$', stripped, re.IGNORECASE):
+            if _PAGE_NUMBER_PATTERN.match(stripped):
                 continue
             cleaned_lines.append(line)
         return "\n".join(cleaned_lines)
     
     def _remove_headers_footers(self, text: str) -> str:
         """Remove common header/footer patterns."""
-        # Remove common footer patterns
-        patterns = [
-            r'^\s*\d+\s*$',  # Just page numbers
-            r'^\s*-\s*\d+\s*-\s*$',  # - 1 -
-            r'^\s*\[\s*\d+\s*\]\s*$',  # [1]
-        ]
-        
         lines = text.split("\n")
         cleaned_lines = []
         for line in lines:
             skip = False
-            for pattern in patterns:
-                if re.match(pattern, line):
+            for pattern in _HEADER_FOOTER_PATTERNS:
+                if pattern.match(line):
                     skip = True
                     break
             if not skip:
@@ -82,11 +85,8 @@ class TextPreprocessor:
     
     def _normalize_whitespace(self, text: str) -> str:
         """Normalize whitespace in text."""
-        # Replace multiple spaces with single space
-        text = re.sub(r'[ \t]+', ' ', text)
-        
-        # Replace multiple newlines with double newline (paragraph break)
-        text = re.sub(r'\n{3,}', '\n\n', text)
+        text = _MULTI_SPACE_PATTERN.sub(' ', text)
+        text = _MULTI_NEWLINE_PATTERN.sub('\n\n', text)
         
         # Remove trailing whitespace from lines
         lines = [line.rstrip() for line in text.split("\n")]

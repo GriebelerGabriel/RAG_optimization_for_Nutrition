@@ -1,10 +1,15 @@
 """Generation-grounded metrics for evaluating answer quality and faithfulness."""
+import json
+import logging
 import re
 from dataclasses import dataclass, field
 from typing import Any
 
 from src.core.document import Document
 from src.core.interfaces import BaseLLM
+from .text_utils import text_overlap
+
+logger = logging.getLogger(__name__)
 
 
 @dataclass
@@ -79,17 +84,16 @@ def evaluate_faithfulness_heuristic(
         return 0.5, {"reason": "no substantial claims found"}
     
     # Check how many sentences have overlap with context
+    context_words = set(re.findall(r'\b\w{4,}\b', context_text))
     grounded_count = 0
     for sentence in sentences:
-        # Check for significant word overlap (simple heuristic)
         sentence_words = set(re.findall(r'\b\w{4,}\b', sentence.lower()))
-        context_words = set(re.findall(r'\b\w{4,}\b', context_text))
-        
+
         if len(sentence_words) == 0:
             continue
-            
+
         overlap = len(sentence_words & context_words) / len(sentence_words)
-        if overlap > 0.3:  # At least 30% word overlap
+        if overlap > 0.3:
             grounded_count += 1
     
     score = grounded_count / len(sentences) if sentences else 0.0
@@ -141,15 +145,14 @@ Responda APENAS com um JSON no formato:
     try:
         result = llm.generate(eval_prompt)
         # Extract JSON from response
-        import json
         json_match = re.search(r'\{[^}]+\}', result)
         if json_match:
             parsed = json.loads(json_match.group())
             return float(parsed.get("score", 0.5)), {"reason": parsed.get("reason", ""), "raw": result}
-    except Exception as e:
-        pass
-    
-    return 0.5, {"reason": "failed to parse LLM evaluation", "raw": result if 'result' in dir() else ""}
+    except (json.JSONDecodeError, ValueError, AttributeError) as e:
+        logger.warning("Failed to parse LLM faithfulness evaluation: %s", e)
+
+    return 0.5, {"reason": "failed to parse LLM evaluation"}
 
 
 def evaluate_answer_correctness(
@@ -192,22 +195,15 @@ Responda APENAS com um JSON: {{"score": <0.0 a 1.0>, "reason": "<explicação>"}
 """
         try:
             result = llm.generate(eval_prompt)
-            import json
             json_match = re.search(r'\{[^}]+\}', result)
             if json_match:
                 parsed = json.loads(json_match.group())
                 return float(parsed.get("score", 0.5)), {"reason": parsed.get("reason", "")}
-        except:
-            pass
+        except (json.JSONDecodeError, ValueError, AttributeError) as e:
+            logger.warning("Failed to parse LLM correctness evaluation: %s", e)
     
     # Fallback: simple word overlap heuristic
-    response_words = set(re.findall(r'\b\w{4,}\b', response.lower()))
-    ideal_words = set(re.findall(r'\b\w{4,}\b', ideal_answer.lower()))
-    
-    if not ideal_words:
-        return 0.5, {"reason": "ideal answer too short for comparison"}
-    
-    overlap = len(response_words & ideal_words) / len(ideal_words)
+    overlap = text_overlap(response, ideal_answer)
     return min(overlap, 1.0), {"word_overlap": overlap}
 
 

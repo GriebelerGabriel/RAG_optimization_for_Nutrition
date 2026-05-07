@@ -1,40 +1,38 @@
 .ONESHELL:
 SHELL := /bin/bash
 
-.PHONY: help install install-pip install-poetry env ingest ingest-all run run-chatbot run-chatbot-py benchmark benchmark-generation clean-db clean-chroma
+.PHONY: help install install-pip install-poetry env ingest ingest-all run run-chatbot benchmark benchmark-single clean-db clean-chroma
 
 CONFIG ?= configs/baseline.yaml
-DATA_DIR ?= data/raw
-EVAL_DATASET ?= data/eval/golden_dataset.json
+DATA_DIR ?= data/docs
+EVAL_DATASET ?= data/eval/dataset.json
 RESULTS_DIR ?= results
 PORT ?= 8501
 ADDRESS ?= 0.0.0.0
-FORCE ?= 0
+EVALUATOR ?= openai
+EVALUATOR_MODEL ?= gpt-4o-mini
 
 help:
 	@echo "Targets:"
-	@echo "  install                    Install deps (prefers poetry; falls back to pip)"
-	@echo "  ingest                     Ingest using CONFIG=$(CONFIG) from DATA_DIR=$(DATA_DIR)"
-	@echo "  ingest-all                 Ingest for all configs in configs/"
-	@echo "  run                        Run Streamlit (PORT=$(PORT) ADDRESS=$(ADDRESS))"
-	@echo "  clean-db                   Remove local ChromaDB folder (./chroma_db)"
+	@echo "  install              Install deps (pip)"
+	@echo "  ingest               Ingest using CONFIG=$(CONFIG) from DATA_DIR=$(DATA_DIR)"
+	@echo "  ingest-all           Ingest for all configs in configs/"
+	@echo "  benchmark            Run RAGAS benchmark on all configs"
+	@echo "  benchmark-single     Run RAGAS benchmark on CONFIG=$(CONFIG)"
+	@echo "  run                  Run Streamlit (PORT=$(PORT) ADDRESS=$(ADDRESS))"
+	@echo "  clean-db             Remove local ChromaDB folder (./chroma_db)"
 	@echo ""
-	@echo "Notes:"
-	@echo "  - Run make targets from the repository root (same folder as this Makefile)."
-	@echo "  - Override Streamlit port/address: make run-chatbot PORT=8501 ADDRESS=0.0.0.0"
-	@echo "  - Aliases kept: run-chatbot, clean-chroma"
+	@echo "Variables:"
+	@echo "  EVALUATOR=$(EVALUATOR)        Evaluator LLM provider (openai/ollama)"
+	@echo "  EVALUATOR_MODEL=$(EVALUATOR_MODEL)  Evaluator model name"
+	@echo "  DATA_DIR=$(DATA_DIR)        Source PDFs directory"
+	@echo "  EVAL_DATASET=$(EVAL_DATASET)   Evaluation dataset path"
 
-install: install-poetry
-	@true
-
-install-pip:
-	pip install -r requirements.txt
-
-install-poetry:
-	poetry install
+install:
+	python3 -m venv .venv && . .venv/bin/activate && pip install -r requirements.txt
 
 ingest:
-	python -c "from src.core.pipeline import RAGPipeline; from src.ingestion import PDFParser, TextPreprocessor; p=PDFParser(); docs=p.parse_directory('$(DATA_DIR)'); pre=TextPreprocessor(); [setattr(d,'content', pre.preprocess(d.content)) for d in docs]; pipe=RAGPipeline.from_config('$(CONFIG)'); pipe.ingest_documents(docs); print('ingested_docs=', len(docs))"
+	PYTHONPATH=. .venv/bin/python3 scripts/ingest.py --config $(CONFIG) --data-dir $(DATA_DIR)
 
 ingest-all:
 	@set -e; \
@@ -44,21 +42,27 @@ ingest-all:
 	done
 
 run-chatbot:
-	streamlit run src/app/chatbot.py --server.port $(PORT) --server.address $(ADDRESS)
+	.venv/bin/streamlit run src/app/chatbot.py --server.port $(PORT) --server.address $(ADDRESS)
 
 run: run-chatbot
-
-run-chatbot-py:
-	PYTHONPATH=. streamlit run src/app/chatbot.py --server.port $(PORT) --server.address $(ADDRESS)
 
 ingest-and-run: ingest run-chatbot
 
 benchmark:
-	python -c "from src.evaluation import Benchmark; b=Benchmark('$(EVAL_DATASET)'); df=b.run_all_configs('configs/'); agg=b.aggregate_results(df); import pathlib; pathlib.Path('$(RESULTS_DIR)').mkdir(parents=True, exist_ok=True); b.save_results(agg,'$(RESULTS_DIR)/benchmark_results.csv')"
+	PYTHONPATH=. .venv/bin/python3 scripts/benchmark.py \
+		--eval-dataset $(EVAL_DATASET) \
+		--config-dir configs/ \
+		--results-dir $(RESULTS_DIR) \
+		--evaluator $(EVALUATOR) \
+		--evaluator-model $(EVALUATOR_MODEL)
 
-benchmark-generation:
-	python -c "from src.evaluation import Benchmark; b=Benchmark('$(EVAL_DATASET)'); df=b.run_all_configs('configs/', include_generation=True); agg=b.aggregate_results(df); import pathlib; pathlib.Path('$(RESULTS_DIR)').mkdir(parents=True, exist_ok=True); b.save_results(agg,'$(RESULTS_DIR)/benchmark_results_with_generation.csv')"
-
+benchmark-single:
+	PYTHONPATH=. .venv/bin/python3 scripts/benchmark.py \
+		--eval-dataset $(EVAL_DATASET) \
+		--config $(CONFIG) \
+		--results-dir $(RESULTS_DIR) \
+		--evaluator $(EVALUATOR) \
+		--evaluator-model $(EVALUATOR_MODEL)
 
 clean-db:
 	rm -rf ./chroma_db

@@ -1,5 +1,5 @@
 # Environment
-.env
+.env.local
 .venv/
 venv/
 env/
@@ -50,3 +50,5 @@ data/processed/*.json
 # OS
 .DS_Store
 Thumbs.db
+
+/results/artifacts/

@@ -1,5 +1,7 @@
 """Hybrid retrieval combining BM25 and dense retrieval."""
+import heapq
 import json
+import logging
 import re
 from pathlib import Path
 from typing import Any
@@ -83,21 +85,21 @@ class HybridRetriever(BaseRetriever):
                         content=row.get("content", ""),
                         metadata=row.get("metadata") or {},
                     ))
-        except Exception:
-            # If corrupted, ignore loading rather than breaking runtime.
+        except (json.JSONDecodeError, OSError) as e:
+            logging.warning("Failed to load BM25 store from %s: %s", self._bm25_store_path, e)
             return
 
         self._documents = docs
         self._build_bm25_index()
 
     def _append_to_bm25_store(self, documents: list[Document]) -> None:
-        """Append new documents to persisted BM25 corpus."""
-        if not documents:
+        """Rewrite the BM25 corpus to disk (deduplicated by doc id)."""
+        if not self._documents:
             return
 
         self._bm25_store_path.parent.mkdir(parents=True, exist_ok=True)
-        with self._bm25_store_path.open("a", encoding="utf-8") as f:
-            for doc in documents:
+        with self._bm25_store_path.open("w", encoding="utf-8") as f:
+            for doc in self._documents:
                 payload = {
                     "id": doc.id,
                     "content": doc.content,
@@ -107,16 +109,18 @@ class HybridRetriever(BaseRetriever):
     
     def add_documents(self, documents: list[Document]) -> None:
         """Add documents to both BM25 and dense indices.
-        
+
         Args:
             documents: Documents to index.
         """
         # Add to dense retriever
         self._dense_retriever.add_documents(documents)
-        
-        # Add to BM25 index
-        self._documents.extend(documents)
-        self._append_to_bm25_store(documents)
+
+        # Add to BM25 index (deduplicate by id)
+        existing_ids = {doc.id for doc in self._documents}
+        new_docs = [d for d in documents if d.id not in existing_ids]
+        self._documents.extend(new_docs)
+        self._append_to_bm25_store(new_docs)
         self._build_bm25_index()
     
     def _bm25_retrieve(self, query: str, top_k: int) -> list[Document]:
@@ -127,8 +131,8 @@ class HybridRetriever(BaseRetriever):
         query_tokens = self._tokenize(query)
         scores = self._bm25.get_scores(query_tokens)
         
-        # Get top-k indices
-        top_indices = sorted(range(len(scores)), key=lambda i: scores[i], reverse=True)[:top_k]
+        # Get top-k indices using heap (O(n log k) instead of O(n log n))
+        top_indices = heapq.nlargest(top_k, range(len(scores)), key=lambda i: scores[i])
         
         results = []
         for idx in top_indices:

@@ -1,4 +1,5 @@
 """PDF document parsing."""
+import logging
 from pathlib import Path
 from typing import Any
 
@@ -6,13 +7,12 @@ import fitz  # PyMuPDF
 
 from src.core.document import Document
 
+logger = logging.getLogger(__name__)
+
 
 class PDFParser:
     """Parse PDF documents into text."""
-    
-    def __init__(self, extract_images: bool = False):
-        self.extract_images = extract_images
-    
+
     def parse(self, file_path: str | Path) -> Document:
         """Parse a PDF file into a Document.
         
@@ -64,6 +64,6 @@ class PDFParser:
                 doc = self.parse(pdf_path)
                 documents.append(doc)
             except Exception as e:
-                print(f"Error parsing {pdf_path}: {e}")
+                logger.error("Error parsing %s: %s", pdf_path, e)
         
         return documents

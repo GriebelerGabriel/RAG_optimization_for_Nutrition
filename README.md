@@ -1,220 +1,392 @@
 # RAG Nutrition System
 
-A modular, experiment-driven RAG (Retrieval-Augmented Generation) system for nutritional education. This system allows easy swapping and benchmarking of different components (chunkers, embeddings, retrievers, rerankers, LLMs) to find the optimal configuration.
+A modular, experiment-driven RAG (Retrieval-Augmented Generation) system for nutritional education. Swap any component (chunker, embedding, retriever, reranker, LLM) via YAML configuration and benchmark to find the optimal setup.
 
-## Features
+## Data Flow Overview
 
-- **Pluggable Architecture**: Swap any component via YAML configuration
-- **Multiple Chunking Strategies**: Fixed, Recursive, Sentence-based
-- **Multiple Embedding Models**: E5, MPNet, BGE (HuggingFace), OpenAI
-- **Multiple Retrieval Strategies**: Naive, HYDE, Hybrid (BM25 + Dense)
-- **Multiple Rerankers**: Cross-encoder, BGE reranker
-- **Multiple LLMs**: OpenAI (GPT-4o-mini, GPT-4o), Ollama (Llama, Mistral)
-- **Automated Benchmarking**: Compare configurations with retrieval metrics
-- **Streamlit Chatbot**: Interactive interface for the best configuration
+```
+PDFs (data/docs/)
+  │
+  ▼
+┌─────────────────────────────────────────────────────────┐
+│ INGESTION                                                │
+│                                                          │
+│  PDFParser → TextPreprocessor → Chunker → Embedder      │
+│                                      │          │        │
+│                                      ▼          ▼        │
+│                              ChromaDB (chroma_db/)       │
+│                              + BM25 index (if hybrid)    │
+└─────────────────────────────────────────────────────────┘
+  │
+  ▼
+┌─────────────────────────────────────────────────────────┐
+│ QUERY (chatbot / benchmark)                              │
+│                                                          │
+│  User Question                                           │
+│       ▼                                                  │
+│  Retriever (naive / hyde / hybrid)                       │
+│       ▼                                                  │
+│  Reranker (optional)                                     │
+│       ▼                                                  │
+│  LLM → Response                                          │
+└─────────────────────────────────────────────────────────┘
+  │
+  ▼
+┌─────────────────────────────────────────────────────────┐
+│ EVALUATION                                               │
+│                                                          │
+│  RAGAS metrics  OR  Custom metrics                       │
+│  → results/*.csv + results/artifacts/                    │
+└─────────────────────────────────────────────────────────┘
+```
+
+Each config gets its own isolated ChromaDB collection (keyed by chunker+embedder hash) so experiments never contaminate each other.
 
 ## Quick Start
 
-### Using the Makefile (recommended)
-
 ```bash
-make install-pip
-make ingest-and-run CONFIG=configs/baseline.yaml PORT=8501
+# 1. Install
+make install
+
+# 2. Set up API keys
+cp .env.example .env.local
+# Edit .env.local with your OPENAI_API_KEY (required for OpenAI/LiteLLM configs)
+
+# 3. Ingest documents + launch chatbot (one command)
+make ingest-and-run CONFIG=configs/baseline.yaml
 ```
 
-Run the commands from the repository root (the folder that contains the `Makefile`).
-
-### 1. Install Dependencies
+Or step by step:
 
 ```bash
-# Using Poetry (recommended)
-poetry install
-
-# Or using pip
-pip install -r requirements.txt
+make install
+make ingest CONFIG=configs/baseline.yaml
+make run PORT=8501
 ```
 
-### 2. Set Up Environment
+Run all commands from the repository root (the folder with the `Makefile`).
+
+## Makefile Reference
+
+| Target | Description |
+|--------|-------------|
+| `make install` | Create `.venv` and install dependencies |
+| `make ingest CONFIG=... DATA_DIR=...` | Ingest PDFs for one config |
+| `make ingest-all` | Ingest for every `configs/*.yaml` |
+| `make run` / `make run-chatbot` | Launch Streamlit chatbot |
+| `make ingest-and-run` | Ingest + run in one shot |
+| `make benchmark` | Run RAGAS benchmark on all configs |
+| `make benchmark-single CONFIG=...` | Run RAGAS benchmark on one config |
+| `make clean-db` | Delete the ChromaDB vector store |
+
+**Variables:**
+
+| Variable | Default | Purpose |
+|----------|---------|---------|
+| `CONFIG` | `configs/baseline.yaml` | Config YAML for ingest/benchmark |
+| `DATA_DIR` | `data/docs` | Directory containing source PDFs |
+| `EVAL_DATASET` | `data/eval/dataset.json` | Evaluation dataset path |
+| `EVALUATOR` | `openai` | Evaluator LLM provider (`openai`/`ollama`) |
+| `EVALUATOR_MODEL` | `gpt-4o-mini` | Evaluator model name |
+| `RESULTS_DIR` | `results` | Output directory for benchmark results |
+| `PORT` | `8501` | Streamlit port |
+| `ADDRESS` | `0.0.0.0` | Streamlit bind address |
+
+## Ingestion Flow
+
+### Data directory
+
+Place PDF documents in `data/docs/`. The included documents cover Brazilian dietary guidelines, WHO sodium guidelines, and cardiovascular health research.
+
+### Via CLI (recommended)
 
 ```bash
-cp .env.example .env
-# Edit .env and add your API keys
+PYTHONPATH=. .venv/bin/python3 scripts/ingest.py \
+    --config configs/baseline.yaml \
+    --data-dir data/docs
 ```
 
-### 3. Add Documents
-
-Place your PDF documents in `data/raw/`:
-- Guia Alimentar para a População Brasileira
-- Other nutritional guidelines
-
-### 4. Ingest Documents
+### Via Python API
 
 ```python
 from src.core.pipeline import RAGPipeline
 from src.ingestion import PDFParser, TextPreprocessor
 
-# Parse PDFs
 parser = PDFParser()
-docs = parser.parse_directory("data/raw")
+docs = parser.parse_directory("data/docs")
 
-# Preprocess
 preprocessor = TextPreprocessor()
 for doc in docs:
     doc.content = preprocessor.preprocess(doc.content)
 
-# Create pipeline and ingest
 pipeline = RAGPipeline.from_config("configs/baseline.yaml")
 pipeline.ingest_documents(docs)
 ```
 
-### 5. Run Chatbot
+### What happens during ingestion
+
+1. **PDF Parsing** (`src/ingestion/parser.py`) — extracts text and metadata (filename, page count, author) from each PDF using PyMuPDF
+2. **Preprocessing** (`src/ingestion/preprocessor.py`) — removes page numbers, headers/footers, normalizes whitespace, filters short lines
+3. **Chunking** — splits text into chunks based on `chunker.type` (fixed / recursive / sentence)
+4. **Embedding** — generates vector embeddings based on `embedding.type`
+5. **Indexing** — stores chunks + embeddings in ChromaDB (`chroma_db/`). If `retriever.type` is `hybrid`, also builds a BM25 sparse index saved as `chroma_db/<collection>__bm25.jsonl`
+
+Each unique combination of chunker type + chunk size + overlap + embedder produces a separate ChromaDB collection, so different configs don't interfere.
+
+## Chatbot Flow
 
 ```bash
-streamlit run src/app/chatbot.py
+make run CONFIG=configs/baseline.yaml
 ```
 
-If you get `ModuleNotFoundError: No module named 'src'`, make sure you are running the command from the repository root. If needed, you can also run with:
+The Streamlit app (`src/app/chatbot.py`):
+
+1. Shows a config dropdown in the sidebar (all `configs/*.yaml` files)
+2. Displays the active config details (chunker, embedding, retriever, reranker, LLM)
+3. Accepts questions via chat input
+4. Retrieves relevant chunks from ChromaDB
+5. Optionally reranks results
+6. Generates a response using the configured LLM
+7. Shows response with expandable source citations (filename + relevance score)
+8. Maintains chat history in session state
+
+## Benchmarking
+
+There are two benchmarking systems: **RAGAS** (external, LLM-judged) and **Custom** (built-in, heuristic + optional LLM-judge).
+
+### Evaluation Dataset
+
+`data/eval/dataset.json` — a RAGAS-style flat JSON array:
+
+```json
+[
+  {
+    "question": "Quais são os grupos alimentares?",
+    "answer": "Os grupos alimentares incluem...",
+    "contexts": ["Os grupos alimentares incluem cereais..."],
+    "ground_truth": "Os grupos alimentares incluem...",
+    "metadata": {"type": "single-hop", "difficulty": "easy"}
+  }
+]
+```
+
+Supported fields: `question`, `answer`, `contexts` (reference passages), `ground_truth` (ideal answer), `metadata`.
+
+### RAGAS Benchmark (recommended)
+
+Uses the [RAGAS](https://docs.ragas.io/) framework with LLM-as-judge metrics.
 
 ```bash
-PYTHONPATH=. streamlit run src/app/chatbot.py
+# All configs
+make benchmark
+
+# Single config
+make benchmark-single CONFIG=configs/baseline.yaml
+
+# With different evaluator
+make benchmark EVALUATOR=openai EVALUATOR_MODEL=gpt-4o
 ```
 
-Note: the first run may download embedding/reranking models from Hugging Face (potentially multiple GB depending on `embedding.model_name`).
+Or directly:
+
+```bash
+PYTHONPATH=. .venv/bin/python3 scripts/benchmark.py \
+    --eval-dataset data/eval/dataset.json \
+    --config-dir configs/ \
+    --results-dir results \
+    --evaluator openai \
+    --evaluator-model gpt-4o-mini
+```
+
+**RAGAS metrics computed:**
+
+| Metric | What it measures |
+|--------|-----------------|
+| Faithfulness | Is the answer grounded in the retrieved context? |
+| AnswerRelevancy | Does the answer address the question? |
+| ContextPrecision | Are the retrieved chunks relevant? |
+| ContextRecall | Are all necessary facts retrieved? |
+| AnswerCorrectness | How close is the answer to the reference? |
+
+**Outputs:**
+- `results/ragas_benchmark_results.csv` — aggregated metrics per config
+- `results/ragas_detail_<config_name>.csv` — per-question breakdown
+
+### Custom Benchmark
+
+Built-in framework with its own metrics (no RAGAS dependency needed).
+
+```python
+from src.evaluation import Benchmark
+
+benchmark = Benchmark("data/eval/dataset.json")
+
+# Retrieval-only (fast)
+results = benchmark.run_config("configs/baseline.yaml")
+df = benchmark.run_all_configs("configs/")
+aggregated = benchmark.aggregate_results(df)
+benchmark.save_results(aggregated, "results/custom_results.csv")
+
+# Include generation metrics (slower)
+df = benchmark.run_all_configs("configs/", include_generation=True)
+
+# With LLM-as-judge
+df = benchmark.run_all_configs("configs/", include_generation=True, use_llm_eval=True)
+```
+
+**Custom retrieval metrics:** precision@1, precision@3, precision@5, recall@5, MRR
+
+**Custom generation metrics:** faithfulness, answer correctness, abstain correctness, citation quality
+
+**Artifacts:** When `save_artifacts=True` (default), per-question JSON files are saved to `results/artifacts/<experiment_name>/<timestamp>/` containing retrieved chunks, prompt snapshots, response, and all metrics — useful for debugging hallucinations.
 
 ## Configuration
 
-Configurations are YAML files in `configs/`. Example:
+Configs are YAML files in `configs/`. Each config defines all five pipeline components.
 
 ```yaml
 experiment_name: "baseline"
 
 chunker:
-  type: "recursive"      # fixed, recursive, sentence
+  type: "recursive"          # fixed, recursive, sentence
   chunk_size: 512
   overlap: 50
 
 embedding:
-  type: "e5"             # e5, mpnet, bge, openai
-  model_name: "intfloat/multilingual-e5-large"
+  type: "huggingface"        # e5, mpnet, bge, huggingface, openai
+  model_name: "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2"
 
 retriever:
-  type: "naive"          # naive, hyde, hybrid
+  type: "naive"              # naive, hyde, hybrid
   top_k: 5
+  collection_name: "nutrition_docs"
 
 reranker:
-  type: "none"           # none, cross_encoder, bge
+  type: "none"               # none, cross_encoder, bge
+  model_name: ""
+  top_k: 5
 
 llm:
-  type: "openai"         # openai, ollama
-  model_name: "gpt-4o-mini"
-  temperature: 0.1
+  type: "litellm"            # openai, ollama, litellm
+  model_name: "openai/gpt-4o-mini"
+  temperature: 0.3
+  max_tokens: 256
+  context_template: "[Fonte {i}]: {content}"  # optional
 ```
 
-## Running Benchmarks
+All configs share the same default system prompt (defined in `src/core/interfaces.py`). It instructs the LLM to answer based on context, always cite sources as `[Fonte X]`, and only say "Não encontrei" when context is empty.
 
-Benchmarks read a golden evaluation dataset and compute retrieval metrics per question. Optionally, they can also run generation and compute generation-focused metrics.
+### Included Experiment Configs
 
-### Dataset
+| Config | Chunker | Embedding | Retriever | Reranker | LLM |
+|--------|---------|-----------|-----------|----------|-----|
+| `baseline` | recursive | MiniLM-L12-v2 | naive | none | gpt-4o-mini |
+| `experiment_gpt4o` | recursive | MiniLM-L12-v2 | naive | none | gpt-4o (litellm) |
+| `experiment_o3_mini` | recursive | MiniLM-L12-v2 | naive | none | o3-mini (litellm) |
+| `experiment_hyde` | recursive | E5-base | hyde | none | gpt-4o-mini |
+| `experiment_hybrid` | recursive | E5-base | hybrid | cross-encoder | gpt-4o-mini |
+| `experiment_ollama` | recursive | E5-base | naive | none | llama3.1:8b (local) |
 
-The default dataset path used in examples is:
+## Available Components
 
-`data/eval/golden_dataset.json`
+### Chunkers
 
-### Retrieval-only metrics (fast)
+| Type | Description |
+|------|-------------|
+| `fixed` | Fixed character window with overlap |
+| `recursive` | LangChain recursive character splitter |
+| `sentence` | Groups N sentences per chunk with sentence-level overlap |
 
-```python
-from src.evaluation import Benchmark
+### Embedders
 
-benchmark = Benchmark("data/eval/golden_dataset.json")
+| Type | Default Model | Notes |
+|------|---------------|-------|
+| `e5` | intfloat/multilingual-e5-base | Adds "query:"/"passage:" prefix automatically |
+| `mpnet` | paraphrase-multilingual-mpnet-base-v2 | |
+| `bge` | BAAI/bge-m3 | |
+| `huggingface` | (configurable) | Generic HuggingFace sentence-transformer |
+| `openai` | text-embedding-3-small | Requires `OPENAI_API_KEY` |
 
-# Run single config
-results = benchmark.run_config("configs/baseline.yaml")
+### Retrievers
 
-# Run all configs
-df = benchmark.run_all_configs("configs/")
-aggregated = benchmark.aggregate_results(df)
-benchmark.save_results(aggregated, "results/benchmark_results.csv")
-```
+| Type | Description | Storage |
+|------|-------------|---------|
+| `naive` | Direct query embedding → cosine similarity in ChromaDB | ChromaDB only |
+| `hyde` | Generates hypothetical answer via LLM, embeds that instead of the query | ChromaDB (uses naive internally) |
+| `hybrid` | BM25 sparse + dense retrieval, combined with Reciprocal Rank Fusion | ChromaDB + BM25 JSONL file |
 
-You can also run the same from the command line without creating a new script:
+### Rerankers
 
-```bash
-python -c "from src.evaluation import Benchmark; b=Benchmark('data/eval/golden_dataset.json'); df=b.run_all_configs('configs/'); agg=b.aggregate_results(df); b.save_results(agg,'results/benchmark_results.csv')"
-```
+| Type | Default Model | Notes |
+|------|---------------|-------|
+| `none` | — | No reranking |
+| `cross_encoder` | cross-encoder/ms-marco-MiniLM-L-6-v2 | Cross-encoder re-scoring |
+| `bge` | BAAI/bge-reranker-base | BGE reranker |
 
-Artifacts per question (retrieved chunks, prompt snapshots, etc.) are saved under:
+### LLMs
 
-`results/artifacts/<experiment_name>/<timestamp>/`
+All LLM types are powered by [LiteLLM](https://github.com/BerriAI/litellm) under the hood, providing a unified interface with built-in retries and timeout handling.
 
-### Include generation metrics (slower)
-
-To also generate answers during benchmarking:
-
-```bash
-python -c "from src.evaluation import Benchmark; b=Benchmark('data/eval/golden_dataset.json'); df=b.run_all_configs('configs/', include_generation=True); agg=b.aggregate_results(df); b.save_results(agg,'results/benchmark_results_with_generation.csv')"
-```
-
-If you enable LLM-as-judge evaluation, you must have the appropriate API key configured in `.env`.
+| Type | Model prefix | Examples | Notes |
+|------|-------------|----------|-------|
+| `litellm` | any | `openai/gpt-4o`, `ollama/llama3.1:8b`, `anthropic/claude-sonnet-4-20250514` | Full provider list: [docs.litellm.ai/docs/providers](https://docs.litellm.ai/docs/providers) |
+| `openai` | `openai/` | `gpt-4o-mini`, `gpt-4o` | Auto-prefixed; requires `OPENAI_API_KEY` |
+| `ollama` | `ollama/` | `llama3.1:8b`, `mistral:7b` | Auto-prefixed; requires Ollama running locally (`ollama serve`) |
 
 ## Project Structure
 
 ```
 RAG_Nutrition/
-├── src/
-│   ├── core/           # Interfaces, config, pipeline
-│   ├── chunkers/       # Chunking strategies
-│   ├── embedders/      # Embedding models
-│   ├── retrievers/     # Retrieval strategies
-│   ├── rerankers/      # Reranking models
-│   ├── llms/           # Language models
-│   ├── ingestion/      # Document parsing
-│   ├── evaluation/     # Metrics & benchmarking
-│   └── app/            # Streamlit chatbot
-├── configs/            # Experiment configurations
+├── configs/                  # Experiment YAML configurations
+├── configs_openai/           # OpenAI-only config symlinks
 ├── data/
-│   ├── raw/            # Original PDFs
-│   ├── processed/      # Processed chunks
-│   └── eval/           # Evaluation datasets
-├── results/            # Benchmark outputs
-└── notebooks/          # Analysis notebooks
+│   ├── docs/                 # Source PDF documents
+│   └── eval/
+│       └── dataset.json      # Evaluation questions (126+)
+├── scripts/
+│   ├── ingest.py             # CLI: document ingestion
+│   └── benchmark.py          # CLI: RAGAS benchmark runner
+├── src/
+│   ├── core/                 # Interfaces, config, pipeline
+│   │   ├── config.py         # Pydantic config models + factory
+│   │   ├── document.py       # Document dataclass
+│   │   ├── interfaces.py     # Abstract base classes
+│   │   └── pipeline.py       # RAGPipeline orchestrator
+│   ├── chunkers/             # Chunking strategies
+│   ├── embedders/            # Embedding models (HF + OpenAI)
+│   ├── retrievers/           # Retrieval (naive, hyde, hybrid)
+│   ├── rerankers/            # Reranking models
+│   ├── llms/                 # LLM providers (LiteLLM — 100+ providers)
+│   ├── ingestion/            # PDF parsing + text preprocessing
+│   ├── evaluation/
+│   │   ├── benchmark.py      # Custom benchmark runner
+│   │   ├── metrics.py        # Retrieval metrics (P@k, R@k, MRR)
+│   │   ├── generation_metrics.py  # Generation metrics
+│   │   ├── visualization.py  # Plotting utilities
+│   │   └── text_utils.py     # Shared text overlap utilities
+│   └── app/
+│       └── chatbot.py        # Streamlit web interface
+├── chroma_db/                # ChromaDB vector store (gitignored)
+├── results/                  # Benchmark outputs (gitignored)
+├── Makefile                  # CLI orchestration
+└── requirements.txt
 ```
 
-## Available Components
+## Environment Setup
 
-### Chunkers
-| Type | Description |
-|------|-------------|
-| `fixed` | Fixed character size with overlap |
-| `recursive` | LangChain recursive splitter |
-| `sentence` | Sentence-based grouping |
+```bash
+cp .env.example .env.local
+```
 
-### Embedders
-| Type | Model |
-|------|-------|
-| `e5` | intfloat/multilingual-e5-large |
-| `mpnet` | sentence-transformers/paraphrase-multilingual-mpnet-base-v2 |
-| `bge` | BAAI/bge-m3 |
-| `openai` | text-embedding-3-small |
+Required environment variables (depending on which configs you use):
 
-### Retrievers
-| Type | Description |
-|------|-------------|
-| `naive` | Direct embedding similarity |
-| `hyde` | Hypothetical Document Embeddings |
-| `hybrid` | BM25 + Dense with RRF |
+| Variable | When needed |
+|----------|-------------|
+| `OPENAI_API_KEY` | Any config using `openai` or `litellm` with OpenAI models |
+| `ANTHROPIC_API_KEY` | LiteLLM configs using `anthropic/*` models |
+| `GOOGLE_API_KEY` | LiteLLM configs using `gemini/*` models |
 
-### Rerankers
-| Type | Model |
-|------|-------|
-| `none` | No reranking |
-| `cross_encoder` | cross-encoder/ms-marco-MiniLM-L-6-v2 |
-| `bge` | BAAI/bge-reranker-base |
-
-### LLMs
-| Type | Models |
-|------|--------|
-| `openai` | gpt-4o-mini, gpt-4o |
-| `ollama` | llama3.1:8b, mistral:7b |
+For Ollama configs, ensure the Ollama server is running (`ollama serve`) and the model is pulled (`ollama pull llama3.1:8b`).
 
 ## License
 

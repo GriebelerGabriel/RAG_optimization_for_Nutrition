@@ -1,12 +1,17 @@
 """Configuration management for RAG experiments."""
+import functools
 import hashlib
 import os
 from pathlib import Path
 from typing import Any
 
 import yaml
+from dotenv import load_dotenv
 from pydantic import BaseModel, Field
 from pydantic_settings import BaseSettings
+
+load_dotenv()
+load_dotenv(".env.local")
 
 
 class ChunkerConfig(BaseModel):
@@ -75,13 +80,12 @@ class Config(BaseModel):
         model_safe = self.embedding.model_name.replace("/", "_").replace("-", "_")
         return f"{self.retriever.collection_name}_{model_safe}"
     
-    def get_config_hash(self) -> str:
-        """Generate a hash of config components that affect the vector store.
-        
-        This ensures experiments with different chunking/embedding strategies
-        don't contaminate each other's vector stores.
+    @functools.cached_property
+    def config_hash(self) -> str:
+        """Hash of config components that affect the vector store.
+
+        Cached after first computation since config is immutable.
         """
-        # Include all components that affect document representation in the index
         hash_components = {
             "chunker_type": self.chunker.type,
             "chunk_size": self.chunker.chunk_size,
@@ -91,15 +95,14 @@ class Config(BaseModel):
         }
         hash_str = str(sorted(hash_components.items()))
         return hashlib.md5(hash_str.encode()).hexdigest()[:12]
-    
+
     def get_unique_collection_name(self) -> str:
         """Generate unique collection name based on full config hash.
-        
+
         This prevents cross-run contamination when chunking or preprocessing differs.
         """
         base_name = self.retriever.collection_name
-        config_hash = self.get_config_hash()
-        return f"{base_name}_{config_hash}"
+        return f"{base_name}_{self.config_hash}"
 
 
 class EnvSettings(BaseSettings):

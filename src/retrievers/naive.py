@@ -75,38 +75,55 @@ class NaiveRetriever(BaseRetriever):
     
     def retrieve(self, query: str, top_k: int | None = None) -> list[Document]:
         """Retrieve documents using direct query embedding.
-        
+
         Args:
             query: Search query.
             top_k: Number of documents to retrieve.
-            
+
         Returns:
             List of relevant documents with scores.
         """
         if top_k is None:
             top_k = self.top_k
-        
+
         # Embed the query
         if hasattr(self.embedder, 'embed_query'):
             query_embedding = self.embedder.embed_query(query)
         else:
             query_embedding = self.embedder.embed_single(query)
-        
-        # Query ChromaDB
+
+        return self.query_by_embedding(query_embedding, top_k)
+
+    def query_by_embedding(self, embedding: list[float], top_k: int | None = None) -> list[Document]:
+        """Query ChromaDB using a pre-computed embedding vector.
+
+        Args:
+            embedding: Pre-computed embedding vector.
+            top_k: Number of documents to retrieve.
+
+        Returns:
+            List of relevant documents with scores.
+        """
+        if top_k is None:
+            top_k = self.top_k
+
         results = self._collection.query(
-            query_embeddings=[query_embedding],
+            query_embeddings=[embedding],
             n_results=top_k,
             include=["documents", "metadatas", "distances"],
         )
-        
-        # Convert to Document objects
+
+        return self._parse_chroma_results(results)
+
+    @staticmethod
+    def _parse_chroma_results(results: dict) -> list[Document]:
+        """Convert ChromaDB query results to Document objects."""
         documents = []
         if results["ids"] and results["ids"][0]:
             for i, doc_id in enumerate(results["ids"][0]):
-                # ChromaDB returns distances, convert to similarity score
                 distance = results["distances"][0][i] if results["distances"] else 0
                 score = 1 - distance  # Cosine distance to similarity
-                
+
                 doc = Document(
                     id=doc_id,
                     content=results["documents"][0][i],
@@ -114,7 +131,7 @@ class NaiveRetriever(BaseRetriever):
                     score=score,
                 )
                 documents.append(doc)
-        
+
         return documents
     
     def clear(self) -> None:

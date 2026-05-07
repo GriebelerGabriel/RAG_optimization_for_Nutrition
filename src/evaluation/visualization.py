@@ -1,4 +1,5 @@
 """Visualization tools for comparing RAG experiment results."""
+import logging
 from pathlib import Path
 from typing import Any
 
@@ -6,6 +7,8 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 import seaborn as sns
+
+logger = logging.getLogger(__name__)
 
 
 def set_style() -> None:
@@ -78,8 +81,9 @@ def plot_metric_comparison(
     
     if save_path:
         fig.savefig(save_path, dpi=150, bbox_inches='tight')
-        print(f"Saved plot to {save_path}")
-    
+        plt.close(fig)
+        logger.info("Saved plot to %s", save_path)
+
     return fig
 
 
@@ -144,8 +148,9 @@ def plot_radar_chart(
     
     if save_path:
         fig.savefig(save_path, dpi=150, bbox_inches='tight')
-        print(f"Saved plot to {save_path}")
-    
+        plt.close(fig)
+        logger.info("Saved plot to %s", save_path)
+
     return fig
 
 
@@ -217,8 +222,11 @@ def plot_retrieval_vs_generation(
     
     if save_path:
         fig.savefig(save_path, dpi=150, bbox_inches='tight')
-        print(f"Saved plot to {save_path}")
-    
+        plt.close(fig)
+        logger.info("Saved plot to %s", save_path)
+    else:
+        plt.close(fig)
+
     return fig
 
 
@@ -277,8 +285,9 @@ def plot_latency_vs_quality(
     
     if save_path:
         fig.savefig(save_path, dpi=150, bbox_inches='tight')
-        print(f"Saved plot to {save_path}")
-    
+        plt.close(fig)
+        logger.info("Saved plot to %s", save_path)
+
     return fig
 
 
@@ -337,8 +346,9 @@ def plot_metric_heatmap(
     
     if save_path:
         fig.savefig(save_path, dpi=150, bbox_inches='tight')
-        print(f"Saved plot to {save_path}")
-    
+        plt.close(fig)
+        logger.info("Saved plot to %s", save_path)
+
     return fig
 
 
@@ -386,8 +396,9 @@ def plot_per_question_breakdown(
     
     if save_path:
         fig.savefig(save_path, dpi=150, bbox_inches='tight')
-        print(f"Saved plot to {save_path}")
-    
+        plt.close(fig)
+        logger.info("Saved plot to %s", save_path)
+
     return fig
 
 
@@ -426,32 +437,32 @@ def generate_comparison_report(
         plot_metric_comparison(agg_df, save_path=path)
         saved_plots['bar_comparison'] = path
     except Exception as e:
-        print(f"Could not create bar comparison: {e}")
-    
+        logger.warning("Could not create bar comparison: %s", e)
+
     # 2. Radar chart
     try:
         path = output_dir / f"{prefix}_radar.png"
         plot_radar_chart(agg_df, save_path=path)
         saved_plots['radar'] = path
     except Exception as e:
-        print(f"Could not create radar chart: {e}")
-    
+        logger.warning("Could not create radar chart: %s", e)
+
     # 3. Heatmap
     try:
         path = output_dir / f"{prefix}_heatmap.png"
         plot_metric_heatmap(agg_df, save_path=path)
         saved_plots['heatmap'] = path
     except Exception as e:
-        print(f"Could not create heatmap: {e}")
-    
+        logger.warning("Could not create heatmap: %s", e)
+
     # 4. Latency vs Quality
     try:
         path = output_dir / f"{prefix}_latency_quality.png"
         plot_latency_vs_quality(agg_df, save_path=path)
         saved_plots['latency_quality'] = path
     except Exception as e:
-        print(f"Could not create latency vs quality plot: {e}")
-    
+        logger.warning("Could not create latency vs quality plot: %s", e)
+
     # 5. Retrieval vs Generation (if generation metrics present)
     if 'faithfulness' in agg_df.columns:
         try:
@@ -459,8 +470,8 @@ def generate_comparison_report(
             plot_retrieval_vs_generation(agg_df, save_path=path)
             saved_plots['retrieval_vs_generation'] = path
         except Exception as e:
-            print(f"Could not create retrieval vs generation plot: {e}")
-    
+            logger.warning("Could not create retrieval vs generation plot: %s", e)
+
     # 6. Per-question breakdown (if not aggregated)
     if not is_aggregated:
         try:
@@ -468,9 +479,9 @@ def generate_comparison_report(
             plot_per_question_breakdown(df, save_path=path)
             saved_plots['per_question'] = path
         except Exception as e:
-            print(f"Could not create per-question plot: {e}")
-    
-    print(f"\nGenerated {len(saved_plots)} plots in {output_dir}")
+            logger.warning("Could not create per-question plot: %s", e)
+
+    logger.info("Generated %d plots in %s", len(saved_plots), output_dir)
     return saved_plots
 
 
@@ -505,5 +516,5 @@ def print_winner_summary(df: pd.DataFrame) -> str:
     lines.extend(["", "=" * 50])
     
     summary = "\n".join(lines)
-    print(summary)
+    logger.info(summary)
     return summary

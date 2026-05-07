@@ -12,6 +12,7 @@ class HuggingFaceEmbedder(BaseEmbedder):
     def __init__(self, model_name: str = "intfloat/multilingual-e5-base", **kwargs: Any):
         super().__init__(model_name=model_name, **kwargs)
         self.model_name = model_name
+        self._is_e5 = "e5" in model_name.lower()
         self._model: SentenceTransformer | None = None
     
     @property
@@ -31,7 +32,7 @@ class HuggingFaceEmbedder(BaseEmbedder):
             List of embedding vectors.
         """
         # E5 models require "query: " or "passage: " prefix
-        if "e5" in self.model_name.lower():
+        if self._is_e5:
             texts = [f"passage: {t}" for t in texts]
         
         embeddings = self.model.encode(texts, convert_to_numpy=True)
@@ -39,7 +40,7 @@ class HuggingFaceEmbedder(BaseEmbedder):
     
     def embed_query(self, text: str) -> list[float]:
         """Embed a query (with appropriate prefix for E5 models)."""
-        if "e5" in self.model_name.lower():
+        if self._is_e5:
             text = f"query: {text}"
         
         embedding = self.model.encode([text], convert_to_numpy=True)

@@ -20,7 +20,7 @@ reranker:
   top_k: 5
 
 llm:
-  type: "openai"
-  model_name: "gpt-4o-mini"
+  type: "litellm"
+  model_name: "openai/gpt-4o-mini"
   temperature: 0.1
   max_tokens: 1024

@@ -1,5 +1,6 @@
 """Benchmarking framework for RAG experiments."""
 import json
+import logging
 import time
 from dataclasses import dataclass, field
 from datetime import datetime
@@ -12,6 +13,9 @@ from src.core.config import Config, load_config
 from src.core.pipeline import RAGPipeline
 from .metrics import RetrievalMetrics, compute_retrieval_metrics
 from .generation_metrics import GenerationMetrics, compute_generation_metrics
+from .text_utils import text_overlap
+
+logger = logging.getLogger(__name__)
 
 
 @dataclass
@@ -19,8 +23,10 @@ class EvalQuestion:
     """A question in the evaluation dataset."""
     id: str
     question: str
-    ideal_chunk_ids: list[str]
+    ideal_contexts: list[str]
     ideal_answer: str | None = None
+    source: str | None = None
+    metadata: dict[str, Any] = field(default_factory=dict)
 
 
 @dataclass
@@ -42,33 +48,55 @@ class BenchmarkResult:
 
 class Benchmark:
     """Benchmark runner for RAG experiments."""
-    
+
     def __init__(self, eval_dataset_path: str | Path):
         """Initialize benchmark with evaluation dataset.
-        
+
         Args:
-            eval_dataset_path: Path to golden_dataset.json
+            eval_dataset_path: Path to evaluation dataset JSON.
         """
         self.eval_dataset_path = Path(eval_dataset_path)
         self.questions: list[EvalQuestion] = []
         self._load_dataset()
-    
+
     def _load_dataset(self) -> None:
-        """Load evaluation dataset from JSON."""
+        """Load evaluation dataset from JSON.
+
+        Supports two formats:
+        1. RAGAS-style flat list: [{"question", "answer", "contexts", "ground_truth", ...}]
+        2. Legacy format: {"questions": [{"id", "question", "ideal_chunks", "ideal_answer"}]}
+        """
         if not self.eval_dataset_path.exists():
-            print(f"Warning: Evaluation dataset not found at {self.eval_dataset_path}")
+            logger.warning("Evaluation dataset not found at %s", self.eval_dataset_path)
             return
-        
+
         with open(self.eval_dataset_path, "r", encoding="utf-8") as f:
             data = json.load(f)
-        
-        for q in data.get("questions", []):
-            self.questions.append(EvalQuestion(
-                id=q["id"],
-                question=q["question"],
-                ideal_chunk_ids=q.get("ideal_chunks", []),
-                ideal_answer=q.get("ideal_answer"),
-            ))
+
+        if isinstance(data, list):
+            # RAGAS-style flat list
+            for i, q in enumerate(data):
+                self.questions.append(EvalQuestion(
+                    id=q.get("id", f"q_{i:04d}"),
+                    question=q["question"],
+                    ideal_contexts=q.get("contexts", []),
+                    ideal_answer=q.get("ground_truth") or q.get("ideal_answer") or q.get("answer"),
+                    source=q.get("source"),
+                    metadata=q.get("metadata", {}),
+                ))
+        elif isinstance(data, dict) and "questions" in data:
+            # Legacy format
+            for q in data["questions"]:
+                self.questions.append(EvalQuestion(
+                    id=q["id"],
+                    question=q["question"],
+                    ideal_contexts=q.get("contexts", []),
+                    ideal_answer=q.get("ideal_answer"),
+                    source=q.get("source"),
+                    metadata=q.get("metadata", {}),
+                ))
+        else:
+            logger.error("Unrecognized dataset format in %s", self.eval_dataset_path)
     
     def run_config(
         self, 
@@ -105,13 +133,14 @@ class Benchmark:
         
         for question in self.questions:
             start_time = time.time()
-            
+
             # Retrieve
             retrieved_docs = pipeline.retrieve(question.question)
             retrieved_ids = [doc.id for doc in retrieved_docs]
-            
-            # Compute retrieval metrics
-            relevant_ids = set(question.ideal_chunk_ids)
+
+            # Compute retrieval metrics using text overlap
+            # (no chunk IDs available, so match retrieved text against ideal contexts)
+            relevant_ids = self._find_relevant_by_overlap(retrieved_docs, question.ideal_contexts)
             metrics = compute_retrieval_metrics(retrieved_docs, relevant_ids)
             
             # Store chunk data for artifacts
@@ -137,7 +166,7 @@ class Benchmark:
                 prompt_used = self._build_prompt_snapshot(question.question, retrieved_docs, pipeline)
                 
                 # Compute generation-grounded metrics
-                has_relevant_context = len(relevant_ids & set(retrieved_ids)) > 0
+                has_relevant_context = len(relevant_ids) > 0
                 generation_metrics = compute_generation_metrics(
                     response=response,
                     context=retrieved_docs,
@@ -170,22 +199,37 @@ class Benchmark:
         
         return results
     
+    @staticmethod
+    def _find_relevant_by_overlap(
+        retrieved_docs: list, ideal_contexts: list[str], threshold: float = 0.3,
+    ) -> set[str]:
+        """Find which retrieved docs are relevant via text overlap with ideal contexts.
+
+        Returns a set of retrieved doc IDs whose content overlaps significantly
+        with at least one ideal context passage.
+        """
+        if not ideal_contexts:
+            return set()
+
+        relevant = set()
+        for doc in retrieved_docs:
+            for ref in ideal_contexts:
+                if text_overlap(doc.content, ref) >= threshold:
+                    relevant.add(doc.id)
+                    break
+        return relevant
+
     def _build_prompt_snapshot(
-        self, 
-        query: str, 
-        context: list, 
+        self,
+        query: str,
+        context: list,
         pipeline: RAGPipeline,
     ) -> str:
         """Build a snapshot of the prompt used for generation."""
-        from src.core.document import Document
-        context_text = "\n\n".join([
-            f"[Fonte {i+1}]: {doc.content}" 
-            for i, doc in enumerate(context)
-        ])
-        system_prompt = pipeline.llm._default_system_prompt()
-        if hasattr(pipeline.config, 'llm') and pipeline.config.llm.system_prompt:
-            system_prompt = pipeline.config.llm.system_prompt
-        
+        llm = pipeline.llm
+        system_prompt = llm.system_prompt or llm._default_system_prompt()
+        context_text = llm._format_context(context)
+
         return f"""{system_prompt}
 
 Contexto:
@@ -236,7 +280,7 @@ Resposta:"""
         all_results = []
         
         for config_path in config_dir.glob("*.yaml"):
-            print(f"Running benchmark for: {config_path.name}")
+            logger.info("Running benchmark for: %s", config_path.name)
             try:
                 results = self.run_config(
                     config_path, 
@@ -246,7 +290,7 @@ Resposta:"""
                 )
                 all_results.extend(results)
             except Exception as e:
-                print(f"Error running {config_path.name}: {e}")
+                logger.error("Error running %s: %s", config_path.name, e)
         
         return self._results_to_dataframe(all_results)
     
@@ -295,4 +339,4 @@ Resposta:"""
     def save_results(self, df: pd.DataFrame, output_path: str | Path) -> None:
         """Save results to CSV."""
         df.to_csv(output_path, index=False)
-        print(f"Results saved to {output_path}")
+        logger.info("Results saved to %s", output_path)

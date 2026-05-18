@@ -1,0 +1,26 @@
+experiment_name: "llama_cs1024"
+
+chunker:
+  type: "recursive"
+  chunk_size: 1024
+  overlap: 50
+
+embedding:
+  type: "e5"
+  model_name: "intfloat/multilingual-e5-base"
+
+retriever:
+  type: "naive"
+  top_k: 5
+  collection_name: "nutrition_docs"
+
+reranker:
+  type: "none"
+  model_name: ""
+  top_k: 5
+
+llm:
+  type: "litellm"
+  model_name: "ollama/llama3.1:8b"
+  temperature: 0.1
+  max_tokens: 1024

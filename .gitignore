@@ -40,8 +40,7 @@ wheels/
 chroma_db/
 
 # Results (keep structure but ignore data)
-results/*.csv
-results/plots/*.png
+results/
 
 # Data (keep structure but ignore actual files)
 data/raw/*.pdf

@@ -1,7 +1,7 @@
 .ONESHELL:
 SHELL := /bin/bash
 
-.PHONY: help install install-pip install-poetry env ingest ingest-all run run-chatbot benchmark benchmark-single clean-db clean-chroma
+.PHONY: help install install-pip install-poetry env ingest ingest-all run run-chatbot benchmark benchmark-single benchmark-all benchmark-eval benchmark-deterministic benchmark-report benchmark-unified-single clean-db clean-chroma
 
 CONFIG ?= configs/baseline.yaml
 DATA_DIR ?= data/docs
@@ -10,7 +10,7 @@ RESULTS_DIR ?= results
 PORT ?= 8501
 ADDRESS ?= 0.0.0.0
 EVALUATOR ?= openai
-EVALUATOR_MODEL ?= gpt-4o-mini
+EVALUATOR_MODEL ?= gpt-4.1-mini
 
 help:
 	@echo "Targets:"
@@ -19,6 +19,10 @@ help:
 	@echo "  ingest-all           Ingest for all configs in configs/"
 	@echo "  benchmark            Run RAGAS benchmark on all configs"
 	@echo "  benchmark-single     Run RAGAS benchmark on CONFIG=$(CONFIG)"
+	@echo "  benchmark-all        Unified: pipeline + RAGAS + deterministic + report"
+	@echo "  benchmark-eval       Evaluate cached pipeline: deterministic + RAGAS + report"
+	@echo "  benchmark-deterministic  Deterministic NLP metrics only (no LLM cost)"
+	@echo "  benchmark-report     Re-generate report from existing CSVs"
 	@echo "  run                  Run Streamlit (PORT=$(PORT) ADDRESS=$(ADDRESS))"
 	@echo "  clean-db             Remove local ChromaDB folder (./chroma_db)"
 	@echo ""
@@ -68,3 +72,38 @@ clean-db:
 	rm -rf ./chroma_db
 
 clean-chroma: clean-db
+
+benchmark-all:
+	PYTHONPATH=. .venv/bin/python3 scripts/benchmark_unified.py \
+		--eval-dataset $(EVAL_DATASET) \
+		--config-dir configs/ \
+		--results-dir $(RESULTS_DIR) \
+		--evaluator $(EVALUATOR) \
+		--evaluator-model $(EVALUATOR_MODEL)
+
+benchmark-eval:
+	PYTHONPATH=. .venv/bin/python3 scripts/benchmark_unified.py \
+		--results-dir $(RESULTS_DIR) \
+		--evaluator $(EVALUATOR) \
+		--evaluator-model $(EVALUATOR_MODEL) \
+		--skip-pipeline
+
+benchmark-deterministic:
+	PYTHONPATH=. .venv/bin/python3 scripts/benchmark_unified.py \
+		--eval-dataset $(EVAL_DATASET) \
+		--config-dir configs/ \
+		--results-dir $(RESULTS_DIR) \
+		--skip-ragas
+
+benchmark-report:
+	PYTHONPATH=. .venv/bin/python3 scripts/benchmark_unified.py \
+		--results-dir $(RESULTS_DIR) \
+		--skip-pipeline --skip-ragas --skip-deterministic
+
+benchmark-unified-single:
+	PYTHONPATH=. .venv/bin/python3 scripts/benchmark_unified.py \
+		--eval-dataset $(EVAL_DATASET) \
+		--config $(CONFIG) \
+		--results-dir $(RESULTS_DIR) \
+		--evaluator $(EVALUATOR) \
+		--evaluator-model $(EVALUATOR_MODEL)

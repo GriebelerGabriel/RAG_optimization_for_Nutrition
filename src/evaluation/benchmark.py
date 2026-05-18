@@ -13,6 +13,7 @@ from src.core.config import Config, load_config
 from src.core.pipeline import RAGPipeline
 from .metrics import RetrievalMetrics, compute_retrieval_metrics
 from .generation_metrics import GenerationMetrics, compute_generation_metrics
+from .deterministic_metrics import DeterministicMetrics, compute_deterministic_metrics
 from .text_utils import text_overlap
 
 logger = logging.getLogger(__name__)
@@ -40,6 +41,7 @@ class BenchmarkResult:
     response: str | None = None
     latency_ms: float = 0.0
     generation_metrics: GenerationMetrics | None = None
+    deterministic_metrics: DeterministicMetrics | None = None
     # Artifact data for debugging hallucinations
     retrieved_chunks: list[dict[str, Any]] = field(default_factory=list)
     prompt_used: str | None = None
@@ -157,6 +159,7 @@ class Benchmark:
             # Optionally generate response and compute generation metrics
             response = None
             generation_metrics = None
+            deterministic_metrics = None
             prompt_used = None
             
             if include_generation:
@@ -175,6 +178,14 @@ class Benchmark:
                     llm=pipeline.llm if use_llm_eval else None,
                     use_llm_eval=use_llm_eval,
                 )
+
+                # Compute deterministic metrics against reference answer
+                deterministic_metrics = None
+                if question.ideal_answer:
+                    deterministic_metrics = compute_deterministic_metrics(
+                        response=response,
+                        reference=question.ideal_answer,
+                    )
             
             latency_ms = (time.time() - start_time) * 1000
             
@@ -187,6 +198,7 @@ class Benchmark:
                 response=response,
                 latency_ms=latency_ms,
                 generation_metrics=generation_metrics,
+                deterministic_metrics=deterministic_metrics,
                 retrieved_chunks=retrieved_chunks,
                 prompt_used=prompt_used,
                 ideal_answer=question.ideal_answer,
@@ -251,6 +263,7 @@ Resposta:"""
             "prompt_used": result.prompt_used,
             "retrieval_metrics": result.metrics.to_dict(),
             "generation_metrics": result.generation_metrics.to_dict() if result.generation_metrics else None,
+            "deterministic_metrics": result.deterministic_metrics.to_dict() if result.deterministic_metrics else None,
             "latency_ms": result.latency_ms,
         }
         
@@ -309,6 +322,8 @@ Resposta:"""
                 row["response"] = r.response
             if r.generation_metrics:
                 row.update(r.generation_metrics.to_dict())
+            if r.deterministic_metrics:
+                row.update(r.deterministic_metrics.to_dict())
             rows.append(row)
         
         return pd.DataFrame(rows)
@@ -324,9 +339,10 @@ Resposta:"""
         """
         retrieval_cols = ["precision@1", "precision@3", "precision@5", "recall@5", "mrr", "latency_ms"]
         generation_cols = ["faithfulness", "answer_correctness", "abstain_correctness", "citation_quality"]
-        
+        deterministic_cols = ["bleu", "rouge_l", "meteor", "bertscore_f1", "semantic_similarity"]
+
         # Only include columns that exist in the dataframe
-        metric_cols = [c for c in retrieval_cols + generation_cols if c in df.columns]
+        metric_cols = [c for c in retrieval_cols + generation_cols + deterministic_cols if c in df.columns]
         
         # For answer_correctness, filter out -1 values (N/A) before averaging
         if "answer_correctness" in df.columns:

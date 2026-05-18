@@ -1,0 +1,26 @@
+experiment_name: "fair_gpt4o_mini"
+
+chunker:
+  type: "recursive"
+  chunk_size: 512
+  overlap: 50
+
+embedding:
+  type: "e5"
+  model_name: "intfloat/multilingual-e5-base"
+
+retriever:
+  type: "naive"
+  top_k: 5
+  collection_name: "nutrition_docs"
+
+reranker:
+  type: "none"
+  model_name: ""
+  top_k: 5
+
+llm:
+  type: "litellm"
+  model_name: "openai/gpt-4o-mini"
+  temperature: 0.3
+  max_tokens: 256

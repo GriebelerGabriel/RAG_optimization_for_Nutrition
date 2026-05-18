@@ -31,6 +31,7 @@ class RetrieverConfig(BaseModel):
     """Configuration for retrieval strategy."""
     type: str = "naive"
     top_k: int = 5
+    score_threshold: float = 0.3
     collection_name: str = "nutrition_docs"
     persist_directory: str = "./chroma_db"
     use_config_hash_collection: bool = True

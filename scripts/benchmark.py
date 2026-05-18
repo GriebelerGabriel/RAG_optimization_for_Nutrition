@@ -12,6 +12,8 @@ import sys
 import time
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+
 from dotenv import load_dotenv
 load_dotenv()
 load_dotenv(".env.local")
@@ -19,51 +21,7 @@ load_dotenv(".env.local")
 logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
 logger = logging.getLogger(__name__)
 
-
-def build_ragas_evaluator(
-    evaluator_type: str,
-    evaluator_model: str,
-):
-    """Build the LLM and embeddings that RAGAS will use for judging."""
-    from ragas.llms import LangchainLLMWrapper
-    from ragas.embeddings import LangchainEmbeddingsWrapper
-
-    if evaluator_type == "openai":
-        from langchain_openai import ChatOpenAI, OpenAIEmbeddings
-
-        lc_llm = ChatOpenAI(model=evaluator_model, temperature=0)
-        lc_emb = OpenAIEmbeddings(model="text-embedding-3-small")
-        return LangchainLLMWrapper(lc_llm), LangchainEmbeddingsWrapper(lc_emb)
-
-    elif evaluator_type == "ollama":
-        from langchain_community.llms import Ollama
-        from langchain_community.embeddings import HuggingFaceEmbeddings
-
-        lc_llm = Ollama(model=evaluator_model)
-        lc_emb = HuggingFaceEmbeddings(model_name="intfloat/multilingual-e5-base")
-        return LangchainLLMWrapper(lc_llm), LangchainEmbeddingsWrapper(lc_emb)
-
-    else:
-        raise ValueError(f"Unknown evaluator type: {evaluator_type}")
-
-
-def build_ragas_metrics(llm, embeddings):
-    """Build the standard RAGAS metric suite."""
-    from ragas.metrics import (
-        Faithfulness,
-        AnswerRelevancy,
-        ContextPrecision,
-        ContextRecall,
-        AnswerCorrectness,
-    )
-
-    return [
-        Faithfulness(llm=llm),
-        AnswerRelevancy(llm=llm, embeddings=embeddings),
-        ContextPrecision(llm=llm),
-        ContextRecall(llm=llm),
-        AnswerCorrectness(llm=llm, embeddings=embeddings),
-    ]
+from src.evaluation.ragas_utils import build_ragas_evaluator, build_ragas_metrics
 
 
 def run_config_benchmark(config_path: Path, questions: list[dict]) -> dict | None:

@@ -1,8 +1,11 @@
 """RAG Pipeline orchestrator."""
+import logging
 from pathlib import Path
 from typing import Any
 
 from .config import Config, load_config
+
+logger = logging.getLogger(__name__)
 from .document import Document
 from .interfaces import BaseChunker, BaseEmbedder, BaseLLM, BaseReranker, BaseRetriever
 
@@ -93,21 +96,32 @@ class RAGPipeline:
     
     def retrieve(self, query: str, top_k: int | None = None) -> list[Document]:
         """Retrieve relevant documents for a query.
-        
+
         Args:
             query: Search query.
             top_k: Number of documents to retrieve.
-            
+
         Returns:
-            List of relevant documents.
+            List of relevant documents filtered by score threshold.
         """
         # Get initial retrieval results
         docs = self.retriever.retrieve(query, top_k)
-        
+
         # Apply reranking if configured
         if self.reranker is not None:
             docs = self.reranker.rerank(query, docs, top_k)
-        
+
+        # Filter out documents below score threshold
+        if self.config and self.config.retriever.score_threshold > 0:
+            threshold = self.config.retriever.score_threshold
+            before = len(docs)
+            docs = [doc for doc in docs if doc.score is not None and doc.score >= threshold]
+            if before > 0 and not docs:
+                logger.warning(
+                    "Score threshold %.2f filtered out all %d retrieved documents for query: %s",
+                    threshold, before, query[:80],
+                )
+
         return docs
     
     def generate(self, query: str, context: list[Document]) -> str:

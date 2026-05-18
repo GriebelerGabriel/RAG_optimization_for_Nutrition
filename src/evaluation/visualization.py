@@ -518,3 +518,230 @@ def print_winner_summary(df: pd.DataFrame) -> str:
     summary = "\n".join(lines)
     logger.info(summary)
     return summary
+
+
+def plot_correlation_heatmap(
+    corr_df: pd.DataFrame,
+    save_path: str | Path | None = None,
+    figsize: tuple[int, int] = (10, 8),
+) -> plt.Figure:
+    """Heatmap of Spearman correlations between RAGAS and deterministic metrics.
+
+    Args:
+        corr_df: DataFrame from compare_frameworks with columns
+                 ragas_metric, deterministic_metric, spearman_r.
+        save_path: Optional path to save the figure.
+        figsize: Figure size.
+
+    Returns:
+        Matplotlib Figure object.
+    """
+    set_style()
+
+    pivot = corr_df.pivot(
+        index="ragas_metric",
+        columns="deterministic_metric",
+        values="spearman_r",
+    )
+
+    fig, ax = plt.subplots(figsize=figsize)
+    sns.heatmap(
+        pivot,
+        annot=True,
+        fmt=".3f",
+        cmap="RdYlGn",
+        center=0,
+        vmin=-1,
+        vmax=1,
+        linewidths=0.5,
+        ax=ax,
+    )
+    ax.set_title("Spearman Correlation: RAGAS vs Deterministic Metrics")
+    ax.set_ylabel("RAGAS Metrics")
+    ax.set_xlabel("Deterministic Metrics")
+
+    plt.tight_layout()
+
+    if save_path:
+        fig.savefig(save_path, dpi=150, bbox_inches="tight")
+        plt.close(fig)
+        logger.info("Saved correlation heatmap to %s", save_path)
+
+    return fig
+
+
+def plot_ranking_comparison(
+    ragas_df: pd.DataFrame,
+    det_df: pd.DataFrame,
+    save_path: str | Path | None = None,
+    figsize: tuple[int, int] = (14, 6),
+) -> plt.Figure:
+    """Side-by-side bar chart showing config rankings by each framework.
+
+    Args:
+        ragas_df: Aggregated RAGAS results with 'config' column.
+        det_df: Aggregated deterministic results with 'config' column.
+        save_path: Optional path to save the figure.
+        figsize: Figure size.
+
+    Returns:
+        Matplotlib Figure object.
+    """
+    set_style()
+
+    ragas_cols = [c for c in ragas_df.columns if c not in ("config", "config_path", "avg_latency_ms")]
+    det_cols = [c for c in det_df.columns if c not in ("config", "config_path", "avg_latency_ms")]
+
+    ragas_df = ragas_df.copy()
+    det_df = det_df.copy()
+    ragas_df["framework_mean"] = ragas_df[ragas_cols].mean(axis=1)
+    det_df["framework_mean"] = det_df[det_cols].mean(axis=1)
+
+    merged = ragas_df[["config", "framework_mean"]].merge(
+        det_df[["config", "framework_mean"]],
+        on="config",
+        suffixes=("_ragas", "_det"),
+    )
+
+    fig, ax = plt.subplots(figsize=figsize)
+    x = np.arange(len(merged))
+    width = 0.35
+
+    bars1 = ax.bar(x - width / 2, merged["framework_mean_ragas"], width, label="RAGAS", alpha=0.85)
+    bars2 = ax.bar(x + width / 2, merged["framework_mean_det"], width, label="Deterministic", alpha=0.85)
+
+    ax.set_xlabel("Configuration")
+    ax.set_ylabel("Mean Score")
+    ax.set_title("RAGAS vs Deterministic: Mean Metric Score by Configuration")
+    ax.set_xticks(x)
+    ax.set_xticklabels(merged["config"], rotation=45, ha="right")
+    ax.legend()
+    ax.set_ylim(0, 1)
+
+    for bar in bars1:
+        ax.text(bar.get_x() + bar.get_width() / 2, bar.get_height() + 0.01,
+                f"{bar.get_height():.3f}", ha="center", va="bottom", fontsize=8)
+    for bar in bars2:
+        ax.text(bar.get_x() + bar.get_width() / 2, bar.get_height() + 0.01,
+                f"{bar.get_height():.3f}", ha="center", va="bottom", fontsize=8)
+
+    plt.tight_layout()
+
+    if save_path:
+        fig.savefig(save_path, dpi=150, bbox_inches="tight")
+        plt.close(fig)
+        logger.info("Saved ranking comparison to %s", save_path)
+
+    return fig
+
+
+def _embed_image(path: Path) -> str:
+    """Encode a PNG file as a base64 data URI."""
+    import base64
+
+    data = Path(path).read_bytes()
+    encoded = base64.b64encode(data).decode("ascii")
+    return f"data:image/png;base64,{encoded}"
+
+
+def generate_html_report(
+    ragas_df: pd.DataFrame,
+    det_df: pd.DataFrame,
+    corr_df: pd.DataFrame,
+    best: dict,
+    plots: dict[str, Path],
+    output_path: str | Path,
+    title: str = "RAG Benchmark Report",
+) -> Path:
+    """Generate a self-contained HTML report with embedded plots.
+
+    Embeds PNG images as base64 so the report is a single shareable file.
+
+    Args:
+        ragas_df: RAGAS summary results (one row per config).
+        det_df: Deterministic summary results (one row per config).
+        corr_df: Correlation analysis results.
+        best: Dict with 'best_ragas', 'best_deterministic', 'agreement'.
+        plots: Dict mapping plot names to PNG file paths.
+        output_path: Where to write the HTML file.
+        title: Report title.
+
+    Returns:
+        Path to the generated HTML file.
+    """
+    from datetime import datetime, timezone
+
+    output_path = Path(output_path)
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+
+    timestamp = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
+    agreement_cls = "agreement-yes" if best.get("agreement") else "agreement-no"
+    agreement_text = "YES" if best.get("agreement") else "NO"
+
+    plot_sections = ""
+    for name, path in plots.items():
+        if Path(path).exists():
+            label = name.replace("_", " ").replace(".png", "").title()
+            plot_sections += f"""
+            <div class="plot">
+                <h3>{label}</h3>
+                <img src="{_embed_image(path)}" alt="{label}" />
+            </div>"""
+
+    ragas_table = ragas_df.to_html(index=False, float_format="%.4f", classes="data-table")
+    det_table = det_df.to_html(index=False, float_format="%.4f", classes="data-table")
+    corr_table = corr_df.to_html(index=False, float_format="%.4f", classes="data-table")
+
+    html = f"""<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{title}</title>
+<style>
+  body {{ font-family: system-ui, -apple-system, sans-serif; max-width: 1200px;
+         margin: 0 auto; padding: 20px; color: #333; }}
+  h1 {{ border-bottom: 2px solid #4a90d9; padding-bottom: 8px; }}
+  h2 {{ color: #4a90d9; margin-top: 30px; }}
+  .summary {{ background: #e8f5e9; padding: 15px 20px; border-radius: 8px;
+              margin: 20px 0; }}
+  .agreement-yes {{ color: #2e7d32; font-weight: bold; }}
+  .agreement-no {{ color: #c62828; font-weight: bold; }}
+  table.data-table {{ border-collapse: collapse; width: 100%; margin: 10px 0; }}
+  table.data-table th {{ background: #4a90d9; color: #fff; padding: 8px 12px;
+                         text-align: left; }}
+  table.data-table td {{ border: 1px solid #ddd; padding: 6px 12px; }}
+  table.data-table tr:nth-child(even) {{ background: #f5f5f5; }}
+  .plot {{ text-align: center; margin: 20px 0; }}
+  .plot img {{ max-width: 100%; border: 1px solid #eee; border-radius: 4px; }}
+  .timestamp {{ color: #888; font-size: 0.9em; }}
+</style>
+</head>
+<body>
+<h1>{title}</h1>
+<p class="timestamp">Generated: {timestamp}</p>
+
+<div class="summary">
+  <h2 style="margin-top:0">Best Configuration</h2>
+  <p><strong>By RAGAS (LLM-as-judge):</strong> {best.get('best_ragas', 'N/A')}</p>
+  <p><strong>By Deterministic NLP metrics:</strong> {best.get('best_deterministic', 'N/A')}</p>
+  <p><strong>Agreement:</strong> <span class="{agreement_cls}">{agreement_text}</span></p>
+</div>
+
+<h2>RAGAS Results (LLM-as-Judge)</h2>
+{ragas_table}
+
+<h2>Deterministic NLP Metrics</h2>
+{det_table}
+
+<h2>Correlation Analysis (Spearman)</h2>
+{corr_table}
+
+<h2>Visualizations</h2>
+{plot_sections}
+</body>
+</html>"""
+
+    output_path.write_text(html, encoding="utf-8")
+    logger.info("HTML report saved to %s", output_path)
+    return output_path

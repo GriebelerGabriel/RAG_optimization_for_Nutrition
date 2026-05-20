@@ -1,23 +1,45 @@
 """RAGAS evaluator construction helpers.
 
-Shared between the standalone RAGAS benchmark script and the unified
-benchmark script.
+Matches the proven fast approach from the reference notebook:
+- Uses LangChain ChatOpenAI directly (no wrapper)
+- Passes llm/embeddings to evaluate() directly
+- Default RunConfig (no overrides)
 """
+
+import os
 
 ALL_RAGAS_METRICS = ["faithfulness", "answer_relevancy", "context_precision", "context_recall", "answer_correctness"]
 
 
 def build_ragas_evaluator(evaluator_type: str, evaluator_model: str):
-    """Build the LLM and embeddings that RAGAS will use for judging."""
-    from ragas.llms import LangchainLLMWrapper
-    from ragas.embeddings import LangchainEmbeddingsWrapper
+    """Build LangChain LLM and embeddings for RAGAS evaluation."""
+    embedding_model = os.getenv("RAGAS_EMBEDDING_MODEL", "text-embedding-3-small")
 
     if evaluator_type == "openai":
         from langchain_openai import ChatOpenAI, OpenAIEmbeddings
 
-        lc_llm = ChatOpenAI(model=evaluator_model, temperature=0)
-        lc_emb = OpenAIEmbeddings(model="text-embedding-3-small")
-        return LangchainLLMWrapper(lc_llm), LangchainEmbeddingsWrapper(lc_emb)
+        lc_llm = ChatOpenAI(
+            model=evaluator_model,
+            temperature=0,
+            max_tokens=32768,
+            request_timeout=120,
+        )
+        lc_emb = OpenAIEmbeddings(model=embedding_model)
+        return lc_llm, lc_emb
+
+    elif evaluator_type == "openrouter":
+        from langchain_openai import ChatOpenAI, OpenAIEmbeddings
+
+        lc_llm = ChatOpenAI(
+            model=evaluator_model,
+            temperature=0,
+            max_tokens=32768,
+            request_timeout=120,
+            base_url="https://openrouter.ai/api/v1",
+            api_key=os.getenv("OPENROUTER_API_KEY"),
+        )
+        lc_emb = OpenAIEmbeddings(model=embedding_model)
+        return lc_llm, lc_emb
 
     elif evaluator_type == "ollama":
         from langchain_community.llms import Ollama
@@ -25,22 +47,14 @@ def build_ragas_evaluator(evaluator_type: str, evaluator_model: str):
 
         lc_llm = Ollama(model=evaluator_model)
         lc_emb = HuggingFaceEmbeddings(model_name="intfloat/multilingual-e5-base")
-        return LangchainLLMWrapper(lc_llm), LangchainEmbeddingsWrapper(lc_emb)
+        return lc_llm, lc_emb
 
     else:
-        raise ValueError(f"Unknown evaluator type: {evaluator_type}")
+        raise ValueError(f"Unknown evaluator type: {evaluator_type}. Options: openai, openrouter, ollama")
 
 
-def build_ragas_metrics(llm, embeddings, metric_names: list[str] | None = None):
-    """Build RAGAS metrics, optionally filtered by name.
-
-    Args:
-        llm: RAGAS-wrapped LLM.
-        embeddings: RAGAS-wrapped embeddings.
-        metric_names: Subset of metric names to use. None = all 5.
-            Options: faithfulness, answer_relevancy, context_precision,
-                     context_recall, answer_correctness.
-    """
+def build_ragas_metrics(llm=None, embeddings=None, metric_names: list[str] | None = None):
+    """Build RAGAS metrics. Uses defaults (no custom llm/embeddings per metric)."""
     from ragas.metrics import (
         Faithfulness,
         AnswerRelevancy,
@@ -50,11 +64,11 @@ def build_ragas_metrics(llm, embeddings, metric_names: list[str] | None = None):
     )
 
     all_metrics = {
-        "faithfulness": lambda: Faithfulness(llm=llm),
-        "answer_relevancy": lambda: AnswerRelevancy(llm=llm, embeddings=embeddings),
-        "context_precision": lambda: ContextPrecision(llm=llm),
-        "context_recall": lambda: ContextRecall(llm=llm),
-        "answer_correctness": lambda: AnswerCorrectness(llm=llm, embeddings=embeddings),
+        "faithfulness": Faithfulness(),
+        "answer_relevancy": AnswerRelevancy(),
+        "context_precision": ContextPrecision(),
+        "context_recall": ContextRecall(),
+        "answer_correctness": AnswerCorrectness(),
     }
 
     names = metric_names or list(all_metrics.keys())
@@ -62,23 +76,4 @@ def build_ragas_metrics(llm, embeddings, metric_names: list[str] | None = None):
     if unknown:
         raise ValueError(f"Unknown RAGAS metrics: {unknown}. Available: {list(all_metrics)}")
 
-    return [all_metrics[n]() for n in names]
-
-
-def build_ragas_run_config(max_workers: int = 8, timeout: int = 60):
-    """Build a tuned RunConfig for RAGAS evaluation.
-
-    Defaults are optimized for OpenAI gpt-4o-mini to avoid rate limits:
-    - Fewer workers (8 vs default 16) to reduce timeout errors
-    - Lower timeout (60s vs 180s) to fail fast
-    - Fewer retries (3 vs 10) to avoid long waits
-    """
-    from ragas import RunConfig
-
-    return RunConfig(
-        timeout=timeout,
-        max_workers=max_workers,
-        max_wait=30,
-        max_retries=3,
-        log_tenacity=False,
-    )
+    return [all_metrics[n] for n in names]

@@ -1,7 +1,7 @@
 .ONESHELL:
 SHELL := /bin/bash
 
-.PHONY: help install install-pip install-poetry env ingest ingest-all run run-chatbot benchmark benchmark-single benchmark-all benchmark-eval benchmark-deterministic benchmark-report benchmark-unified-single clean-db clean-chroma
+.PHONY: help install install-pip install-poetry env ingest ingest-all run run-chatbot benchmark benchmark-single benchmark-all benchmark-eval benchmark-parallel benchmark-deterministic benchmark-report benchmark-unified-single clean-db clean-chroma
 
 CONFIG ?= configs/baseline.yaml
 DATA_DIR ?= data/docs
@@ -21,6 +21,7 @@ help:
 	@echo "  benchmark-single     Run RAGAS benchmark on CONFIG=$(CONFIG)"
 	@echo "  benchmark-all        Unified: pipeline + RAGAS + deterministic + report"
 	@echo "  benchmark-eval       Evaluate cached pipeline: deterministic + RAGAS + report"
+	@echo "  benchmark-parallel   Same as benchmark-eval but 3 parallel batches (faster)"
 	@echo "  benchmark-deterministic  Deterministic NLP metrics only (no LLM cost)"
 	@echo "  benchmark-report     Re-generate report from existing CSVs"
 	@echo "  run                  Run Streamlit (PORT=$(PORT) ADDRESS=$(ADDRESS))"
@@ -87,6 +88,9 @@ benchmark-eval:
 		--evaluator $(EVALUATOR) \
 		--evaluator-model $(EVALUATOR_MODEL) \
 		--skip-pipeline
+
+benchmark-parallel:
+	./scripts/ragas_parallel.sh
 
 benchmark-deterministic:
 	PYTHONPATH=. .venv/bin/python3 scripts/benchmark_unified.py \

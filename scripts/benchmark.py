@@ -128,7 +128,7 @@ def main() -> None:
     parser.add_argument(
         "--evaluator",
         default="openai",
-        choices=["openai", "ollama"],
+        choices=["openai", "openrouter", "ollama"],
         help="LLM provider for RAGAS evaluation",
     )
     parser.add_argument(

@@ -169,50 +169,40 @@ def evaluate_ragas(
     results_dir: Path,
     metric_names: list[str] | None = None,
 ) -> pd.DataFrame | None:
-    """Run RAGAS evaluation on all config results."""
-    from src.evaluation.ragas_utils import (
-        build_ragas_evaluator,
-        build_ragas_metrics,
-        build_ragas_run_config,
-    )
-    from ragas.dataset_schema import SingleTurnSample, EvaluationDataset
+    """Run RAGAS evaluation matching the proven fast notebook approach."""
+    import os
+    from datasets import Dataset
     from ragas import evaluate
+    from src.evaluation.ragas_utils import build_ragas_evaluator, build_ragas_metrics
+
+    os.environ["RAGAS_WITH_EVAL_MODE"] = "true"
 
     try:
         ragas_llm, ragas_emb = build_ragas_evaluator(evaluator_type, evaluator_model)
-        metrics = build_ragas_metrics(ragas_llm, ragas_emb, metric_names=metric_names)
-        run_config = build_ragas_run_config()
+        metrics = build_ragas_metrics(metric_names=metric_names)
     except Exception as e:
         logger.error("Failed to build RAGAS evaluator: %s", e)
         return None
 
-    logger.info(
-        "  Metrics: %s (workers=%d, timeout=%ds)",
-        [m.name for m in metrics], run_config.max_workers, run_config.timeout,
-    )
+    logger.info("  Metrics: %s", [m.name for m in metrics])
 
+    total = len(results)
     rows = []
-    for config_result in results:
+    for i, config_result in enumerate(results, 1):
         try:
-            samples = [
-                SingleTurnSample(
-                    user_input=s.question,
-                    retrieved_contexts=s.retrieved_contexts,
-                    reference_contexts=s.reference_contexts,
-                    response=s.response,
-                    reference=s.reference,
-                )
-                for s in config_result.samples
-            ]
-            dataset = EvaluationDataset(samples=samples)
+            dataset = Dataset.from_dict({
+                "question": [s.question for s in config_result.samples],
+                "answer": [s.response for s in config_result.samples],
+                "contexts": [s.retrieved_contexts for s in config_result.samples],
+                "ground_truth": [s.reference for s in config_result.samples],
+            })
 
-            logger.info("  RAGAS evaluating: %s ...", config_result.config_name)
+            logger.info("  [%d/%d] RAGAS evaluating: %s ...", i, total, config_result.config_name)
             ragas_result = evaluate(
-                dataset=dataset,
+                dataset,
                 metrics=metrics,
                 llm=ragas_llm,
                 embeddings=ragas_emb,
-                run_config=run_config,
                 show_progress=True,
                 raise_exceptions=False,
             )
@@ -228,11 +218,10 @@ def evaluate_ragas(
             detail_df = ragas_result.to_pandas()
             detail_path = results_dir / f"ragas_detail_{config_result.config_name}.csv"
             detail_df.to_csv(detail_path, index=False)
-            logger.info("  %s done", config_result.config_name)
+            logger.info("  [%d/%d] Done: %s", i, total, config_result.config_name)
         except Exception as e:
-            logger.error("RAGAS eval failed for %s: %s", config_result.config_name, e)
+            logger.error("  RAGAS eval failed for %s: %s", config_result.config_name, e)
 
-    # Save partial results even if some configs failed
     if not rows:
         return None
 
@@ -375,8 +364,8 @@ def main() -> None:
     parser.add_argument("--config-dir", default="configs/")
     parser.add_argument("--config", default=None, help="Single config YAML")
     parser.add_argument("--results-dir", default="results")
-    parser.add_argument("--evaluator", default="openai", choices=["openai", "ollama"])
-    parser.add_argument("--evaluator-model", default="gpt-4o-mini")
+    parser.add_argument("--evaluator", default="openai", choices=["openai", "openrouter", "ollama"])
+    parser.add_argument("--evaluator-model", default="gpt-4.1-mini")
     parser.add_argument("--bertscore-model", default="xlm-roberta-base")
     parser.add_argument("--st-model", default="intfloat/multilingual-e5-base")
     parser.add_argument("--ragas-metrics", nargs="+", default=None,

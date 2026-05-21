@@ -1,0 +1,8 @@
+experiment_name: "no_rag_llama8b"
+mode: "no_rag"
+
+llm:
+  type: "litellm"
+  model_name: "ollama/llama3.1:8b"
+  temperature: 0.1
+  max_tokens: 1024

@@ -1,7 +1,7 @@
 .ONESHELL:
 SHELL := /bin/bash
 
-.PHONY: help install install-pip install-poetry env ingest ingest-all run run-chatbot benchmark benchmark-single benchmark-all benchmark-eval benchmark-parallel benchmark-deterministic benchmark-report benchmark-unified-single clean-db clean-chroma
+.PHONY: help install install-pip install-poetry env ingest ingest-all run run-chatbot benchmark benchmark-single benchmark-all benchmark-eval benchmark-parallel benchmark-deterministic benchmark-report benchmark-unified-single benchmark-with-no-rag benchmark-no-rag-only clean-db clean-chroma
 
 CONFIG ?= configs/baseline.yaml
 DATA_DIR ?= data/docs
@@ -24,6 +24,8 @@ help:
 	@echo "  benchmark-parallel   Same as benchmark-eval but 3 parallel batches (faster)"
 	@echo "  benchmark-deterministic  Deterministic NLP metrics only (no LLM cost)"
 	@echo "  benchmark-report     Re-generate report from existing CSVs"
+	@echo "  benchmark-with-no-rag  Run full benchmark including no-RAG baselines"
+	@echo "  benchmark-no-rag-only  Run only no-RAG configs (LLM without retrieval)"
 	@echo "  run                  Run Streamlit (PORT=$(PORT) ADDRESS=$(ADDRESS))"
 	@echo "  clean-db             Remove local ChromaDB folder (./chroma_db)"
 	@echo ""
@@ -41,7 +43,7 @@ ingest:
 
 ingest-all:
 	@set -e; \
-	for f in configs/*.yaml; do \
+	for f in $$(find configs/ -name '*.yaml' | sort); do \
 		echo "==> ingesting $$f"; \
 		$(MAKE) ingest CONFIG=$$f DATA_DIR=$(DATA_DIR); \
 	done
@@ -97,12 +99,23 @@ benchmark-deterministic:
 		--eval-dataset $(EVAL_DATASET) \
 		--config-dir configs/ \
 		--results-dir $(RESULTS_DIR) \
-		--skip-ragas
+		--skip-ragas --skip-pipeline
 
 benchmark-report:
 	PYTHONPATH=. .venv/bin/python3 scripts/benchmark_unified.py \
 		--results-dir $(RESULTS_DIR) \
 		--skip-pipeline --skip-ragas --skip-deterministic
+
+benchmark-with-no-rag: benchmark-all
+
+benchmark-no-rag-only:
+	PYTHONPATH=. .venv/bin/python3 scripts/benchmark_unified.py \
+		--eval-dataset $(EVAL_DATASET) \
+		--config configs/fair_comparison/no_rag_llama8b.yaml \
+		--config configs/fair_comparison/no_rag_gpt4o_mini.yaml \
+		--results-dir $(RESULTS_DIR) \
+		--evaluator $(EVALUATOR) \
+		--evaluator-model $(EVALUATOR_MODEL)
 
 benchmark-unified-single:
 	PYTHONPATH=. .venv/bin/python3 scripts/benchmark_unified.py \

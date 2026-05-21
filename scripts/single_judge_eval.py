@@ -23,7 +23,7 @@ load_dotenv()
 load_dotenv(".env.local")
 
 RESULTS_DIR = Path("results")
-CACHE_PATH = RESULTS_DIR / "pipeline_cache.json"
+CACHE_PATH = RESULTS_DIR / "generation_cache.json"
 
 METRIC_NAMES = [
     "faithfulness",

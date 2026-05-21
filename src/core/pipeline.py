@@ -94,33 +94,46 @@ class RAGPipeline:
             all_chunks.extend(chunks)
         return all_chunks
     
-    def retrieve(self, query: str, top_k: int | None = None) -> list[Document]:
+    def retrieve(self, query: str, top_k: int | None = None, query_embedding: list[float] | None = None) -> list[Document]:
         """Retrieve relevant documents for a query.
 
         Args:
             query: Search query.
             top_k: Number of documents to retrieve.
+            query_embedding: Pre-computed query embedding (skips embed step).
 
         Returns:
             List of relevant documents filtered by score threshold.
         """
         # Get initial retrieval results
-        docs = self.retriever.retrieve(query, top_k)
+        if query_embedding is not None:
+            if hasattr(self.retriever, 'retrieve_with_query_embedding'):
+                docs = self.retriever.retrieve_with_query_embedding(query, query_embedding, top_k)
+            elif hasattr(self.retriever, 'query_by_embedding'):
+                docs = self.retriever.query_by_embedding(query_embedding, top_k)
+            else:
+                docs = self.retriever.retrieve(query, top_k)
+        else:
+            docs = self.retriever.retrieve(query, top_k)
 
         # Apply reranking if configured
         if self.reranker is not None:
             docs = self.reranker.rerank(query, docs, top_k)
 
         # Filter out documents below score threshold
+        # Only apply for non-hybrid retrievers (cosine similarity scale).
+        # Hybrid retrievers use RRF scores which are on a different scale.
         if self.config and self.config.retriever.score_threshold > 0:
-            threshold = self.config.retriever.score_threshold
-            before = len(docs)
-            docs = [doc for doc in docs if doc.score is not None and doc.score >= threshold]
-            if before > 0 and not docs:
-                logger.warning(
-                    "Score threshold %.2f filtered out all %d retrieved documents for query: %s",
-                    threshold, before, query[:80],
-                )
+            retriever_type = self.config.retriever.type
+            if retriever_type not in ("hybrid",):
+                threshold = self.config.retriever.score_threshold
+                before = len(docs)
+                docs = [doc for doc in docs if doc.score is not None and doc.score >= threshold]
+                if before > 0 and not docs:
+                    logger.warning(
+                        "Score threshold %.2f filtered out all %d retrieved documents for query: %s",
+                        threshold, before, query[:80],
+                    )
 
         return docs
     

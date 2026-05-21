@@ -153,26 +153,39 @@ class BaseLLM(ABC):
         # Priority: explicit param > instance config > default
         if system_prompt is None:
             system_prompt = self.system_prompt or self._default_system_prompt()
-        
+
         # Format context using template or default
         context_text = self._format_context(context)
-        
-        full_prompt = f"""{system_prompt}
 
-Contexto:
+        user_prompt = f"""Contexto:
 {context_text}
 
 Pergunta do usuário: {query}
 
 Resposta:"""
-        
+
+        return self.generate_with_system(system_prompt, user_prompt)
+
+    def generate_with_system(self, system_prompt: str, user_prompt: str) -> str:
+        """Generate using separate system and user prompts.
+
+        Default implementation concatenates into a single prompt.
+        Subclasses (like LiteLLM) override this to use proper message roles.
+        """
+        full_prompt = f"{system_prompt}\n\n{user_prompt}"
         return self.generate(full_prompt)
     
-    def _format_context(self, context: list[Document]) -> str:
-        """Format context documents using template or default format."""
+    def _format_context(self, context: list[Document], max_chars: int = 12000) -> str:
+        """Format context documents using template or default format.
+
+        Args:
+            context: Documents to format.
+            max_chars: Approximate character budget to avoid exceeding LLM limits.
+        """
         if self.context_template:
             # Custom template - supports {i}, {content}, {source}, {score} placeholders
             formatted_chunks = []
+            total = 0
             for i, doc in enumerate(context):
                 chunk_text = self.context_template.format(
                     i=i+1,
@@ -180,16 +193,23 @@ Resposta:"""
                     source=doc.metadata.get("source", "unknown"),
                     score=doc.score or 0.0,
                 )
+                if total + len(chunk_text) > max_chars:
+                    break
                 formatted_chunks.append(chunk_text)
+                total += len(chunk_text)
             return "\n\n".join(formatted_chunks)
-        
+
         # Default format
-        return "\n\n".join(
-            [
-                f"[Fonte {i+1}]: {doc.content[:1000]}" 
-                for i, doc in enumerate(context)
-            ]
-        )
+        chunks = []
+        total = 0
+        for i, doc in enumerate(context):
+            text = doc.content[:1000]
+            chunk = f"[Fonte {i+1}]: {text}"
+            if total + len(chunk) > max_chars:
+                break
+            chunks.append(chunk)
+            total += len(chunk)
+        return "\n\n".join(chunks)
     
     def _default_system_prompt(self) -> str:
         return """Você é um assistente especialista em nutrição.

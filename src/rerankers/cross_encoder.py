@@ -49,12 +49,21 @@ class CrossEncoderReranker(BaseReranker):
         
         # Get cross-encoder scores
         scores = self.model.predict(pairs)
-        
-        # Update document scores and sort
-        for doc, score in zip(documents, scores):
-            doc.score = float(score)
-        
+
+        # Create scored copies to avoid mutating input
+        from src.core.document import Document
+        scored_docs = [
+            Document(
+                id=doc.id,
+                content=doc.content,
+                metadata=doc.metadata,
+                embedding=doc.embedding,
+                score=float(score),
+            )
+            for doc, score in zip(documents, scores)
+        ]
+
         # Sort by score descending
-        reranked = sorted(documents, key=lambda x: x.score or 0, reverse=True)
+        reranked = sorted(scored_docs, key=lambda x: x.score or 0, reverse=True)
         
         return reranked[:top_k]

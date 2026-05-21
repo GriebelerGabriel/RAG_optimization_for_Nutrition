@@ -8,6 +8,10 @@ from src.core.interfaces import BaseLLM
 
 litellm.drop_params = True
 
+# Silence litellm's chatty INFO logs (completion() model=..., Wrapper: ...).
+for _name in ("litellm", "LiteLLM", "LiteLLM Proxy"):
+    logging.getLogger(_name).setLevel(logging.WARNING)
+
 logger = logging.getLogger(__name__)
 
 
@@ -43,6 +47,47 @@ class LiteLLM(BaseLLM):
         self.max_tokens = max_tokens
         self.num_retries = num_retries
         self.timeout = timeout
+
+    def generate_with_system(self, system_prompt: str, user_prompt: str) -> str:
+        """Generate using separate system and user message roles."""
+        try:
+            response = litellm.completion(
+                model=self.model_name,
+                messages=[
+                    {"role": "system", "content": system_prompt},
+                    {"role": "user", "content": user_prompt},
+                ],
+                temperature=self.temperature,
+                max_tokens=self.max_tokens,
+                num_retries=self.num_retries,
+                timeout=self.timeout,
+            )
+            return response.choices[0].message.content or ""
+        except litellm.AuthenticationError as e:
+            raise ValueError(
+                f"Authentication failed for model '{self.model_name}'. "
+                "Check your API key environment variables."
+            ) from e
+        except litellm.RateLimitError as e:
+            raise RuntimeError(
+                f"Rate limit exceeded for model '{self.model_name}'. "
+                "Wait and retry, or switch to a different model/provider."
+            ) from e
+        except litellm.Timeout as e:
+            raise RuntimeError(
+                f"Request timed out for model '{self.model_name}'. "
+                "Try reducing max_tokens or increase timeout settings."
+            ) from e
+        except litellm.APIConnectionError as e:
+            provider = self.model_name.split("/")[0]
+            raise RuntimeError(
+                f"Could not connect to {provider} for model '{self.model_name}'. "
+                "Ensure the service is running and accessible."
+            ) from e
+        except litellm.APIError as e:
+            raise RuntimeError(
+                f"LiteLLM API error for model '{self.model_name}': {e}"
+            ) from e
 
     def generate(self, prompt: str) -> str:
         try:

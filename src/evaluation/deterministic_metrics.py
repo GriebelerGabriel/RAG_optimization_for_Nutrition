@@ -38,21 +38,21 @@ def _ensure_nltk() -> None:
 # ---------------------------------------------------------------------------
 # Sentence-Transformer cache (avoid reloading per question)
 # ---------------------------------------------------------------------------
-_st_model = None
+_st_models: dict[str, Any] = {}
 _st_lock = threading.Lock()
 
 
 def _get_st_model(model_name: str = "intfloat/multilingual-e5-base"):
-    global _st_model
-    if _st_model is not None:
-        return _st_model
+    if model_name in _st_models:
+        return _st_models[model_name]
     with _st_lock:
-        if _st_model is not None:
-            return _st_model
+        if model_name in _st_models:
+            return _st_models[model_name]
         from sentence_transformers import SentenceTransformer
 
-        _st_model = SentenceTransformer(model_name)
-        return _st_model
+        model = SentenceTransformer(model_name)
+        _st_models[model_name] = model
+        return model
 
 
 # ---------------------------------------------------------------------------

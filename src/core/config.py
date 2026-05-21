@@ -57,6 +57,7 @@ class LLMConfig(BaseModel):
 class Config(BaseModel):
     """Main configuration for RAG experiment."""
     experiment_name: str = "baseline"
+    mode: str = "rag"  # "rag" or "no_rag"
     chunker: ChunkerConfig = Field(default_factory=ChunkerConfig)
     embedding: EmbedderConfig = Field(default_factory=EmbedderConfig)
     retriever: RetrieverConfig = Field(default_factory=RetrieverConfig)

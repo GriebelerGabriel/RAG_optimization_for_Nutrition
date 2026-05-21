@@ -107,9 +107,12 @@ class NaiveRetriever(BaseRetriever):
         if top_k is None:
             top_k = self.top_k
 
+        if self._collection.count() == 0:
+            return []
+
         results = self._collection.query(
             query_embeddings=[embedding],
-            n_results=top_k,
+            n_results=min(top_k, self._collection.count()),
             include=["documents", "metadatas", "distances"],
         )
 

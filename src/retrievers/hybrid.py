@@ -93,13 +93,16 @@ class HybridRetriever(BaseRetriever):
         self._build_bm25_index()
 
     def _append_to_bm25_store(self, documents: list[Document]) -> None:
-        """Rewrite the BM25 corpus to disk (deduplicated by doc id)."""
-        if not self._documents:
+        """Append new documents to the BM25 corpus on disk.
+
+        Writes only the new documents that aren't already persisted.
+        """
+        if not documents:
             return
 
         self._bm25_store_path.parent.mkdir(parents=True, exist_ok=True)
-        with self._bm25_store_path.open("w", encoding="utf-8") as f:
-            for doc in self._documents:
+        with self._bm25_store_path.open("a", encoding="utf-8") as f:
+            for doc in documents:
                 payload = {
                     "id": doc.id,
                     "content": doc.content,
@@ -182,28 +185,43 @@ class HybridRetriever(BaseRetriever):
         
         return results
     
+    def retrieve_with_query_embedding(
+        self, query: str, query_embedding: list[float], top_k: int | None = None,
+    ) -> list[Document]:
+        """Retrieve using hybrid BM25 + dense retrieval with a pre-computed embedding."""
+        if top_k is None:
+            top_k = self.top_k
+
+        fetch_k = top_k * 2
+
+        bm25_results = self._bm25_retrieve(query, fetch_k)
+        dense_results = self._dense_retriever.query_by_embedding(query_embedding, fetch_k)
+
+        fused_results = self._reciprocal_rank_fusion(bm25_results, dense_results)
+        return fused_results[:top_k]
+
     def retrieve(self, query: str, top_k: int | None = None) -> list[Document]:
         """Retrieve using hybrid BM25 + dense retrieval.
-        
+
         Args:
             query: Search query.
             top_k: Number of documents to retrieve.
-            
+
         Returns:
             List of relevant documents with fused scores.
         """
         if top_k is None:
             top_k = self.top_k
-        
+
         # Get results from both retrievers
         fetch_k = top_k * 2  # Fetch more for better fusion
-        
+
         bm25_results = self._bm25_retrieve(query, fetch_k)
         dense_results = self._dense_retriever.retrieve(query, fetch_k)
-        
+
         # Fuse results
         fused_results = self._reciprocal_rank_fusion(bm25_results, dense_results)
-        
+
         return fused_results[:top_k]
     
     def clear(self) -> None:

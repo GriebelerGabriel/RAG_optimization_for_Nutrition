@@ -1,4 +1,4 @@
-experiment_name: "hybrid_retrieval"
+experiment_name: "llama_reranker"
 
 chunker:
   type: "recursive"
@@ -10,9 +10,8 @@ embedding:
   model_name: "intfloat/multilingual-e5-base"
 
 retriever:
-  type: "hybrid"
+  type: "naive"
   top_k: 5
-  score_threshold: 0.3
   collection_name: "nutrition_docs"
 
 reranker:
@@ -22,6 +21,6 @@ reranker:
 
 llm:
   type: "litellm"
-  model_name: "openai/gpt-4o-mini"
+  model_name: "ollama/llama3.1:8b"
   temperature: 0.1
   max_tokens: 1024

@@ -17,7 +17,7 @@ class SentenceChunker(BaseChunker):
     def __init__(self, chunk_size: int = 512, overlap: int = 50, sentences_per_chunk: int = 5, **kwargs: Any):
         super().__init__(chunk_size=chunk_size, overlap=overlap, **kwargs)
         self.sentences_per_chunk = sentences_per_chunk
-        self.overlap_sentences = max(0, overlap // 100)  # Convert char overlap to sentence overlap
+        self.overlap_sentences = max(1, overlap // 50)  # Convert char overlap to sentence overlap
     
     def _split_sentences(self, text: str) -> list[str]:
         """Split text into sentences."""

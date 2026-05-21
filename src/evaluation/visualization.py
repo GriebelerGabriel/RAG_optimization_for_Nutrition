@@ -635,6 +635,265 @@ def plot_ranking_comparison(
     return fig
 
 
+def plot_metric_boxplots(
+    detail_dfs: dict[str, pd.DataFrame],
+    metrics: list[str],
+    title: str = "Metric Distribution by Configuration",
+    figsize: tuple[int, int] = (16, 5),
+    save_path: str | Path | None = None,
+) -> plt.Figure:
+    """Create boxplots showing metric distributions across configs.
+
+    Args:
+        detail_dfs: Dict mapping config_name -> per-question detail DataFrame.
+        metrics: Metric column names to plot.
+        title: Figure title.
+        figsize: Figure size per subplot row.
+        save_path: Optional path to save the figure.
+
+    Returns:
+        Matplotlib Figure object.
+    """
+    set_style()
+
+    all_rows = []
+    for config_name, df in detail_dfs.items():
+        for _, row in df.iterrows():
+            entry = {"config": config_name}
+            for m in metrics:
+                entry[m] = row.get(m, np.nan)
+            all_rows.append(entry)
+
+    combined = pd.DataFrame(all_rows)
+
+    n_metrics = len(metrics)
+    n_configs = len(combined["config"].unique())
+    plot_width = max(14, n_configs * 1.2)
+    plot_height = 4 * n_metrics
+
+    fig, axes = plt.subplots(n_metrics, 1, figsize=(plot_width, plot_height), squeeze=False)
+
+    for i, metric in enumerate(metrics):
+        ax = axes[i][0]
+        sns.boxplot(data=combined, x="config", y=metric, ax=ax, hue="config", legend=False)
+        ax.set_title(metric, fontsize=12, fontweight="bold")
+        ax.set_xlabel("")
+        ax.set_ylabel("Score")
+        ax.tick_params(axis="x", rotation=45, labelsize=8)
+        ax.set_ylim(0, 1.05)
+
+    fig.suptitle(title, fontsize=14, y=1.02)
+    plt.tight_layout()
+
+    if save_path:
+        fig.savefig(save_path, dpi=150, bbox_inches="tight")
+        plt.close(fig)
+        logger.info("Saved boxplots to %s", save_path)
+
+    return fig
+
+
+def compute_statistical_summary(
+    detail_dfs: dict[str, pd.DataFrame],
+    metrics: list[str],
+) -> pd.DataFrame:
+    """Compute mean, std, min, max, median for each (config, metric) pair.
+
+    Args:
+        detail_dfs: Dict mapping config_name -> per-question detail DataFrame.
+        metrics: Metric column names.
+
+    Returns:
+        DataFrame with columns: config, metric, mean, std, min, max, median, count.
+    """
+    rows = []
+    for config_name, df in detail_dfs.items():
+        for metric in metrics:
+            vals = df[metric].dropna()
+            if len(vals) == 0:
+                continue
+            rows.append({
+                "config": config_name,
+                "metric": metric,
+                "mean": vals.mean(),
+                "std": vals.std(),
+                "min": vals.min(),
+                "max": vals.max(),
+                "median": vals.median(),
+                "count": len(vals),
+            })
+    return pd.DataFrame(rows)
+
+
+def plot_category_breakdown(
+    df: pd.DataFrame,
+    category_col: str,
+    metrics: list[str],
+    title: str | None = None,
+    figsize: tuple[int, int] = (14, 5),
+    save_path: str | Path | None = None,
+) -> plt.Figure:
+    """Grouped bar chart: one subplot per metric, bars = configs, x-axis = categories.
+
+    Args:
+        df: DataFrame with columns: 'config', category_col, and metric columns.
+            Must contain per-question rows with category metadata already joined.
+        category_col: Column to group by ("type" or "difficulty").
+        metrics: Metric columns to plot.
+        title: Plot title.
+        figsize: Figure size per subplot row.
+        save_path: Optional path to save the figure.
+
+    Returns:
+        Matplotlib Figure object.
+    """
+    set_style()
+
+    grouped = df.groupby(["config", category_col])[metrics].mean().reset_index()
+
+    categories = sorted(grouped[category_col].unique())
+    configs = sorted(grouped["config"].unique())
+    n_metrics = len(metrics)
+
+    fig, axes = plt.subplots(n_metrics, 1, figsize=(16, 4 * n_metrics), squeeze=False)
+
+    for i, metric in enumerate(metrics):
+        ax = axes[i][0]
+        x = np.arange(len(categories))
+        width = 0.8 / max(len(configs), 1)
+
+        for j, config in enumerate(configs):
+            subset = grouped[grouped["config"] == config]
+            vals = [subset[subset[category_col] == cat][metric].values[0]
+                    if len(subset[subset[category_col] == cat]) > 0 else 0
+                    for cat in categories]
+            offset = (j - len(configs) / 2 + 0.5) * width
+            ax.bar(x + offset, vals, width, label=config, alpha=0.85)
+
+        ax.set_title(metric, fontsize=11)
+        ax.set_xlabel(category_col.title())
+        ax.set_ylabel("Score")
+        ax.set_xticks(x)
+        ax.set_xticklabels(categories, rotation=30, ha="right")
+        ax.set_ylim(0, 1.05)
+
+    if configs:
+        axes[0][0].legend(fontsize=7, loc="upper right")
+
+    if title is None:
+        title = f"Performance by {category_col.title()}"
+    fig.suptitle(title, fontsize=14, y=1.02)
+    plt.tight_layout()
+
+    if save_path:
+        fig.savefig(save_path, dpi=150, bbox_inches="tight")
+        plt.close(fig)
+        logger.info("Saved category breakdown to %s", save_path)
+
+    return fig
+
+
+def plot_failure_summary(
+    failure_df: pd.DataFrame,
+    title: str = "Failure Analysis Summary",
+    figsize: tuple[int, int] = (14, 7),
+    save_path: str | Path | None = None,
+) -> plt.Figure:
+    """Stacked bar chart showing failure type counts per config.
+
+    Args:
+        failure_df: DataFrame with 'config' and 'failure_types' (list column).
+        title: Plot title.
+        figsize: Figure size.
+        save_path: Optional path to save the figure.
+
+    Returns:
+        Matplotlib Figure object.
+    """
+    set_style()
+
+    # Explode list column so each failure type gets its own row
+    exploded = failure_df.explode("failure_types")
+    counts = exploded.groupby(["config", "failure_types"]).size().unstack(fill_value=0)
+
+    fig, ax = plt.subplots(figsize=figsize)
+    counts.plot(kind="bar", stacked=True, ax=ax, alpha=0.85)
+
+    ax.set_xlabel("Configuration")
+    ax.set_ylabel("Number of Failures")
+    ax.set_title(title)
+    ax.legend(title="Failure Type", loc="upper right")
+    ax.tick_params(axis="x", rotation=45)
+
+    plt.tight_layout()
+
+    if save_path:
+        fig.savefig(save_path, dpi=150, bbox_inches="tight")
+        plt.close(fig)
+        logger.info("Saved failure summary to %s", save_path)
+
+    return fig
+
+
+def plot_no_rag_comparison(
+    comparison_df: pd.DataFrame,
+    title: str = "RAG vs No-RAG: Retrieval Impact",
+    figsize: tuple[int, int] = (14, 7),
+    save_path: str | Path | None = None,
+) -> plt.Figure:
+    """Grouped bar chart showing RAG vs no-RAG scores per metric.
+
+    Args:
+        comparison_df: DataFrame with columns: llm, metric, rag_score, no_rag_score, delta.
+        title: Plot title.
+        figsize: Figure size.
+        save_path: Optional path to save the figure.
+
+    Returns:
+        Matplotlib Figure object.
+    """
+    set_style()
+
+    llms = comparison_df["llm"].unique()
+    n_llms = len(llms)
+
+    fig, axes = plt.subplots(1, max(n_llms, 1), figsize=figsize, squeeze=False)
+
+    for i, llm in enumerate(llms):
+        ax = axes[0][i]
+        subset = comparison_df[comparison_df["llm"] == llm]
+        metrics = subset["metric"].values
+        x = np.arange(len(metrics))
+        width = 0.35
+
+        bars_rag = ax.bar(x - width / 2, subset["rag_score"], width, label="RAG", alpha=0.85, color="#4a90d9")
+        bars_norag = ax.bar(x + width / 2, subset["no_rag_score"], width, label="No-RAG", alpha=0.85, color="#e57373")
+
+        for bar, delta in zip(bars_rag, subset["delta"]):
+            if not pd.isna(delta) and delta != 0:
+                sign = "+" if delta > 0 else ""
+                ax.text(bar.get_x() + bar.get_width() / 2, max(bar.get_height(), 0) + 0.02,
+                        f"{sign}{delta:.2f}", ha="center", va="bottom", fontsize=8, fontweight="bold")
+
+        ax.set_title(llm, fontsize=11)
+        ax.set_xlabel("Metric")
+        ax.set_ylabel("Score")
+        ax.set_xticks(x)
+        ax.set_xticklabels(metrics, rotation=30, ha="right")
+        ax.set_ylim(0, 1.15)
+        ax.legend()
+
+    fig.suptitle(title, fontsize=14, y=1.02)
+    plt.tight_layout()
+
+    if save_path:
+        fig.savefig(save_path, dpi=150, bbox_inches="tight")
+        plt.close(fig)
+        logger.info("Saved no-RAG comparison to %s", save_path)
+
+    return fig
+
+
 def _embed_image(path: Path) -> str:
     """Encode a PNG file as a base64 data URI."""
     import base64
@@ -642,6 +901,24 @@ def _embed_image(path: Path) -> str:
     data = Path(path).read_bytes()
     encoded = base64.b64encode(data).decode("ascii")
     return f"data:image/png;base64,{encoded}"
+
+
+def _optional_section(heading: str, content: str) -> str:
+    """Return an HTML section if content is non-empty, else empty string."""
+    if not content.strip():
+        return ""
+    return f"<h2>{heading}</h2>\n{content}"
+
+
+def _optional_plot(plots: dict[str, Path] | None, key: str) -> str:
+    """Return an embedded image tag if the plot exists, else empty string."""
+    if not plots or key not in plots:
+        return ""
+    path = plots[key]
+    if not Path(path).exists():
+        return ""
+    label = key.replace("_", " ").replace(".png", "").title()
+    return f"""<div class="plot"><h3>{label}</h3><img src="{_embed_image(path)}" alt="{label}" /></div>"""
 
 
 def generate_html_report(
@@ -652,6 +929,20 @@ def generate_html_report(
     plots: dict[str, Path],
     output_path: str | Path,
     title: str = "RAG Benchmark Report",
+    # Feature 1: Category breakdown
+    category_by_type_df: pd.DataFrame | None = None,
+    category_by_difficulty_df: pd.DataFrame | None = None,
+    category_plots: dict[str, Path] | None = None,
+    # Feature 2: Statistical robustness
+    ragas_stats_df: pd.DataFrame | None = None,
+    det_stats_df: pd.DataFrame | None = None,
+    stats_plots: dict[str, Path] | None = None,
+    # Feature 3: Failure analysis
+    failure_df: pd.DataFrame | None = None,
+    failure_plots: dict[str, Path] | None = None,
+    # Feature 4: No-RAG comparison
+    no_rag_comparison_df: pd.DataFrame | None = None,
+    no_rag_plots: dict[str, Path] | None = None,
 ) -> Path:
     """Generate a self-contained HTML report with embedded plots.
 
@@ -665,6 +956,16 @@ def generate_html_report(
         plots: Dict mapping plot names to PNG file paths.
         output_path: Where to write the HTML file.
         title: Report title.
+        category_by_type_df: Category breakdown by question type.
+        category_by_difficulty_df: Category breakdown by difficulty.
+        category_plots: Category breakdown plot paths.
+        ragas_stats_df: RAGAS statistical summary.
+        det_stats_df: Deterministic statistical summary.
+        stats_plots: Boxplot paths.
+        failure_df: Failure analysis details.
+        failure_plots: Failure analysis plot paths.
+        no_rag_comparison_df: RAG vs no-RAG comparison.
+        no_rag_plots: No-RAG comparison plot paths.
 
     Returns:
         Path to the generated HTML file.
@@ -692,6 +993,52 @@ def generate_html_report(
     det_table = det_df.to_html(index=False, float_format="%.4f", classes="data-table")
     corr_table = corr_df.to_html(index=False, float_format="%.4f", classes="data-table")
 
+    # --- Feature 2: Statistical Robustness ---
+    stats_html = ""
+    if ragas_stats_df is not None and not ragas_stats_df.empty:
+        stats_html += "<h3>RAGAS Metric Distributions</h3>\n"
+        stats_html += ragas_stats_df.to_html(index=False, float_format="%.4f", classes="data-table")
+    if det_stats_df is not None and not det_stats_df.empty:
+        stats_html += "<h3>Deterministic Metric Distributions</h3>\n"
+        stats_html += det_stats_df.to_html(index=False, float_format="%.4f", classes="data-table")
+    if stats_plots:
+        for key in ("ragas_boxplots", "deterministic_boxplots"):
+            stats_html += _optional_plot(stats_plots, key)
+
+    # --- Feature 1: Category Breakdown ---
+    category_html = ""
+    if category_by_type_df is not None and not category_by_type_df.empty:
+        category_html += "<h3>Performance by Question Type</h3>\n"
+        category_html += category_by_type_df.to_html(index=False, float_format="%.4f", classes="data-table")
+    if category_by_difficulty_df is not None and not category_by_difficulty_df.empty:
+        category_html += "<h3>Performance by Difficulty</h3>\n"
+        category_html += category_by_difficulty_df.to_html(index=False, float_format="%.4f", classes="data-table")
+    if category_plots:
+        for key in ("by_type", "by_difficulty"):
+            category_html += _optional_plot(category_plots, key)
+
+    # --- Feature 3: Failure Analysis ---
+    failure_html = ""
+    if failure_df is not None and not failure_df.empty:
+        failure_html += "<p>Questions with key metrics below threshold (0.3).</p>\n"
+        if failure_plots:
+            failure_html += _optional_plot(failure_plots, "failure_summary")
+        display_cols = ["question", "config", "type", "difficulty", "failure_types"]
+        avail_cols = [c for c in display_cols if c in failure_df.columns]
+        failure_html += failure_df[avail_cols].head(50).to_html(index=False, classes="data-table")
+        if len(failure_df) > 50:
+            failure_html += f"<p><em>Showing 50 of {len(failure_df)} failure cases.</em></p>"
+    elif failure_plots:
+        failure_html += _optional_plot(failure_plots, "failure_summary")
+
+    # --- Feature 4: No-RAG Comparison ---
+    no_rag_html = ""
+    if no_rag_comparison_df is not None and not no_rag_comparison_df.empty:
+        no_rag_html += "<p>Shows how much retrieval improves answer quality over parametric knowledge alone.</p>\n"
+        no_rag_html += no_rag_comparison_df.to_html(index=False, float_format="%.4f", classes="data-table")
+    if no_rag_plots:
+        no_rag_html += _optional_plot(no_rag_plots, "no_rag_comparison")
+
     html = f"""<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -707,7 +1054,7 @@ def generate_html_report(
               margin: 20px 0; }}
   .agreement-yes {{ color: #2e7d32; font-weight: bold; }}
   .agreement-no {{ color: #c62828; font-weight: bold; }}
-  table.data-table {{ border-collapse: collapse; width: 100%; margin: 10px 0; }}
+  table.data-table {{ border-collapse: collapse; width: 100%; margin: 10px 0; font-size: 0.9em; }}
   table.data-table th {{ background: #4a90d9; color: #fff; padding: 8px 12px;
                          text-align: left; }}
   table.data-table td {{ border: 1px solid #ddd; padding: 6px 12px; }}
@@ -736,6 +1083,11 @@ def generate_html_report(
 
 <h2>Correlation Analysis (Spearman)</h2>
 {corr_table}
+
+{_optional_section("Statistical Robustness", stats_html)}
+{_optional_section("QA Category Breakdown", category_html)}
+{_optional_section("Failure Analysis", failure_html)}
+{_optional_section("No-RAG vs RAG Comparison", no_rag_html)}
 
 <h2>Visualizations</h2>
 {plot_sections}

@@ -1,4 +1,5 @@
-experiment_name: "gpt4o"
+experiment_name: "llama_topk8"
+mode: "rag"
 
 chunker:
   type: "recursive"
@@ -6,12 +7,12 @@ chunker:
   overlap: 50
 
 embedding:
-  type: "huggingface"
-  model_name: "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2"
+  type: "e5"
+  model_name: "intfloat/multilingual-e5-base"
 
 retriever:
   type: "naive"
-  top_k: 5
+  top_k: 8
   collection_name: "nutrition_docs"
 
 reranker:
@@ -21,6 +22,6 @@ reranker:
 
 llm:
   type: "litellm"
-  model_name: "openai/gpt-4o"
-  temperature: 0.3
-  max_tokens: 256
+  model_name: "ollama/llama3.1:8b"
+  temperature: 0.1
+  max_tokens: 1024

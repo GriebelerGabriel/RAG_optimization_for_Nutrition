@@ -21,7 +21,7 @@ load_dotenv(".env.local")
 logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
 logger = logging.getLogger(__name__)
 
-from src.evaluation.ragas_utils import build_ragas_evaluator, build_ragas_metrics
+from src.evaluation.ragas_utils import build_ragas_evaluator, build_ragas_metrics  # noqa: E402
 
 
 def run_config_benchmark(config_path: Path, questions: list[dict]) -> dict | None:
@@ -82,22 +82,25 @@ def run_config_benchmark(config_path: Path, questions: list[dict]) -> dict | Non
 
 def evaluate_with_ragas(config_result: dict, metrics: list, llm, embeddings) -> dict:
     """Run RAGAS evaluate() on a single config's results."""
-    from ragas.dataset_schema import SingleTurnSample, EvaluationDataset
+    from datasets import Dataset
     from ragas import evaluate
 
-    samples = [
-        SingleTurnSample(**s) for s in config_result["samples"]
-    ]
-    dataset = EvaluationDataset(samples=samples)
+    dataset = Dataset.from_dict({
+        "question": [s["user_input"] for s in config_result["samples"]],
+        "answer": [s["response"] for s in config_result["samples"]],
+        "contexts": [s["retrieved_contexts"] for s in config_result["samples"]],
+        "ground_truth": [s["reference"] for s in config_result["samples"]],
+    })
 
     logger.info("  Evaluating with RAGAS: %s ...", config_result["config_name"])
     result = evaluate(
-        dataset=dataset,
+        dataset,
         metrics=metrics,
         llm=llm,
         embeddings=embeddings,
         show_progress=True,
         raise_exceptions=False,
+        batch_size=2,
     )
 
     return result
@@ -152,7 +155,7 @@ def main() -> None:
     if args.config:
         config_paths = [Path(args.config)]
     else:
-        config_paths = sorted(Path(args.config_dir).glob("*.yaml"))
+        config_paths = sorted(Path(args.config_dir).rglob("*.yaml"))
     logger.info("Configs to evaluate: %s", [p.name for p in config_paths])
 
     # --- Run each config through the RAG pipeline ---
@@ -169,7 +172,7 @@ def main() -> None:
     # --- Build RAGAS evaluator ---
     try:
         ragas_llm, ragas_emb = build_ragas_evaluator(args.evaluator, args.evaluator_model)
-        metrics = build_ragas_metrics(ragas_llm, ragas_emb)
+        metrics = build_ragas_metrics()
     except Exception as e:
         logger.error("Failed to build RAGAS evaluator: %s", e)
         logger.error("Make sure you have the right API keys set (.env) or Ollama running.")

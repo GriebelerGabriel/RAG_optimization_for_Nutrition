@@ -15,8 +15,8 @@ retriever:
   collection_name: "nutrition_docs"
 
 reranker:
-  type: "cross_encoder"
-  model_name: "cross-encoder/ms-marco-MiniLM-L-6-v2"
+  type: "none"
+  model_name: ""
   top_k: 5
 
 llm:

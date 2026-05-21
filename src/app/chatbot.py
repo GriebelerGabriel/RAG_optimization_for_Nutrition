@@ -52,7 +52,7 @@ def main():
         
         # Config file selection
         config_dir = Path("configs")
-        config_files = list(config_dir.glob("*.yaml")) if config_dir.exists() else []
+        config_files = sorted(config_dir.rglob("*.yaml")) if config_dir.exists() else []
         
         if config_files:
             config_options = {f.stem: str(f) for f in config_files}

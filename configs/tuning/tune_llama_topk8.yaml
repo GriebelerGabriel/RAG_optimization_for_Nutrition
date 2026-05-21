@@ -23,5 +23,6 @@ reranker:
 llm:
   type: "litellm"
   model_name: "ollama/llama3.1:8b"
-  temperature: 0.1
+  temperature: 0.0
+  seed: 42
   max_tokens: 1024

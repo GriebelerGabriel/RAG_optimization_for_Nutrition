@@ -183,20 +183,36 @@ def run_pipeline_for_configs(
     config_paths: list[Path],
     questions: list[dict],
     max_workers: int = 8,
+    cache_path: Path | None = None,
 ) -> list[ConfigRunResult]:
     """Run RAG pipeline (or no-RAG baseline) for each config, with parallel questions."""
     from src.core.config import load_config
     from src.core.pipeline import RAGPipeline
 
-    results = []
+    # Load existing cache to skip already-completed configs.
+    results: list[ConfigRunResult] = []
+    completed_configs: set[str] = set()
+    if cache_path and cache_path.exists():
+        results = load_generation_cache(cache_path)
+        completed_configs = {r.config_name for r in results}
+        if completed_configs:
+            logger.info("Loaded %d configs from cache, skipping: %s", len(results), sorted(completed_configs))
+
     for config_path in config_paths:
+        # Peek at config name to check cache.
+        config = load_config(str(config_path))
+        config_name = config.experiment_name
+        if config_name in completed_configs:
+            logger.info("Skipping cached config: %s", config_name)
+            continue
+
         logger.info("Running pipeline for: %s (workers=%d)", config_path.name, max_workers)
 
-        config = load_config(str(config_path))
         if getattr(config, "mode", "rag") == "no_rag":
             result = _run_no_rag_parallel(config_path, questions, max_workers)
             if result is not None:
                 results.append(result)
+            save_generation_cache(results, cache_path)
             continue
 
         try:
@@ -204,8 +220,6 @@ def run_pipeline_for_configs(
         except Exception as e:
             logger.error("Failed to create pipeline for %s: %s", config_path.name, e)
             continue
-
-        config_name = pipeline.config.experiment_name if pipeline.config else config_path.stem
 
         # Pre-embed all queries in one batch to avoid lock contention during threading.
         query_embeddings: list[list[float]] | None = None
@@ -255,6 +269,11 @@ def run_pipeline_for_configs(
             latencies_ms=latencies,
             avg_latency_ms=avg_latency,
         ))
+
+        # Save after each config so progress is preserved on crashes.
+        if cache_path:
+            save_generation_cache(results, cache_path)
+            logger.info("  Cache updated (%d configs saved)", len(results))
 
     return results
 
@@ -960,14 +979,14 @@ def main() -> None:
             logger.error("No config files found")
             sys.exit(1)
 
-        pipeline_results = run_pipeline_for_configs(config_paths, questions, max_workers=args.max_workers)
+        pipeline_results = run_pipeline_for_configs(
+            config_paths, questions, max_workers=args.max_workers,
+            cache_path=results_dir / "generation_cache.json",
+        )
 
         if not pipeline_results:
             logger.error("No configs could run. Check API keys / Ollama availability.")
             sys.exit(1)
-
-        save_generation_cache(pipeline_results, results_dir / "generation_cache.json")
-        logger.info("Generation cache saved to %s", results_dir / "generation_cache.json")
     else:
         cache_path = results_dir / "generation_cache.json"
         if cache_path.exists():

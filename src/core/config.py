@@ -48,7 +48,8 @@ class LLMConfig(BaseModel):
     """Configuration for language model."""
     type: str = "openai"
     model_name: str = "gpt-4o-mini"
-    temperature: float = 0.1
+    temperature: float = 0.0
+    seed: int | None = 42
     max_tokens: int = 1024
     system_prompt: str | None = None
     context_template: str | None = None

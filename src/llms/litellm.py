@@ -30,7 +30,8 @@ class LiteLLM(BaseLLM):
     def __init__(
         self,
         model_name: str = "openai/gpt-4o-mini",
-        temperature: float = 0.1,
+        temperature: float = 0.0,
+        seed: int | None = 42,
         max_tokens: int = 1024,
         num_retries: int = 3,
         timeout: float = 600.0,
@@ -44,6 +45,7 @@ class LiteLLM(BaseLLM):
         )
         self.model_name = model_name
         self.temperature = temperature
+        self.seed = seed
         self.max_tokens = max_tokens
         self.num_retries = num_retries
         self.timeout = timeout
@@ -58,6 +60,7 @@ class LiteLLM(BaseLLM):
                     {"role": "user", "content": user_prompt},
                 ],
                 temperature=self.temperature,
+                seed=self.seed,
                 max_tokens=self.max_tokens,
                 num_retries=self.num_retries,
                 timeout=self.timeout,
@@ -95,6 +98,7 @@ class LiteLLM(BaseLLM):
                 model=self.model_name,
                 messages=[{"role": "user", "content": prompt}],
                 temperature=self.temperature,
+                seed=self.seed,
                 max_tokens=self.max_tokens,
                 num_retries=self.num_retries,
                 timeout=self.timeout,

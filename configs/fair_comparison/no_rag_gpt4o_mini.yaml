@@ -4,5 +4,6 @@ mode: "no_rag"
 llm:
   type: "litellm"
   model_name: "openai/gpt-4o-mini"
-  temperature: 0.1
+  temperature: 0.0
+  seed: 42
   max_tokens: 1024

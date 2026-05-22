@@ -138,6 +138,8 @@ def compute_bertscore(
         return 0.0, {"reason": "empty input"}
 
     import bert_score
+    import gc
+    import torch
 
     P, R, F1 = bert_score.score(
         [response],
@@ -146,12 +148,62 @@ def compute_bertscore(
         lang="pt",
         verbose=False,
     )
-    f1 = F1.item()
+    p_val, r_val, f1 = P.item(), R.item(), F1.item()
+    del P, R, F1
+    gc.collect()
+    if torch.cuda.is_available():
+        torch.cuda.empty_cache()
     return f1, {
-        "precision": P.item(),
-        "recall": R.item(),
+        "precision": p_val,
+        "recall": r_val,
         "model": model_type,
     }
+
+
+def compute_bertscore_batch(
+    responses: list[str],
+    references: list[str],
+    model_type: str = "xlm-roberta-base",
+) -> list[tuple[float, dict[str, Any]]]:
+    """BERTScore F1 for multiple pairs in one forward pass (one model load)."""
+    import bert_score
+    import gc
+    import torch
+
+    valid_mask = [bool(r) and bool(ref) for r, ref in zip(responses, references)]
+    valid_responses = [r for r, m in zip(responses, valid_mask) if m]
+    valid_references = [ref for ref, m in zip(references, valid_mask) if m]
+
+    results: list[tuple[float, dict[str, Any]]] = []
+    if valid_responses:
+        P, R, F1 = bert_score.score(
+            valid_responses,
+            valid_references,
+            model_type=model_type,
+            lang="pt",
+            verbose=False,
+        )
+        for i in range(len(valid_responses)):
+            results.append((F1[i].item(), {
+                "precision": P[i].item(),
+                "recall": R[i].item(),
+                "model": model_type,
+            }))
+        del P, R, F1
+        gc.collect()
+        if torch.cuda.is_available():
+            torch.cuda.empty_cache()
+
+    # Re-insert zero scores for empty pairs
+    out: list[tuple[float, dict[str, Any]]] = []
+    vi = 0
+    for m in valid_mask:
+        if m:
+            out.append(results[vi])
+            vi += 1
+        else:
+            out.append((0.0, {"reason": "empty input"}))
+    return out
 
 
 def compute_semantic_similarity(
@@ -223,6 +275,7 @@ def compute_deterministic_metrics(
     bleu, _ = compute_bleu(response, reference, ref_tokens=ref_tokens, resp_tokens=resp_tokens)
     rouge_l, _ = compute_rouge_l(response, reference)
     meteor, _ = compute_meteor(response, reference, ref_tokens=ref_tokens, resp_tokens=resp_tokens)
+    # BERTScore first (heavy GPU), then free memory before sentence-transformer
     bertscore, _ = compute_bertscore(response, reference, model_type=bertscore_model)
     sem_sim, _ = compute_semantic_similarity(response, reference, model_name=st_model_name)
 
@@ -233,3 +286,39 @@ def compute_deterministic_metrics(
         bertscore_f1=bertscore,
         semantic_similarity=sem_sim,
     )
+
+
+def compute_deterministic_metrics_batch(
+    responses: list[str],
+    references: list[str],
+    bertscore_model: str = "xlm-roberta-base",
+    st_model_name: str = "intfloat/multilingual-e5-base",
+) -> list[DeterministicMetrics]:
+    """Batch version: runs BERTScore once for all pairs, then lightweight metrics.
+
+    This avoids loading/unloading the BERTScore model per sample, keeping GPU
+    memory usage to a single peak instead of N repeated allocations.
+    """
+    # 1) BERTScore — batch (one model load, then free GPU)
+    bs_results = compute_bertscore_batch(responses, references, model_type=bertscore_model)
+
+    # 2) Lightweight per-sample metrics + sentence-transformer (cached on GPU)
+    results: list[DeterministicMetrics] = []
+    for resp, ref, (bs_f1, _) in zip(responses, references, bs_results):
+        if not resp or not ref:
+            results.append(DeterministicMetrics(0.0, 0.0, 0.0, 0.0, 0.0))
+            continue
+        ref_tokens = _tokenize(ref)
+        resp_tokens = _tokenize(resp)
+        bleu, _ = compute_bleu(resp, ref, ref_tokens=ref_tokens, resp_tokens=resp_tokens)
+        rouge_l, _ = compute_rouge_l(resp, ref)
+        meteor, _ = compute_meteor(resp, ref, ref_tokens=ref_tokens, resp_tokens=resp_tokens)
+        sem_sim, _ = compute_semantic_similarity(resp, ref, model_name=st_model_name)
+        results.append(DeterministicMetrics(
+            bleu=bleu,
+            rouge_l=rouge_l,
+            meteor=meteor,
+            bertscore_f1=bs_f1,
+            semantic_similarity=sem_sim,
+        ))
+    return results

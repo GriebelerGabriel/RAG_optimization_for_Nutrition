@@ -400,19 +400,21 @@ def evaluate_deterministic(
     st_model: str = "intfloat/multilingual-e5-base",
 ) -> pd.DataFrame | None:
     """Run deterministic NLP metrics on all config results."""
-    from src.evaluation.deterministic_metrics import compute_deterministic_metrics
+    from src.evaluation.deterministic_metrics import compute_deterministic_metrics_batch
 
     rows = []
     for config_result in results:
         logger.info("  Deterministic metrics: %s", config_result.config_name)
+        responses = [s.response for s in config_result.samples]
+        references = [s.reference for s in config_result.samples]
+        all_metrics = compute_deterministic_metrics_batch(
+            responses=responses,
+            references=references,
+            bertscore_model=bertscore_model,
+            st_model_name=st_model,
+        )
         detail_rows = []
-        for sample in config_result.samples:
-            metrics = compute_deterministic_metrics(
-                response=sample.response,
-                reference=sample.reference,
-                bertscore_model=bertscore_model,
-                st_model_name=st_model,
-            )
+        for sample, metrics in zip(config_result.samples, all_metrics):
             detail_rows.append({
                 "question": sample.question,
                 "response": sample.response,
@@ -1030,6 +1032,18 @@ def main() -> None:
 
     # --- Phase 4: Report ---
     if not args.skip_report:
+        # Fallback: load existing CSVs when phases were skipped
+        if ragas_df is None:
+            ragas_csv = results_dir / "ragas_benchmark_results.csv"
+            if ragas_csv.exists():
+                ragas_df = pd.read_csv(ragas_csv)
+                logger.info("Loaded existing RAGAS results for report from %s", ragas_csv)
+        if det_df is None:
+            det_csv = results_dir / "deterministic_benchmark_results.csv"
+            if det_csv.exists():
+                det_df = pd.read_csv(det_csv)
+                logger.info("Loaded existing deterministic results for report from %s", det_csv)
+
         logger.info("=== Generating Report ===")
         generate_report(ragas_df, det_df, results_dir, plots_dir,
                         dataset_path=Path(args.eval_dataset))

@@ -21,6 +21,7 @@ def build_ragas_evaluator(evaluator_type: str, evaluator_model: str):
         lc_llm = ChatOpenAI(
             model=evaluator_model,
             temperature=0,
+            seed=0,
             max_tokens=32768,
             request_timeout=120,
         )
@@ -33,6 +34,7 @@ def build_ragas_evaluator(evaluator_type: str, evaluator_model: str):
         lc_llm = ChatOpenAI(
             model=evaluator_model,
             temperature=0,
+            seed=0,
             max_tokens=32768,
             request_timeout=120,
             base_url="https://openrouter.ai/api/v1",

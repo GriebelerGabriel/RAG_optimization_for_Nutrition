@@ -327,60 +327,53 @@ def evaluate_ragas(
     evaluator_model: str,
     results_dir: Path,
     metric_names: list[str] | None = None,
+    max_workers: int = 8,
 ) -> pd.DataFrame | None:
-    """Run RAGAS evaluation matching the proven fast notebook approach."""
-    import os
-    from datasets import Dataset
-    from ragas import evaluate
-    from src.evaluation.ragas_utils import build_ragas_evaluator, build_ragas_metrics
-
-    os.environ["RAGAS_WITH_EVAL_MODE"] = "true"
+    """Single-pass LLM-as-judge evaluation (one call per question, all metrics)."""
+    from src.evaluation.ragas_utils import build_ragas_evaluator
+    from src.evaluation.single_judge import evaluate_batch, METRIC_NAMES
 
     try:
-        ragas_llm, ragas_emb = build_ragas_evaluator(evaluator_type, evaluator_model)
-        metrics = build_ragas_metrics(metric_names=metric_names)
+        ragas_llm, _ = build_ragas_evaluator(evaluator_type, evaluator_model)
     except Exception as e:
-        logger.error("Failed to build RAGAS evaluator: %s", e)
+        logger.error("Failed to build evaluator LLM: %s", e)
         return None
 
-    logger.info("  Metrics: %s", [m.name for m in metrics])
+    metrics_to_use = metric_names or METRIC_NAMES
+    logger.info("  Single-pass LLM-as-judge — metrics: %s", metrics_to_use)
 
     total = len(results)
     rows = []
     for i, config_result in enumerate(results, 1):
         try:
-            dataset = Dataset.from_dict({
-                "question": [s.question for s in config_result.samples],
-                "answer": [s.response for s in config_result.samples],
-                "contexts": [s.retrieved_contexts for s in config_result.samples],
-                "ground_truth": [s.reference for s in config_result.samples],
-            })
+            logger.info("  [%d/%d] Evaluating: %s (%d questions)...",
+                        i, total, config_result.config_name, len(config_result.samples))
 
-            logger.info("  [%d/%d] RAGAS evaluating: %s ...", i, total, config_result.config_name)
-            ragas_result = evaluate(
-                dataset,
-                metrics=metrics,
-                llm=ragas_llm,
-                embeddings=ragas_emb,
-                show_progress=True,
-                raise_exceptions=False,
-                batch_size=2,
+            judge_results = evaluate_batch(
+                ragas_llm, config_result.samples, max_workers=max_workers,
             )
+
+            detail_rows = [r.to_dict() for r in judge_results]
+            detail_df = pd.DataFrame(detail_rows)
+
+            # Keep only requested metrics in detail
+            keep_cols = ["question", "response", "reference"] + [m for m in metrics_to_use if m in detail_df.columns]
+            detail_df = detail_df[[c for c in keep_cols if c in detail_df.columns]]
+            detail_path = results_dir / f"ragas_detail_{config_result.config_name}.csv"
+            detail_df.to_csv(detail_path, index=False)
 
             row = {
                 "config": config_result.config_name,
                 "config_path": config_result.config_path,
                 "avg_latency_ms": config_result.avg_latency_ms,
             }
-            row.update(ragas_result._repr_dict)
+            for m in metrics_to_use:
+                if m in detail_df.columns:
+                    row[m] = detail_df[m].mean()
             rows.append(row)
-
-            detail_df = ragas_result.to_pandas()
-            detail_path = results_dir / f"ragas_detail_{config_result.config_name}.csv"
-            detail_df.to_csv(detail_path, index=False)
             logger.info("  [%d/%d] Done: %s", i, total, config_result.config_name)
         except Exception as e:
-            logger.error("  RAGAS eval failed for %s: %s", config_result.config_name, e)
+            logger.error("  Eval failed for %s: %s", config_result.config_name, e)
 
     if not rows:
         return None
@@ -870,8 +863,12 @@ def generate_report(
         # Best config analysis
         best = find_best_configs(ragas_df, det_df)
 
-        # Correlation + ranking plots
-        plot_correlation_heatmap(corr_df, save_path=plots_dir / "correlation_heatmap.png")
+        # Correlation + ranking plots (need >=3 configs for meaningful correlations)
+        if not corr_df.empty:
+            plot_correlation_heatmap(corr_df, save_path=plots_dir / "correlation_heatmap.png")
+        else:
+            logger.info("  Skipping correlation heatmap (need >=3 configs)")
+
         plot_ranking_comparison(ragas_df, det_df, save_path=plots_dir / "ranking_comparison.png")
 
         # Full comparison suite (bar, radar, heatmap, latency, scatter)
@@ -880,10 +877,11 @@ def generate_report(
 
         # HTML report
         all_plots = {
-            "correlation_heatmap.png": plots_dir / "correlation_heatmap.png",
-            "ranking_comparison.png": plots_dir / "ranking_comparison.png",
             **comparison_plots,
         }
+        if not corr_df.empty:
+            all_plots["correlation_heatmap.png"] = plots_dir / "correlation_heatmap.png"
+        all_plots["ranking_comparison.png"] = plots_dir / "ranking_comparison.png"
         generate_html_report(
             ragas_df=ragas_df,
             det_df=det_df,
@@ -1002,7 +1000,7 @@ def main() -> None:
             logger.info("=== RAGAS Evaluation ===")
             ragas_df = evaluate_ragas(
                 pipeline_results, args.evaluator, args.evaluator_model, results_dir,
-                metric_names=args.ragas_metrics,
+                metric_names=args.ragas_metrics, max_workers=args.max_workers,
             )
             if ragas_df is not None:
                 logger.info("RAGAS results saved to %s", results_dir / "ragas_benchmark_results.csv")

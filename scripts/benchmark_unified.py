@@ -179,11 +179,37 @@ def _run_no_rag_parallel(
     )
 
 
+def _ensure_ingested(pipeline: "RAGPipeline", data_dir: Path) -> None:
+    """Ingest raw documents into the pipeline if the collection is empty."""
+    from src.ingestion import PDFParser, TextPreprocessor
+
+    if not hasattr(pipeline.retriever, "_collection"):
+        return
+    if pipeline.retriever._collection.count() > 0:
+        return
+
+    logger.info("  Collection empty, ingesting from %s ...", data_dir)
+    pdf_parser = PDFParser()
+    docs = pdf_parser.parse_directory(str(data_dir))
+    if not docs:
+        logger.error("  No PDF documents found in %s", data_dir)
+        return
+
+    preprocessor = TextPreprocessor()
+    for doc in docs:
+        doc.content = preprocessor.preprocess(doc.content)
+
+    pipeline.ingest_documents(docs)
+    logger.info("  Ingested %d documents (%d chunks)",
+                len(docs), pipeline.retriever._collection.count())
+
+
 def run_pipeline_for_configs(
     config_paths: list[Path],
     questions: list[dict],
     max_workers: int = 8,
     cache_path: Path | None = None,
+    data_dir: Path | None = None,
 ) -> list[ConfigRunResult]:
     """Run RAG pipeline (or no-RAG baseline) for each config, with parallel questions."""
     from src.core.config import load_config
@@ -220,6 +246,10 @@ def run_pipeline_for_configs(
         except Exception as e:
             logger.error("Failed to create pipeline for %s: %s", config_path.name, e)
             continue
+
+        # Ensure the vector store is populated for this config's chunking strategy.
+        if data_dir:
+            _ensure_ingested(pipeline, data_dir)
 
         # Pre-embed all queries in one batch to avoid lock contention during threading.
         query_embeddings: list[list[float]] | None = None
@@ -926,6 +956,8 @@ def main() -> None:
         description="Unified RAG benchmark: pipeline + RAGAS + deterministic + report",
     )
     parser.add_argument("--eval-dataset", default="data/eval/dataset.json")
+    parser.add_argument("--data-dir", default="data/docs",
+                        help="Directory with raw PDFs for auto-ingestion")
     parser.add_argument("--config-dir", default="configs/")
     parser.add_argument("--config", nargs="+", default=None, help="One or more config YAML files")
     parser.add_argument("--results-dir", default="results")
@@ -982,6 +1014,7 @@ def main() -> None:
         pipeline_results = run_pipeline_for_configs(
             config_paths, questions, max_workers=args.max_workers,
             cache_path=results_dir / "generation_cache.json",
+            data_dir=Path(args.data_dir),
         )
 
         if not pipeline_results:

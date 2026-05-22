@@ -50,7 +50,7 @@ def _get_st_model(model_name: str = "intfloat/multilingual-e5-base"):
             return _st_models[model_name]
         from sentence_transformers import SentenceTransformer
 
-        model = SentenceTransformer(model_name)
+        model = SentenceTransformer(model_name, device="cpu")
         _st_models[model_name] = model
         return model
 
@@ -176,12 +176,15 @@ def compute_bertscore_batch(
 
     results: list[tuple[float, dict[str, Any]]] = []
     if valid_responses:
+        # Force CPU to avoid OOM when Ollama (or another model) occupies GPU.
+        device = "cpu"
         P, R, F1 = bert_score.score(
             valid_responses,
             valid_references,
             model_type=model_type,
             lang="pt",
             verbose=False,
+            device=device,
         )
         for i in range(len(valid_responses)):
             results.append((F1[i].item(), {

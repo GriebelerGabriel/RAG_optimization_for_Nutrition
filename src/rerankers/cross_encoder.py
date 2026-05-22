@@ -1,6 +1,7 @@
 """Cross-encoder reranking model."""
 from typing import Any
 
+import numpy as np
 from sentence_transformers import CrossEncoder
 
 from src.core.document import Document
@@ -47,8 +48,12 @@ class CrossEncoderReranker(BaseReranker):
         # Create query-document pairs
         pairs = [[query, doc.content] for doc in documents]
         
-        # Get cross-encoder scores
+        # Get cross-encoder scores (raw logits, typically [-10, +10])
         scores = self.model.predict(pairs)
+
+        # Normalize to [0, 1] via sigmoid so scores are comparable with
+        # cosine similarity thresholds used downstream.
+        scores = 1 / (1 + np.exp(-np.array(scores)))
 
         # Create scored copies to avoid mutating input
         from src.core.document import Document

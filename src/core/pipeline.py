@@ -120,12 +120,13 @@ class RAGPipeline:
         if self.reranker is not None:
             docs = self.reranker.rerank(query, docs, top_k)
 
-        # Filter out documents below score threshold
-        # Only apply for non-hybrid retrievers (cosine similarity scale).
-        # Hybrid retrievers use RRF scores which are on a different scale.
-        if self.config and self.config.retriever.score_threshold > 0:
-            retriever_type = self.config.retriever.type
-            if retriever_type not in ("hybrid",):
+        # Filter out documents below score threshold.
+        # Only apply when NO reranker has rescored the documents — rerankers
+        # (e.g. cross-encoders) produce scores on a different scale even after
+        # normalization, so the cosine-similarity threshold does not apply.
+        # Hybrid retrievers use RRF scores which are also on a different scale.
+        if self.config and self.config.retriever.score_threshold > 0 and self.reranker is None:
+            if self.config.retriever.type not in ("hybrid",):
                 threshold = self.config.retriever.score_threshold
                 before = len(docs)
                 docs = [doc for doc in docs if doc.score is not None and doc.score >= threshold]

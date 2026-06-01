@@ -20,12 +20,12 @@ LLM_REGISTRY: dict[str, type[BaseLLM]] = {
 }
 
 DEFAULT_MODELS: dict[str, str] = {
-    "openai": "openai/gpt-4o-mini",
-    "gpt": "openai/gpt-4o-mini",
+    "openai": "openai/gpt-3.5-turbo",
+    "gpt": "openai/gpt-3.5-turbo",
     "ollama": "ollama/llama3.1:8b",
     "llama": "ollama/llama3.1:8b",
     "mistral": "ollama/mistral:7b",
-    "litellm": "openai/gpt-4o-mini",
+    "litellm": "openai/gpt-3.5-turbo",
 }
 
 
@@ -37,7 +37,7 @@ def create_llm(config: "LLMConfig") -> BaseLLM:
 
     model_name = config.model_name
     if not model_name or model_name == "":
-        model_name = DEFAULT_MODELS.get(config.type, "openai/gpt-4o-mini")
+        model_name = DEFAULT_MODELS.get(config.type, "openai/gpt-3.5-turbo")
 
     # Auto-prefix model name for legacy types that don't include provider
     if config.type == "openai" and not model_name.startswith("openai/"):

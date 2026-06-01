@@ -1,9 +1,9 @@
-experiment_name: "no_rag_gpt4o_mini"
+experiment_name: "no_rag_gpt35_turbo"
 mode: "no_rag"
 
 llm:
   type: "litellm"
-  model_name: "openai/gpt-4o-mini"
+  model_name: "openai/gpt-3.5-turbo"
   temperature: 0.0
   seed: 42
   max_tokens: 1024

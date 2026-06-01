@@ -19,7 +19,7 @@ class LiteLLM(BaseLLM):
     """LLM using litellm.completion() — supports OpenAI, Ollama, Anthropic, Google, Groq, etc.
 
     The model_name should be a litellm model string, e.g.:
-      - "openai/gpt-4o-mini"
+      - "openai/gpt-3.5-turbo"
       - "openai/gpt-4o"
       - "ollama/llama3.1:8b"
       - "anthropic/claude-sonnet-4-20250514"
@@ -29,7 +29,7 @@ class LiteLLM(BaseLLM):
 
     def __init__(
         self,
-        model_name: str = "openai/gpt-4o-mini",
+        model_name: str = "openai/gpt-3.5-turbo",
         temperature: float = 0.0,
         seed: int | None = 42,
         max_tokens: int = 1024,

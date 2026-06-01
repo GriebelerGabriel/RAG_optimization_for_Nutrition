@@ -47,7 +47,7 @@ class RerankerConfig(BaseModel):
 class LLMConfig(BaseModel):
     """Configuration for language model."""
     type: str = "openai"
-    model_name: str = "gpt-4o-mini"
+    model_name: str = "gpt-3.5-turbo"
     temperature: float = 0.0
     seed: int | None = 42
     max_tokens: int = 1024

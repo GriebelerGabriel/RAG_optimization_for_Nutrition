@@ -1,4 +1,4 @@
-experiment_name: "fair_gpt4o_mini"
+experiment_name: "fair_gpt35_turbo"
 
 chunker:
   type: "recursive"
@@ -21,7 +21,7 @@ reranker:
 
 llm:
   type: "litellm"
-  model_name: "openai/gpt-4o-mini"
+  model_name: "openai/gpt-3.5-turbo"
   temperature: 0.0
   seed: 42
   max_tokens: 1024

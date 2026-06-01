@@ -135,7 +135,7 @@ llm_h = 1.7
 draw_box(ax, R_x, llm_y, R_w, llm_h,
          "LLM COMPARISON  (same RAG params)", [
              "fair_llama8b       Llama 3.1 8B",
-             "fair_gpt4o_mini    GPT-4o-mini",
+             "fair_gpt35_turbo   GPT-3.5-turbo",
          ], C_COMPARE, "#e0f2f1")
 
 # No-RAG Baselines
@@ -144,7 +144,7 @@ nrag_h = 1.7
 draw_box(ax, R_x, nrag_y, R_w, nrag_h,
          "NO-RAG BASELINES  (parametric knowledge only)", [
              "no_rag_llama8b     Llama, no retrieval",
-             "no_rag_gpt4o_mini  GPT-4o-mini, no retrieval",
+             "no_rag_gpt35_turbo GPT-3.5-turbo, no retrieval",
          ], C_NO_RAG, "#ffebee")
 
 # ══════════════════════════════════════════════

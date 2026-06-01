@@ -9,8 +9,8 @@ EVAL_DATASET ?= data/eval/dataset.json
 RESULTS_DIR ?= results
 PORT ?= 8501
 ADDRESS ?= 0.0.0.0
-EVALUATOR ?= openai
-EVALUATOR_MODEL ?= gpt-4.1-mini
+EVALUATOR ?= openrouter
+EVALUATOR_MODEL ?= google/gemini-2.5-flash-preview
 
 help:
 	@echo "Targets:"
@@ -112,7 +112,7 @@ benchmark-no-rag-only:
 	PYTHONPATH=. .venv/bin/python3 scripts/benchmark_unified.py \
 		--eval-dataset $(EVAL_DATASET) \
 		--config configs/fair_comparison/no_rag_llama8b.yaml \
-		--config configs/fair_comparison/no_rag_gpt4o_mini.yaml \
+		--config configs/fair_comparison/no_rag_gpt35_turbo.yaml \
 		--results-dir $(RESULTS_DIR) \
 		--evaluator $(EVALUATOR) \
 		--evaluator-model $(EVALUATOR_MODEL)

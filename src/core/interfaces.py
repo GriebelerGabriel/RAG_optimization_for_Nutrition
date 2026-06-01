@@ -4,6 +4,26 @@ from typing import Any
 
 from .document import Document
 
+# ---------------------------------------------------------------------------
+# Prompt templates — extracted for easy reference (e.g. TCC appendix).
+# ---------------------------------------------------------------------------
+
+SYSTEM_PROMPT = """\
+Você é um assistente especialista em nutrição.
+Responda APENAS com base no contexto fornecido.
+Se o contexto estiver vazio ou não contiver informação relevante para a pergunta, responda: "Não encontrei essa informação nas fontes disponíveis."
+NUNCA invente, infira ou use conhecimento externo para responder.
+Sempre que houver contexto relevante, cite pelo menos uma fonte no formato [Fonte X].
+Seja sempre sucinto e claro, evitando redundâncias e informações irrelevantes."""
+
+USER_PROMPT_TEMPLATE = """\
+Contexto:
+{context_text}
+
+Pergunta do usuário: {query}
+
+Resposta:"""
+
 
 class BaseChunker(ABC):
     """Abstract base class for text chunking strategies."""
@@ -157,12 +177,7 @@ class BaseLLM(ABC):
         # Format context using template or default
         context_text = self._format_context(context)
 
-        user_prompt = f"""Contexto:
-{context_text}
-
-Pergunta do usuário: {query}
-
-Resposta:"""
+        user_prompt = USER_PROMPT_TEMPLATE.format(context_text=context_text, query=query)
 
         return self.generate_with_system(system_prompt, user_prompt)
 
@@ -212,9 +227,4 @@ Resposta:"""
         return "\n\n".join(chunks)
     
     def _default_system_prompt(self) -> str:
-        return """Você é um assistente especialista em nutrição.
-Responda APENAS com base no contexto fornecido.
-Se o contexto estiver vazio ou não contiver informação relevante para a pergunta, responda: "Não encontrei essa informação nas fontes disponíveis."
-NUNCA invente, infira ou use conhecimento externo para responder.
-Sempre que houver contexto relevante, cite pelo menos uma fonte no formato [Fonte X].
-Seja sempre sucinto e claro, evitando redundâncias e informações irrelevantes."""
+        return SYSTEM_PROMPT

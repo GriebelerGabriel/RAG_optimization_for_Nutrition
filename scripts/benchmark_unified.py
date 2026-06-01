@@ -9,7 +9,7 @@ Usage:
     python3 scripts/benchmark_unified.py
 
     # Single config
-    python3 scripts/benchmark_unified.py --config configs/fair_comparison/fair_gpt4o_mini.yaml
+    python3 scripts/benchmark_unified.py --config configs/fair_comparison/fair_gpt35_turbo.yaml
 
     # Deterministic metrics only (no LLM eval cost)
     python3 scripts/benchmark_unified.py --skip-ragas
@@ -961,8 +961,8 @@ def main() -> None:
     parser.add_argument("--config-dir", default="configs/")
     parser.add_argument("--config", nargs="+", default=None, help="One or more config YAML files")
     parser.add_argument("--results-dir", default="results")
-    parser.add_argument("--evaluator", default="openai", choices=["openai", "openrouter", "ollama"])
-    parser.add_argument("--evaluator-model", default="gpt-4.1-mini")
+    parser.add_argument("--evaluator", default="openrouter", choices=["openai", "openrouter", "ollama"])
+    parser.add_argument("--evaluator-model", default="google/gemini-2.5-flash-preview")
     parser.add_argument("--bertscore-model", default="xlm-roberta-base")
     parser.add_argument("--st-model", default="intfloat/multilingual-e5-base")
     parser.add_argument("--ragas-metrics", nargs="+", default=None,

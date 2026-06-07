@@ -3,8 +3,10 @@ import hashlib
 import logging
 import sys
 import time
+import webbrowser
 from pathlib import Path
 
+import pandas as pd
 import streamlit as st
 
 _PROJECT_ROOT = Path(__file__).resolve().parents[2]
@@ -39,6 +41,20 @@ def _get_file_fingerprint(path: str) -> str:
     return hashlib.md5(data).hexdigest()
 
 
+def _friendly_llm_name(model_name: str) -> str:
+    """Convert raw model name to a human-friendly label."""
+    name = model_name.lower()
+    if "gpt-3.5" in name or "gpt3.5" in name:
+        return "GPT-3.5 Turbo"
+    if "gpt-4" in name:
+        return "GPT-4o"
+    if "llama3.1" in name and "8b" in name:
+        return "Llama 3.1 8B"
+    if "llama" in name:
+        return model_name
+    return model_name
+
+
 def main():
     st.title("🥗 Assistente de Nutrição")
     st.markdown(
@@ -46,45 +62,117 @@ def main():
         "As respostas são baseadas em guias e documentos científicos."
     )
     
+    # --- Precompute top 3 ranking for dropdown labels ---
+    _top3: dict[str, str] = {}
+    _results_dir = _PROJECT_ROOT / "results"
+    _ragas_csv = _results_dir / "ragas_benchmark_results.csv"
+    _det_csv = _results_dir / "deterministic_benchmark_results.csv"
+    if _ragas_csv.exists() or _det_csv.exists():
+        _ranking_rows = []
+        if _ragas_csv.exists():
+            _rdf = pd.read_csv(_ragas_csv)
+            _ragas_metrics = [c for c in _rdf.columns if c not in ("config", "config_path", "avg_latency_ms")]
+            for _, row in _rdf.iterrows():
+                _ranking_rows.append({"config": row["config"], "ragas_mean": row[_ragas_metrics].mean()})
+        if _det_csv.exists():
+            _ddf = pd.read_csv(_det_csv)
+            _det_metrics = [c for c in _ddf.columns if c not in ("config", "config_path", "avg_latency_ms")]
+            _det_map = {row["config"]: row[_det_metrics].mean() for _, row in _ddf.iterrows()}
+            for entry in _ranking_rows:
+                entry["det_mean"] = _det_map.get(entry["config"], 0.0)
+            _existing = {e["config"] for e in _ranking_rows}
+            for name, score in _det_map.items():
+                if name not in _existing:
+                    _ranking_rows.append({"config": name, "ragas_mean": 0.0, "det_mean": score})
+        if _ranking_rows:
+            _rank_df = pd.DataFrame(_ranking_rows).fillna(0)
+            _rank_df["composite"] = _rank_df.get("ragas_mean", 0) * 0.5 + _rank_df.get("det_mean", 0) * 0.5
+            _rank_df = _rank_df.sort_values("composite", ascending=False).head(3)
+            _medals = ["🥇", "🥈", "🥉"]
+            for i, (_, row) in enumerate(_rank_df.iterrows()):
+                _top3[row["config"]] = _medals[i] if i < len(_medals) else f"#{i+1}"
+
+    # Widen sidebar via CSS
+    st.markdown(
+        "<style>"
+        "section[data-testid='stSidebar'] { width: 380px !important; }"
+        "section[data-testid='stSidebar'] .block-container { padding-top: 2rem; }"
+        "</style>",
+        unsafe_allow_html=True,
+    )
+
     # Sidebar for configuration
     with st.sidebar:
         st.header("⚙️ Configuração")
-        
+
         # Config file selection
         config_dir = Path("configs")
         config_files = sorted(config_dir.rglob("*.yaml")) if config_dir.exists() else []
-        
+
         if config_files:
             config_options = {f.stem: str(f) for f in config_files}
             option_keys = sorted(config_options.keys())
+            # Build display labels with medals
+            _display_keys = []
+            for k in option_keys:
+                _cfg_name = k.replace("tune_", "").replace("fair_", "").replace("no_rag_", "no_rag_")
+                _medal = _top3.get(k) or _top3.get(_cfg_name)
+                _display_keys.append(f"{_medal} {k}" if _medal else k)
             default_key = "baseline" if "baseline" in option_keys else option_keys[0]
-            selected_config = st.selectbox(
+            selected_display = st.selectbox(
                 "Configuração do RAG",
-                options=option_keys,
+                options=_display_keys,
                 index=option_keys.index(default_key),
+                help=(
+                    "🥇🥈🥉 indicam as 3 melhores configurações segundo o benchmark.\n\n"
+                    "**Como o ranking funciona:**\n"
+                    "- **RAGAS (50%)**: média de faithfulness, answer_relevancy, "
+                    "context_precision, context_recall e answer_correctness — "
+                    "avaliados por um LLM (Gemini 2.5 Flash) como juiz.\n"
+                    "- **Métricas determinísticas (50%)**: média de BLEU, ROUGE-L, "
+                    "METEOR, BERTScore F1 e Similaridade Semântica.\n\n"
+                    "O score final é a média ponderada 50/50 dessas duas pontuações."
+                ),
             )
+            selected_config = option_keys[_display_keys.index(selected_display)]
             config_path = config_options[selected_config]
         else:
             st.warning("Nenhum arquivo de configuração encontrado em configs/")
             config_path = None
-        
-        st.divider()
-        
-        # Show current config details
+
+        # Compact config details — single expander, all in one table
         if config_path:
             try:
                 config = Config.from_yaml(config_path)
-                st.markdown("**Configuração atual:**")
-                st.markdown(f"- Chunker: `{config.chunker.type}`")
-                st.markdown(f"- Embedding: `{config.embedding.type}`")
-                st.markdown(f"- Retriever: `{config.retriever.type}`")
-                st.markdown(f"- Reranker: `{config.reranker.type}`")
-                st.markdown(f"- LLM: `{config.llm.type}`")
+                with st.expander("📋 Detalhes da config", expanded=False):
+                    st.markdown(
+                        f"| | Valor |\n|---|---|\n"
+                        f"| **Chunker** | {config.chunker.type} |\n"
+                        f"| **Chunk size** | {config.chunker.chunk_size} |\n"
+                        f"| **Overlap** | {config.chunker.overlap} |\n"
+                        f"| **Embedding** | {config.embedding.type} |\n"
+                        f"| **Embed model** | `{config.embedding.model_name}` |\n"
+                        f"| **Retriever** | {config.retriever.type} |\n"
+                        f"| **Top K** | {config.retriever.top_k} |\n"
+                        f"| **Score thresh** | {config.retriever.score_threshold} |\n"
+                        f"| **Reranker** | {config.reranker.type} |\n"
+                        + (f"| **Rerank model** | `{config.reranker.model_name}` |\n"
+                           f"| **Rerank K** | {config.reranker.top_k} |\n"
+                           if config.reranker.type != "none" else "")
+                        + f"| **LLM** | `{_friendly_llm_name(config.llm.model_name)}` |\n"
+                        f"| **Temperature** | {config.llm.temperature} |\n"
+                        f"| **Seed** | {config.llm.seed} |\n"
+                        f"| **Max tokens** | {config.llm.max_tokens} |"
+                    )
             except Exception as e:
                 st.error(f"Erro ao carregar config: {e}")
-        
-        st.divider()
-        
+
+        # Benchmark report link
+        _report_path = _results_dir / "benchmark_report.html"
+        if _report_path.exists():
+            if st.button("📊 Ver relatório benchmark"):
+                webbrowser.open(f"file://{_report_path}")
+
         # Clear chat button
         if st.button("🗑️ Limpar conversa"):
             st.session_state.messages = []

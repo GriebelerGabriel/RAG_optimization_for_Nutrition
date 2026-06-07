@@ -1,1040 +1,1160 @@
 [
   {
-    "question": "Qual é a quantidade diária máxima de sódio que eu posso consumir para evitar problemas de saúde?",
-    "answer": "Você deve limitar o consumo de sódio a no máximo 2g por dia, o que equivale a 5g de sal, para ajudar a prevenir doenças não transmissíveis.",
+    "question": "Se eu tiver pressão alta, cortar o sal pode ajudar mesmo?",
+    "answer": "Sim. a redução do sódio para menos de 2g por dia diminuiu a pressão sistólica em 3,47 mmHg.",
     "contexts": [
-      "Noncommunicable diseases (NCDs) are the main contributor to mortality and morbidity globally, and interventions to reduce the burden of NCDs are highly cost-effective. Elevated sodium intake has been associated with a number of NCDs (including hypertension, cardiovascular disease, and stroke), and decreasing sodium intake may reduce blood pressure and the risk of associated NCDs. Recent data on sodium intake show that populations around the world are consuming much more sodium than is physiologically necessary. In many cases, they are consuming much more than the current World Health Organization (WHO) recommendation on sodium consumption for adults, which is 2 g sodium/day (equivalent to 5 g salt/day). Since the publication of the previous WHO guideline on sodium intake, an appreciable amount of scientific evidence concerning sodium intake, hypertension, and risk of cardiovascular disease has been published. Member States and international partners therefore requested WHO to review the current guideline on sodium intake for adults and to also generate a guideline on sodium intake for children.\n\nNCDs are the leading cause of death globally, killing more people each year than all other causes combined. The major NCDs currently account for approximately 60% of all deaths and 43% of disease burden globally, and these levels are expected to continue to rise. In 2008, 29 million NCD-related deaths (almost 80%) occurred in low and middle-income countries. In those countries, 29% of NCD-related deaths were in people under 60 years of age; in contrast, in high-income countries, only 13% of such deaths were premature. Hypertension is considered a major risk for cardiovascular disease, especially heart attack and stroke. Suboptimal systolic blood pressure (>115 mmHg) is estimated to contribute to 49% of all coronary heart disease and 62% of all stroke."
+      "A reduction of sodium to less than 2g per day decreased systolic blood pressure by 3.47 mmHg."
     ],
-    "ground_truth": "Você deve limitar o consumo de sódio a no máximo 2g por dia, o que equivale a 5g de sal, para ajudar a prevenir doenças não transmissíveis.",
+    "ground_truth": "Sim. a redução do sódio para menos de 2g por dia diminuiu a pressão sistólica em 3,47 mmHg.",
     "source": "9789241504836_eng.pdf",
-    "metadata": {
-      "type": "single-hop",
-      "difficulty": "easy",
-      "topic_path": [
-        "Document Topics",
-        "9789241504836_eng.pdf",
-        "Guidelines on Sodium Intake and Noncommunicable Diseases",
-        "Background on Noncommunicable Diseases (NCDs)"
-      ],
-      "source": "9789241504836_eng.pdf"
-    }
+    "metadata": {}
   },
   {
-    "question": "Se eu reduzir meu consumo de sódio, isso pode realmente ajudar a baixar minha pressão arterial?",
-    "answer": "Sim, diminuir a ingestão de sódio pode ajudar a reduzir a pressão arterial e o risco de doenças não transmissíveis associadas, como hipertensão e doenças cardiovasculares.",
+    "question": "Se eu cortar o sal, isso faz mal para o colesterol, para os hormônios do corpo ou para os rins?",
+    "answer": "Pelo que foi observado, reduzir o sal não teve efeito ruim importante no colesterol, nos hormônios do corpo nem na função dos rins.",
     "contexts": [
-      "Noncommunicable diseases (NCDs) are the main contributor to mortality and morbidity globally, and interventions to reduce the burden of NCDs are highly cost-effective. Elevated sodium intake has been associated with a number of NCDs (including hypertension, cardiovascular disease, and stroke), and decreasing sodium intake may reduce blood pressure and the risk of associated NCDs. Recent data on sodium intake show that populations around the world are consuming much more sodium than is physiologically necessary. In many cases, they are consuming much more than the current World Health Organization (WHO) recommendation on sodium consumption for adults, which is 2 g sodium/day (equivalent to 5 g salt/day). Since the publication of the previous WHO guideline on sodium intake, an appreciable amount of scientific evidence concerning sodium intake, hypertension, and risk of cardiovascular disease has been published. Member States and international partners therefore requested WHO to review the current guideline on sodium intake for adults and to also generate a guideline on sodium intake for children.\n\nNCDs are the leading cause of death globally, killing more people each year than all other causes combined. The major NCDs currently account for approximately 60% of all deaths and 43% of disease burden globally, and these levels are expected to continue to rise. In 2008, 29 million NCD-related deaths (almost 80%) occurred in low and middle-income countries. In those countries, 29% of NCD-related deaths were in people under 60 years of age; in contrast, in high-income countries, only 13% of such deaths were premature. Hypertension is considered a major risk for cardiovascular disease, especially heart attack and stroke. Suboptimal systolic blood pressure (>115 mmHg) is estimated to contribute to 49% of all coronary heart disease and 62% of all stroke."
+      "Reducing sodium intake had no significant adverse effect on blood lipids, catecholamine levels or renal function."
     ],
-    "ground_truth": "Sim, diminuir a ingestão de sódio pode ajudar a reduzir a pressão arterial e o risco de doenças não transmissíveis associadas, como hipertensão e doenças cardiovasculares.",
+    "ground_truth": "Pelo que foi observado, reduzir o sal não teve efeito ruim importante no colesterol, nos hormônios do corpo nem na função dos rins.",
     "source": "9789241504836_eng.pdf",
-    "metadata": {
-      "type": "multi-hop",
-      "difficulty": "medium",
-      "topic_path": [
-        "Document Topics",
-        "9789241504836_eng.pdf",
-        "Guidelines on Sodium Intake and Noncommunicable Diseases",
-        "Background on Noncommunicable Diseases (NCDs)"
-      ],
-      "source": "9789241504836_eng.pdf"
-    }
+    "metadata": {}
   },
   {
-    "question": "É verdade que a hipertensão é um dos principais fatores de risco para doenças cardíacas e derrames?",
-    "answer": "VERDADEIRO. A hipertensão é considerada um fator de risco importante para doenças cardiovasculares, contribuindo significativamente para infartos e derrames.",
+    "question": "E para criança, também precisa reduzir o sal para ajudar a pressão?",
+    "answer": "Sim. Para criança, a ideia é reduzir o sal para controlar a pressão e evitar que ela suba com a idade. O limite de 2 gramas por dia usado para adulto deve ser ajustado para baixo, conforme a necessidade de energia da criança.",
     "contexts": [
-      "Noncommunicable diseases (NCDs) are the main contributor to mortality and morbidity globally, and interventions to reduce the burden of NCDs are highly cost-effective. Elevated sodium intake has been associated with a number of NCDs (including hypertension, cardiovascular disease, and stroke), and decreasing sodium intake may reduce blood pressure and the risk of associated NCDs. Recent data on sodium intake show that populations around the world are consuming much more sodium than is physiologically necessary. In many cases, they are consuming much more than the current World Health Organization (WHO) recommendation on sodium consumption for adults, which is 2 g sodium/day (equivalent to 5 g salt/day). Since the publication of the previous WHO guideline on sodium intake, an appreciable amount of scientific evidence concerning sodium intake, hypertension, and risk of cardiovascular disease has been published. Member States and international partners therefore requested WHO to review the current guideline on sodium intake for adults and to also generate a guideline on sodium intake for children.\n\nNCDs are the leading cause of death globally, killing more people each year than all other causes combined. The major NCDs currently account for approximately 60% of all deaths and 43% of disease burden globally, and these levels are expected to continue to rise. In 2008, 29 million NCD-related deaths (almost 80%) occurred in low and middle-income countries. In those countries, 29% of NCD-related deaths were in people under 60 years of age; in contrast, in high-income countries, only 13% of such deaths were premature. Hypertension is considered a major risk for cardiovascular disease, especially heart attack and stroke. Suboptimal systolic blood pressure (>115 mmHg) is estimated to contribute to 49% of all coronary heart disease and 62% of all stroke."
+      "WHO recommends a reduction in sodium intake to control 2 blood pressure in children ( strong recommendation ). The recommended maximum level of intake of 2 g/day sodium in adults should be adjusted downward based on the energy requirements of children relative to those of adults.",
+      "“Control” for this recommendation refers to the prevention of a deleterious rise in blood pressure with age."
     ],
-    "ground_truth": "VERDADEIRO. A hipertensão é considerada um fator de risco importante para doenças cardiovasculares, contribuindo significativamente para infartos e derrames.",
+    "ground_truth": "Sim. Para criança, a ideia é reduzir o sal para controlar a pressão e evitar que ela suba com a idade. O limite de 2 gramas por dia usado para adulto deve ser ajustado para baixo, conforme a necessidade de energia da criança.",
     "source": "9789241504836_eng.pdf",
-    "metadata": {
-      "type": "inference",
-      "difficulty": "hard",
-      "topic_path": [
-        "Document Topics",
-        "9789241504836_eng.pdf",
-        "Guidelines on Sodium Intake and Noncommunicable Diseases",
-        "Background on Noncommunicable Diseases (NCDs)"
-      ],
-      "source": "9789241504836_eng.pdf"
-    }
+    "metadata": {}
   },
   {
-    "question": "O que devo fazer para reduzir meu consumo de sódio e melhorar minha saúde?",
-    "answer": "Para reduzir o consumo de sódio e melhorar sua saúde, você deve considerar implementar intervenções de saúde pública, como a rotulagem de alimentos e a educação do consumidor. Essas medidas podem ajudar a avaliar os níveis atuais de consumo de sódio e desenvolver diretrizes dietéticas baseadas em alimentos.",
+    "question": "Se eu reduzir o sal, isso pode ajudar minha pressão e meu risco de infarto ou derrame?",
+    "answer": "Sim. A redução do sal ajuda a baixar a pressão e também está ligada à redução do risco de doença cardiovascular, derrame e doença coronariana.",
     "contexts": [
-      "The objective of this guideline is to provide recommendations on the consumption of sodium to reduce NCDs in most adults and children. The recommendations in this guideline can be used by those developing programmes and policies to assess current sodium intake levels relative to a benchmark. If necessary, the recommendations can also be used to develop measures to decrease sodium intake through public health interventions such as food and product labelling, consumer education, and the establishment of food-based dietary guidelines. WHO developed the present evidence-informed guideline using the procedures outlined in the WHO Handbook for guideline development. The steps in this process included: identification of priority questions and outcomes; retrieval of the evidence; assessment and synthesis of the evidence; formulation of recommendations; identification of research gaps; planning for dissemination, implementation, impact evaluation, and updating of the guideline."
+      "This guideline provides a global, evidence-informed recommendation on sodium intake for:\n\n• adults (≥16 years of age) for the reduction of blood pressure and risk of cardiovascular disease, stroke and coronary heart disease;",
+      "The evidence regarding the relationship between sodium intake and blood pressure was of high quality, whereas the evidence regarding sodium intake and all-cause mortality, cardiovascular disease, stroke and coronary heart disease was of lower quality."
     ],
-    "ground_truth": "Para reduzir o consumo de sódio e melhorar sua saúde, você deve considerar implementar intervenções de saúde pública, como a rotulagem de alimentos e a educação do consumidor. Essas medidas podem ajudar a avaliar os níveis atuais de consumo de sódio e desenvolver diretrizes dietéticas baseadas em alimentos.",
+    "ground_truth": "Sim. A redução do sal ajuda a baixar a pressão e também está ligada à redução do risco de doença cardiovascular, derrame e doença coronariana.",
     "source": "9789241504836_eng.pdf",
-    "metadata": {
-      "type": "single-hop",
-      "difficulty": "easy",
-      "topic_path": [
-        "Document Topics",
-        "9789241504836_eng.pdf",
-        "Guidelines on Sodium Intake and Noncommunicable Diseases",
-        "Objective of the Guidelines"
-      ],
-      "source": "9789241504836_eng.pdf"
-    }
+    "metadata": {}
   },
   {
-    "question": "Se eu quiser seguir as recomendações para reduzir o sódio, quais passos devo considerar na minha dieta?",
-    "answer": "Para seguir as recomendações de redução de sódio, você deve avaliar seu consumo atual e, se necessário, adotar medidas como rotulagem de produtos alimentares, educação sobre o consumo e a criação de diretrizes dietéticas. Isso ajudará na implementação de mudanças efetivas na sua dieta.",
+    "question": "Se eu suo muito por causa do calor ou de exercício forte, preciso tomar suplemento de sal ou usar produto especial?",
+    "answer": "Na maioria das vezes, não. Mesmo com calor forte e muito suor, a maior parte das pessoas consegue repor o sódio pela comida, sem precisar mudar a alimentação, tomar suplemento ou usar produto especial.",
     "contexts": [
-      "The objective of this guideline is to provide recommendations on the consumption of sodium to reduce NCDs in most adults and children. The recommendations in this guideline can be used by those developing programmes and policies to assess current sodium intake levels relative to a benchmark. If necessary, the recommendations can also be used to develop measures to decrease sodium intake through public health interventions such as food and product labelling, consumer education, and the establishment of food-based dietary guidelines. WHO developed the present evidence-informed guideline using the procedures outlined in the WHO Handbook for guideline development. The steps in this process included: identification of priority questions and outcomes; retrieval of the evidence; assessment and synthesis of the evidence; formulation of recommendations; identification of research gaps; planning for dissemination, implementation, impact evaluation, and updating of the guideline."
+      "Even in hot, humid climates, there are only minimal loses through faeces and sweat.",
+      "Under conditions of extreme heat and intense physical activity that result in high sweat production, sodium losses in sweat are increased and appreciable; nonetheless, most individuals can replace the necessary sodium through food consumption, without dietary alterations, supplements or specially formulated products (19-21) ."
     ],
-    "ground_truth": "Para seguir as recomendações de redução de sódio, você deve avaliar seu consumo atual e, se necessário, adotar medidas como rotulagem de produtos alimentares, educação sobre o consumo e a criação de diretrizes dietéticas. Isso ajudará na implementação de mudanças efetivas na sua dieta.",
+    "ground_truth": "Na maioria das vezes, não. Mesmo com calor forte e muito suor, a maior parte das pessoas consegue repor o sódio pela comida, sem precisar mudar a alimentação, tomar suplemento ou usar produto especial.",
     "source": "9789241504836_eng.pdf",
-    "metadata": {
-      "type": "multi-hop",
-      "difficulty": "medium",
-      "topic_path": [
-        "Document Topics",
-        "9789241504836_eng.pdf",
-        "Guidelines on Sodium Intake and Noncommunicable Diseases",
-        "Objective of the Guidelines"
-      ],
-      "source": "9789241504836_eng.pdf"
-    }
+    "metadata": {}
   },
   {
-    "question": "Se eu aumentar meu consumo de sódio, o que pode acontecer com minha pressão arterial?",
-    "answer": "Se você aumentar seu consumo de sódio, isso pode levar a um aumento da pressão arterial. Estudos mostram que o consumo elevado de sódio está associado ao aumento da pressão arterial em adultos.",
+    "question": "Se eu estiver em calor forte e suando muito, eu preciso tomar suplemento de sal?",
+    "answer": "Na maioria das vezes, não. Mesmo com calor extremo e muito suor, a maioria das pessoas consegue repor o sódio pela comida, sem mudar a alimentação, sem suplementos e sem produtos especiais.",
     "contexts": [
-      "Sodium is the principal cation in extracellular fluid in the body, and is an essential nutrient necessary for maintenance of plasma volume, acid–base balance, transmission of nerve impulses, and normal cell function. In healthy individuals, nearly 100% of ingested sodium is absorbed during digestion, and urinary excretion is the primary mechanism for maintaining sodium balance. Increased sodium consumption is associated with increased blood pressure, whereas lower sodium consumption appears to decrease blood pressure in adults. A number of recent high-quality systematic reviews of randomized-controlled trials (RCTs) have concluded that decreased sodium intake relative to usual or higher intake results in lowered blood pressure in adults with or without hypertension."
+      "Under conditions of extreme heat and intense physical activity that result in high sweat production, sodium losses in sweat are increased and appreciable; nonetheless, most individuals can replace the necessary sodium through food consumption, without dietary alterations, supplements or specially formulated products (19-21) ."
     ],
-    "ground_truth": "Se você aumentar seu consumo de sódio, isso pode levar a um aumento da pressão arterial. Estudos mostram que o consumo elevado de sódio está associado ao aumento da pressão arterial em adultos.",
+    "ground_truth": "Na maioria das vezes, não. Mesmo com calor extremo e muito suor, a maioria das pessoas consegue repor o sódio pela comida, sem mudar a alimentação, sem suplementos e sem produtos especiais.",
     "source": "9789241504836_eng.pdf",
-    "metadata": {
-      "type": "single-hop",
-      "difficulty": "easy",
-      "topic_path": [
-        "Document Topics",
-        "9789241504836_eng.pdf",
-        "Guidelines on Sodium Intake and Noncommunicable Diseases",
-        "Evidence on Sodium Intake",
-        "Health Outcomes Related to Sodium"
-      ],
-      "source": "9789241504836_eng.pdf"
-    }
+    "metadata": {}
   },
   {
-    "question": "Eu tenho hipertensão, o que devo fazer em relação ao meu consumo de sódio para controlar minha pressão arterial?",
-    "answer": "Se você tem hipertensão, é recomendável que você diminua a ingestão de sódio, pois a redução do consumo de sódio está associada à diminuição da pressão arterial em indivíduos hipertensos. Isso se baseia em revisões de ensaios clínicos controlados que mostram que a diminuição da ingestão de sódio em relação a uma ingestão mais alta resulta em menor pressão arterial.",
+    "question": "Se eu como muito alimento pronto e pouco alimento fresco, isso pode aumentar meu sal?",
+    "answer": "Sim. O sódio aparece em grande quantidade em alimentos processados, como pães, crackers, carnes processadas e salgadinhos. Molhos como soja e peixe também podem ter muito sódio. Uma alimentação com muitos processados e poucas frutas e verduras frescas costuma ter muito sódio.",
     "contexts": [
-      "Sodium is the principal cation in extracellular fluid in the body, and is an essential nutrient necessary for maintenance of plasma volume, acid–base balance, transmission of nerve impulses, and normal cell function. In healthy individuals, nearly 100% of ingested sodium is absorbed during digestion, and urinary excretion is the primary mechanism for maintaining sodium balance. Increased sodium consumption is associated with increased blood pressure, whereas lower sodium consumption appears to decrease blood pressure in adults. A number of recent high-quality systematic reviews of randomized-controlled trials (RCTs) have concluded that decreased sodium intake relative to usual or higher intake results in lowered blood pressure in adults with or without hypertension."
+      "It is often found in high amounts in processed foods such as breads, crackers, processed meats and snack foods (23-26) .",
+      "High amounts of sodium are also found in many condiments (e.g. soy and fish sauces) (23) .",
+      "Thus, a diet high in processed foods and low in fresh fruits and vegetables is often high in sodium (24, 26) ."
     ],
-    "ground_truth": "Se você tem hipertensão, é recomendável que você diminua a ingestão de sódio, pois a redução do consumo de sódio está associada à diminuição da pressão arterial em indivíduos hipertensos. Isso se baseia em revisões de ensaios clínicos controlados que mostram que a diminuição da ingestão de sódio em relação a uma ingestão mais alta resulta em menor pressão arterial.",
+    "ground_truth": "Sim. O sódio aparece em grande quantidade em alimentos processados, como pães, crackers, carnes processadas e salgadinhos. Molhos como soja e peixe também podem ter muito sódio. Uma alimentação com muitos processados e poucas frutas e verduras frescas costuma ter muito sódio.",
     "source": "9789241504836_eng.pdf",
-    "metadata": {
-      "type": "multi-hop",
-      "difficulty": "medium",
-      "topic_path": [
-        "Document Topics",
-        "9789241504836_eng.pdf",
-        "Guidelines on Sodium Intake and Noncommunicable Diseases",
-        "Evidence on Sodium Intake",
-        "Health Outcomes Related to Sodium"
-      ],
-      "source": "9789241504836_eng.pdf"
-    }
+    "metadata": {}
   },
   {
-    "question": "É verdade que reduzir a ingestão de sódio pode aumentar o colesterol total e o LDL?",
-    "answer": "VERDADEIRO. Alguns pesquisadores relataram que a redução de sódio poderia potencialmente ter efeitos adversos nas concentrações de lipídios no sangue, incluindo o aumento do colesterol total e do LDL, mas os resultados mostraram pouco ou nenhum efeito adverso significativo.",
+    "question": "Se eu diminuir o sal, minha pressão pode baixar?",
+    "answer": "Sim. Menor consumo de sódio parece baixar a pressão em adultos. Já aumentar o sódio está ligado a pressão mais alta.",
     "contexts": [
-      "Some researchers have reported that reduced sodium could potentially have adverse effects on blood lipid concentrations (i.e., increase total cholesterol, low-density lipoprotein [LDL] cholesterol and triglyceride, and decrease high-density lipoprotein [HDL] cholesterol), catecholamine levels, or renal function. However, the results showed little or no adverse effect of reduced sodium on blood lipid concentrations. The meta-analysis of studies reporting catecholamine levels showed that reduced sodium intake resulted in a nonsignificant increase in plasma noradrenaline and adrenaline with decreased sodium. Additionally, the results suggest that reduced sodium does not have an adverse effect on renal function and may potentially have a beneficial effect."
+      "Increased sodium consumption is associated with increased blood pressure, whereas lower sodium consumption appears to decrease blood pressure in adults (12, 28-30) .",
+      "A number of recent high-quality systematic reviews of randomized- controlled trials (RCTs) have concluded that decreased sodium intake relative to usual or higher intake results in lowered blood pressure in adults with or without hypertension (30-33) ."
     ],
-    "ground_truth": "VERDADEIRO. Alguns pesquisadores relataram que a redução de sódio poderia potencialmente ter efeitos adversos nas concentrações de lipídios no sangue, incluindo o aumento do colesterol total e do LDL, mas os resultados mostraram pouco ou nenhum efeito adverso significativo.",
+    "ground_truth": "Sim. Menor consumo de sódio parece baixar a pressão em adultos. Já aumentar o sódio está ligado a pressão mais alta.",
     "source": "9789241504836_eng.pdf",
-    "metadata": {
-      "type": "true-false",
-      "difficulty": "easy",
-      "topic_path": [
-        "Document Topics",
-        "9789241504836_eng.pdf",
-        "Guidelines on Sodium Intake and Noncommunicable Diseases",
-        "Evidence on Sodium Intake",
-        "Potential Adverse Effects of Reduced Sodium"
-      ],
-      "source": "9789241504836_eng.pdf"
-    }
+    "metadata": {}
   },
   {
-    "question": "Se eu reduzir minha ingestão de sódio, isso pode ajudar a diminuir meu risco de doenças cardiovasculares?",
-    "answer": "Sim, reduzir a ingestão de sódio está associado a um menor risco de doenças cardiovasculares. Estudos sugerem que a redução do sódio pode ajudar a diminuir a pressão arterial, que é um fator de risco modificável para mortalidade.",
+    "question": "Se eu baixar o sal para menos de 2 gramas por dia, minha pressão pode cair?",
+    "answer": "Sim. Quando o sal foi reduzido para menos de 2 g por dia, a pressão de repouso caiu um pouco, tanto a máxima quanto a mínima.",
     "contexts": [
-      "Some researchers have reported that reduced sodium could potentially have adverse effects on blood lipid concentrations (i.e., increase total cholesterol, low-density lipoprotein [LDL] cholesterol and triglyceride, and decrease high-density lipoprotein [HDL] cholesterol), catecholamine levels, or renal function. However, the results showed little or no adverse effect of reduced sodium on blood lipid concentrations. The meta-analysis of studies reporting catecholamine levels showed that reduced sodium intake resulted in a nonsignificant increase in plasma noradrenaline and adrenaline with decreased sodium. Additionally, the results suggest that reduced sodium does not have an adverse effect on renal function and may potentially have a beneficial effect."
+      "A meta-analysis of six studies with six comparisons with results on ambulatory blood pressure reported that decreased sodium intake resulted in a decrease in ambulatory systolic blood pressure of 5.51 mmHg (95%CI: 3.16, 7.87) (quality of evidence high), and a decrease in ambulatory diastolic blood pressure of 2.94 mmHg (95%CI: 1.51, 4.36) (quality of evidence high).",
+      "A meta-analysis comparing the lowest (<2 g/day) to the middle (>2 g/ day) consumption groups found that reducing sodium intake to <2 g/day compared to reducing intake but still consuming >2 g/day resulted in a decrease in resting systolic blood pressure of 3.47 mmHg (95%CI: 0.76, 6.18) (quality of evidence high), and a decrease in resting diastolic blood pressure of 1.81 mmHg (95%CI: 0.54, 3.08) (quality of evidence high)."
     ],
-    "ground_truth": "Sim, reduzir a ingestão de sódio está associado a um menor risco de doenças cardiovasculares. Estudos sugerem que a redução do sódio pode ajudar a diminuir a pressão arterial, que é um fator de risco modificável para mortalidade.",
+    "ground_truth": "Sim. Quando o sal foi reduzido para menos de 2 g por dia, a pressão de repouso caiu um pouco, tanto a máxima quanto a mínima.",
     "source": "9789241504836_eng.pdf",
-    "metadata": {
-      "type": "multi-hop",
-      "difficulty": "medium",
-      "topic_path": [
-        "Document Topics",
-        "9789241504836_eng.pdf",
-        "Guidelines on Sodium Intake and Noncommunicable Diseases",
-        "Evidence on Sodium Intake",
-        "Potential Adverse Effects of Reduced Sodium"
-      ],
-      "source": "9789241504836_eng.pdf"
-    }
+    "metadata": {}
   },
   {
-    "question": "Qual é a quantidade máxima de sódio que eu posso consumir por dia para evitar problemas de saúde?",
-    "answer": "A quantidade máxima de sódio que você pode consumir por dia é de 2g, o que equivale a 5g de sal, segundo a recomendação.",
+    "question": "Se eu comer menos de 1,2 grama de sal por dia, isso faz diferença na pressão?",
+    "answer": "Foi visto um possível benefício, com queda da pressão, mas isso não ficou totalmente certo.",
     "contexts": [
-      "WHO recommends a reduction in sodium intake to reduce blood pressure and risk of cardiovascular disease, stroke, and coronary heart disease in adults. WHO recommends a reduction to <2 g/day sodium (5 g/day salt) in adults. WHO recommends a reduction in sodium intake to control blood pressure in children. The recommended maximum level of intake of 2 g/day sodium in adults should be adjusted downward based on the energy requirements of children relative to those of adults. These recommendations apply to all individuals, with or without hypertension (including pregnant and lactating women), except for individuals with illnesses or taking drug therapy that may lead to hyponatraemia or acute build-up of body water, or require physician-supervised diets."
+      "Only one study directly compared an intake <1.2 g/day to a reduced intake to a level >1.2 g/day.",
+      "The findings suggested a benefit with a decrease of 8.00 mmHg (95%CI: –1.73, 17.73) (quality of evidence moderate) but were inconclusive."
     ],
-    "ground_truth": "A quantidade máxima de sódio que você pode consumir por dia é de 2g, o que equivale a 5g de sal, segundo a recomendação.",
+    "ground_truth": "Foi visto um possível benefício, com queda da pressão, mas isso não ficou totalmente certo.",
     "source": "9789241504836_eng.pdf",
-    "metadata": {
-      "type": "single-hop",
-      "difficulty": "easy",
-      "topic_path": [
-        "Document Topics",
-        "9789241504836_eng.pdf",
-        "Guidelines on Sodium Intake and Noncommunicable Diseases",
-        "Recommendations for Sodium Intake"
-      ],
-      "source": "9789241504836_eng.pdf"
-    }
+    "metadata": {}
   },
   {
-    "question": "Se eu reduzir minha ingestão de sódio para menos de 2g por dia, isso realmente pode ajudar a controlar minha pressão arterial?",
-    "answer": "Sim, reduzir a ingestão de sódio para menos de 2g por dia pode ajudar a controlar a pressão arterial, tanto em pessoas com hipertensão quanto em aquelas sem essa condição.",
+    "question": "Se eu reduzir o sal, isso pode ajudar a diminuir meu risco de derrame?",
+    "answer": "Sim. A redução do sódio apareceu ligada a menor risco de derrame, e o aumento do sódio apareceu ligado a maior risco de derrame fatal.",
     "contexts": [
-      "WHO recommends a reduction in sodium intake to reduce blood pressure and risk of cardiovascular disease, stroke, and coronary heart disease in adults. WHO recommends a reduction to <2 g/day sodium (5 g/day salt) in adults. WHO recommends a reduction in sodium intake to control blood pressure in children. The recommended maximum level of intake of 2 g/day sodium in adults should be adjusted downward based on the energy requirements of children relative to those of adults. These recommendations apply to all individuals, with or without hypertension (including pregnant and lactating women), except for individuals with illnesses or taking drug therapy that may lead to hyponatraemia or acute build-up of body water, or require physician-supervised diets."
+      "The meta-analysis of 10 cohort studies with 14 comparisons reporting stroke was supportive of a benefit of reduced sodium intake on subsequent risk of stroke (RR 1.24; 95% CI: 1.08, 1.43) (quality of evidence very low).",
+      "Increased sodium intake was also associated with increased risk of fatal stroke events (RR 1.63; 95%CI: 1.27,2.10) (quality of evidence low)."
     ],
-    "ground_truth": "Sim, reduzir a ingestão de sódio para menos de 2g por dia pode ajudar a controlar a pressão arterial, tanto em pessoas com hipertensão quanto em aquelas sem essa condição.",
+    "ground_truth": "Sim. A redução do sódio apareceu ligada a menor risco de derrame, e o aumento do sódio apareceu ligado a maior risco de derrame fatal.",
     "source": "9789241504836_eng.pdf",
-    "metadata": {
-      "type": "multi-hop",
-      "difficulty": "medium",
-      "topic_path": [
-        "Document Topics",
-        "9789241504836_eng.pdf",
-        "Guidelines on Sodium Intake and Noncommunicable Diseases",
-        "Recommendations for Sodium Intake"
-      ],
-      "source": "9789241504836_eng.pdf"
-    }
+    "metadata": {}
   },
   {
-    "question": "Qual é o teor de sódio em 100g de bacon e alimentos processados?",
-    "answer": "Bacon e alimentos processados podem conter cerca de 1.500 mg de sódio por 100 g.",
+    "question": "Se eu cortar o sal, isso pode piorar meu colesterol ou meus triglicérides?",
+    "answer": "Pelos dados, não apareceu um efeito ruim importante no colesterol e nos triglicérides. Houve só mudanças pequenas e sem diferença importante.",
     "contexts": [
-      "The sodium content in various food groups varies significantly. For instance, table salt, baking soda, and baking powder contain approximately 38,000 mg of sodium per 100 g, while processed foods such as bacon and snack foods can contain around 1,500 mg per 100 g. Fresh fruits and vegetables, on the other hand, have much lower sodium content, with fresh fruits containing about 5 mg and fresh vegetables around 10 mg per 100 g. This information can be used for approximate comparisons of food groups and to guide dietary choices."
+      "The meta-analysis of 11 trials with 15 comparisons reporting total cholesterol concentration reported a nonsignificant increase in total cholesterol of 0.02 mmol/L (95%CI: –0.03, 0.07) (quality of evidence high).",
+      "The meta-analysis of nine studies with 11 comparisons reporting HDL concentration was consistent with a slight, but not physiologically important, decrease in HDL with reduced sodium intake versus usual intake of 0.01 mmol/L (95% CI: 0.00, 0.03) (quality of evidence moderate).",
+      "The meta-analysis of eight studies with 10 comparisons reporting total triglyceride concentration reported a nonsignificant decrease in triglyceride concentration of 0.04 mmol/L (95% CI: –0.01, 0.09) (quality of evidence high).",
+      "The results showed little or no adverse effect of reduced sodium on blood lipid concentrations."
     ],
-    "ground_truth": "Bacon e alimentos processados podem conter cerca de 1.500 mg de sódio por 100 g.",
+    "ground_truth": "Pelos dados, não apareceu um efeito ruim importante no colesterol e nos triglicérides. Houve só mudanças pequenas e sem diferença importante.",
     "source": "9789241504836_eng.pdf",
-    "metadata": {
-      "type": "single-hop",
-      "difficulty": "easy",
-      "topic_path": [
-        "Document Topics",
-        "9789241504836_eng.pdf",
-        "Guidelines on Sodium Intake and Noncommunicable Diseases",
-        "Sodium Content in Foods"
-      ],
-      "source": "9789241504836_eng.pdf"
-    }
+    "metadata": {}
   },
   {
-    "question": "Se eu quiser reduzir meu consumo de sódio, quais alimentos eu devo evitar e quais posso comer livremente?",
-    "answer": "Para reduzir o consumo de sódio, você deve evitar alimentos processados como bacon e lanches, que têm alto teor de sódio. Em contrapartida, você pode consumir frutas frescas, que contêm apenas cerca de 5 mg de sódio por 100 g, e vegetais frescos, com aproximadamente 10 mg por 100 g.",
+    "question": "Se eu diminuir o sal, isso pode mexer com os hormônios do corpo ou com os rins?",
+    "answer": "Nos dados mostrados aqui, houve só um aumento pequeno e sem importância importante nos hormônios do corpo, e os resultados foram parecidos com o que já tinha sido visto antes.",
     "contexts": [
-      "The sodium content in various food groups varies significantly. For instance, table salt, baking soda, and baking powder contain approximately 38,000 mg of sodium per 100 g, while processed foods such as bacon and snack foods can contain around 1,500 mg per 100 g. Fresh fruits and vegetables, on the other hand, have much lower sodium content, with fresh fruits containing about 5 mg and fresh vegetables around 10 mg per 100 g. This information can be used for approximate comparisons of food groups and to guide dietary choices."
+      "The meta-analysis of seven studies with seven comparisons reporting catecholamine levels showed that reduced sodium intake resulted in a nonsignificant increase in plasma noradrenaline of 8.23 pg/mL (95% CI: –27.84, 44.29) (quality of evidence high).",
+      "The meta-analysis of four studies with four comparisons reporting plasma adrenaline also reported a nonsignificant increase 6.90 pg/mL (95% CI: –2.17, 15.96) with decreased sodium (quality of evidence high).",
+      "These results were consistent with the previous systematic review in the literature reporting the effects of reduced sodium on blood lipids and catecholamine levels when only studies of 4 weeks duration or longer were considered (33) ."
     ],
-    "ground_truth": "Para reduzir o consumo de sódio, você deve evitar alimentos processados como bacon e lanches, que têm alto teor de sódio. Em contrapartida, você pode consumir frutas frescas, que contêm apenas cerca de 5 mg de sódio por 100 g, e vegetais frescos, com aproximadamente 10 mg por 100 g.",
+    "ground_truth": "Nos dados mostrados aqui, houve só um aumento pequeno e sem importância importante nos hormônios do corpo, e os resultados foram parecidos com o que já tinha sido visto antes.",
     "source": "9789241504836_eng.pdf",
-    "metadata": {
-      "type": "multi-hop",
-      "difficulty": "medium",
-      "topic_path": [
-        "Document Topics",
-        "9789241504836_eng.pdf",
-        "Guidelines on Sodium Intake and Noncommunicable Diseases",
-        "Sodium Content in Foods"
-      ],
-      "source": "9789241504836_eng.pdf"
-    }
+    "metadata": {}
   },
   {
-    "question": "O que devo considerar ao escolher alimentos para minha dieta?",
-    "answer": "Ao escolher alimentos, é importante considerar não apenas a ingestão de nutrientes, mas também os tipos de alimentos que os fornecem, como eles são combinados e preparados, além das características dos hábitos alimentares e das dimensões culturais e sociais das práticas alimentares.",
+    "question": "Se eu reduzir o sal, minha pressão pode baixar mesmo se eu já não tiver pressão alta?",
+    "answer": "Sim. Em pessoas com pressão normal, reduzir o sal baixou a pressão de forma pequena, mas ainda assim foi visto efeito.",
     "contexts": [
-      "The Dietary Guidelines for the Brazilian population present a set of information and recommendations about food aimed at promoting the health of individuals, families, communities, and Brazilian society as a whole, both now and in the future. This guide is intended for all Brazilians, including workers whose profession involves promoting the health of the population, such as health professionals, community agents, educators, and human resources trainers. These workers will be fundamental for the widespread dissemination of this material and for ensuring that the content is understood by all, including those with reading difficulties. It is hoped that this guide will be used in people's homes, health units, schools, and any space where health promotion activities take place, such as community centers, social assistance reference centers, unions, training centers for workers, and social movement headquarters. Although the focus of this material is on health promotion and disease prevention, its recommendations may also be useful for those suffering from specific diseases. In such cases, it is essential that nutritionists adapt the recommendations to the specific conditions of each individual, supporting health professionals in organizing nutritional care.\n\nEvery structured human action is implicitly or explicitly guided by principles. The formulation of dietary guidelines is no exception. The principles that guided the preparation of this guide are presented in this chapter. Food is more than nutrient intake; it concerns the foods that contain and provide nutrients, how foods are combined and prepared, the characteristics of eating habits, and the cultural and social dimensions of food practices. All these aspects influence health and well-being. Nutrient intake, provided by food, is essential for good health. Equally important for health are the specific foods that provide nutrients, the numerous possible combinations between them, and their preparation methods, as well as the characteristics of eating habits and the cultural and social dimensions of food practices. The science of nutrition emerged with the identification and isolation of nutrients present in foods and with studies on the effect of individual nutrients on the incidence of certain diseases. These studies were fundamental for formulating policies and actions aimed at preventing specific nutritional deficiencies and cardiovascular diseases associated with excessive sodium or animal fat consumption. However, the effect of individual nutrients has progressively proven insufficient to explain the relationship between food and health."
+      "The meta-analysis of the six studies with seven comparisons in individuals with normal blood pressure found that reduced sodium intake reduced systolic blood pressure by 1.38 mmHg (95%CI: 0.02, 2.74) (quality of evidence moderate).",
+      "Although the reduction in blood pressure was statistically significantly less in individuals without hypertension, it was still evident."
     ],
-    "ground_truth": "Ao escolher alimentos, é importante considerar não apenas a ingestão de nutrientes, mas também os tipos de alimentos que os fornecem, como eles são combinados e preparados, além das características dos hábitos alimentares e das dimensões culturais e sociais das práticas alimentares.",
+    "ground_truth": "Sim. Em pessoas com pressão normal, reduzir o sal baixou a pressão de forma pequena, mas ainda assim foi visto efeito.",
+    "source": "9789241504836_eng.pdf",
+    "metadata": {}
+  },
+  {
+    "question": "Cortar o sal pode fazer mal para os rins?",
+    "answer": "Não. Os dados mostram que reduzir o sal não faz mal para a função dos rins e pode até ajudar.",
+    "contexts": [
+      "The results suggest that reduced sodium does not have an adverse effect on renal function and may potentially have a beneficial effect.",
+      "One study with 169 participants having a reduced sodium intake and 169 a usual sodium intake reported a significant reduction in urinary albumin levels with reduced sodium intake."
+    ],
+    "ground_truth": "Não. Os dados mostram que reduzir o sal não faz mal para a função dos rins e pode até ajudar.",
+    "source": "9789241504836_eng.pdf",
+    "metadata": {}
+  },
+  {
+    "question": "Se eu já como muito sal, cortar um pouco ainda ajuda a baixar a pressão?",
+    "answer": "Sim. A queda da pressão apareceu em vários níveis de consumo de sal, e quem comia mais sal no começo teve uma queda maior.",
+    "contexts": [
+      "The body of evidence suggests that reducing sodium is beneficial for most individuals, regardless of current sodium consumption level.",
+      "Furthermore, WHO grouped studies based on baseline sodium intake level, and found a significant decrease in systolic blood pressure in all subgroups.",
+      "in the studies with a baseline sodium intake of >4.5 g/day, the decrease was 5.74 mmHg (95%CI: 3.03, 8.45)."
+    ],
+    "ground_truth": "Sim. A queda da pressão apareceu em vários níveis de consumo de sal, e quem comia mais sal no começo teve uma queda maior.",
+    "source": "9789241504836_eng.pdf",
+    "metadata": {}
+  },
+  {
+    "question": "Se eu baixar o sal para menos de 2 gramas por dia, isso ajuda a baixar minha pressão e o risco de infarto e derrame?",
+    "answer": "Sim. Reduzir o sódio para menos de 2 g por dia ajuda a baixar a pressão e também o risco de doença do coração, derrame e doença das coronárias.",
+    "contexts": [
+      "WHO recommends a reduction in sodium intake to reduce blood pressure and risk of cardiovascular disease, stroke and coronary heart disease in adults ( strong recommendation 1 ). WHO recommends a reduction to <2 g/day sodium (5 g/day salt) in adults ( strong recommendation )."
+    ],
+    "ground_truth": "Sim. Reduzir o sódio para menos de 2 g por dia ajuda a baixar a pressão e também o risco de doença do coração, derrame e doença das coronárias.",
+    "source": "9789241504836_eng.pdf",
+    "metadata": {}
+  },
+  {
+    "question": "Se eu cortar o sal, isso pode fazer mal para o colesterol, para os rins ou para os hormônios do corpo?",
+    "answer": "Pelos dados mostrados aqui, não houve sinal de mal para o colesterol e gorduras no sangue, para os hormônios do corpo nem para a função dos rins. Pelo contrário, os resultados até sugerem benefício para os rins.",
+    "contexts": [
+      "There was no indication from the RCTs of a duration of 4 weeks or more that reduced sodium intake had any adverse effects on blood lipids and catecholamine levels.",
+      "There was also no indication of an adverse effect of reduced sodium on renal function, and the results were even suggestive of a beneficial effect."
+    ],
+    "ground_truth": "Pelos dados mostrados aqui, não houve sinal de mal para o colesterol e gorduras no sangue, para os hormônios do corpo nem para a função dos rins. Pelo contrário, os resultados até sugerem benefício para os rins.",
+    "source": "9789241504836_eng.pdf",
+    "metadata": {}
+  },
+  {
+    "question": "Se eu cortar o sal, minha pressão pode baixar mesmo?",
+    "answer": "Sim, a pressão pode baixar um pouco quando o sal diminui.",
+    "contexts": [
+      "Resting systolic blood pressure 2 MD 3.39 lower",
+      "Evidence suggests a dose response with greater"
+    ],
+    "ground_truth": "Sim, a pressão pode baixar um pouco quando o sal diminui.",
+    "source": "9789241504836_eng.pdf",
+    "metadata": {}
+  },
+  {
+    "question": "Se eu cortar o sal, isso mexe com meu colesterol e com as gorduras no sangue?",
+    "answer": "Pelo que aparece aqui, não houve mudança importante no colesterol total, no colesterol bom, no colesterol ruim nem nos triglicérides com menos sal.",
+    "contexts": [
+      "Total cholesterol 4 MD 0.02 higher 2 339 ⊕⊕⊕⊕ Not downgraded due to imprecision because((follow-up",
+      "A meta-analysis of 9 RCTs with 11 comparisons reporting high-density lipoprotein (HDL) concentration was consistent with a slight decrease in HDL which did not indicate a decrease of biological importance (MD 0.01 mmol/L lower (0.03 lower to 0.00)) (quality of evidence moderate).",
+      "A meta-analysis of six RCTs with eight comparisons reporting low-density lipoprotein (LDL) concentration was consistent with no effect of low sodium intake on LDL (MD 0.03 mmol/L higher (0.02 lower to 0.08 higher))(quality of evidence high). A meta-analysis of eight RCTs with 10 comparisons reporting total triglyceride concentration was consistent with no effect of low sodium on triglyceride concentration (MD 0.04 mmol/L lower (0.01 lower to 0.09 higher))(quality of evidence high)."
+    ],
+    "ground_truth": "Pelo que aparece aqui, não houve mudança importante no colesterol total, no colesterol bom, no colesterol ruim nem nos triglicérides com menos sal.",
+    "source": "9789241504836_eng.pdf",
+    "metadata": {}
+  },
+  {
+    "question": "Se eu comer menos sal, isso pode fazer mal para os rins ou dar efeitos ruins como dor de cabeça e tontura?",
+    "answer": "Aqui aparece que houve melhora em alguns sinais dos rins, como proteína na urina e albumina na urina, e que os efeitos ruins leves, como dor de cabeça e tontura, não foram diferentes entre os grupos.",
+    "contexts": [
+      "Consistent with a beneficial effect of reduced sodium on renal function, one study, which could not be combined in the meta-analysis due to the form of results, reported a reduction in urinary protein excretion with reduced sodium.",
+      "Consistent with a beneficial effect of reduced sodium, one study with 169 low sodium and 169 control participants reported a significant reduction in urinary albumin levels with low sodium intake, one study with 46 low sodium and 46 control participants reported a non-significant decrease in urinary albumin with reduced sodium, and one study with 17 low sodium and 17 control participants reported no change. Consistent with a beneficial effect of reduced sodium, two studies reported reduced urinary albumin:creatinine ratio with low sodium intake.",
+      "Minor adverse effects such as headache, edema, dizziness and muscle aches were reported in three studies and there was no difference in reported minor adverse effects between low sodium and control groups."
+    ],
+    "ground_truth": "Aqui aparece que houve melhora em alguns sinais dos rins, como proteína na urina e albumina na urina, e que os efeitos ruins leves, como dor de cabeça e tontura, não foram diferentes entre os grupos.",
+    "source": "9789241504836_eng.pdf",
+    "metadata": {}
+  },
+  {
+    "question": "Se eu baixar o sal para menos de 2 gramas por dia, minha pressão em repouso pode cair?",
+    "answer": "Sim. No conteúdo, a pressão em repouso caiu 3,47 mmHg com menos de 2 g por dia de sódio, em comparação com 2 g por dia ou mais.",
+    "contexts": [
+      "Resting systolic blood pressure 3 MD 3.47 lower 4 820 ⊕⊕⊕⊕",
+      "What is the effect of a decrease in sodium intake to <2 g/day relative to an intake of ≥2 g/day in adults?"
+    ],
+    "ground_truth": "Sim. No conteúdo, a pressão em repouso caiu 3,47 mmHg com menos de 2 g por dia de sódio, em comparação com 2 g por dia ou mais.",
+    "source": "9789241504836_eng.pdf",
+    "metadata": {}
+  },
+  {
+    "question": "Se eu tenho pressão alta e estou acima do peso, isso pode piorar minha saúde?",
+    "answer": "Sim. O excesso de peso aparece como um problema importante, e as doenças crônicas são a principal causa de morte entre adultos.",
+    "contexts": [
+      "O excesso de peso acomete um em cada dois adultos e uma em cada três crianças brasileiras.",
+      "as doenças crônicas são a principal causa de morte entre adultos."
+    ],
+    "ground_truth": "Sim. O excesso de peso aparece como um problema importante, e as doenças crônicas são a principal causa de morte entre adultos.",
     "source": "guia_alimentar_populacao_brasileira_2ed.pdf",
-    "metadata": {
-      "type": "single-hop",
-      "difficulty": "easy",
-      "topic_path": [
-        "Document Topics",
-        "guia_alimentar_populacao_brasileira_2ed.pdf",
-        "Dietary Guidelines for the Brazilian Population",
-        "Overview of Dietary Guidelines"
-      ],
-      "source": "guia_alimentar_populacao_brasileira_2ed.pdf"
-    }
+    "metadata": {}
   },
   {
-    "question": "Se eu quiser prevenir doenças cardiovasculares, quais hábitos alimentares devo mudar?",
-    "answer": "Para prevenir doenças cardiovasculares, é recomendado ajustar a ingestão de energia para manter um peso saudável, consumir uma variedade de frutas e vegetais, optar por grãos integrais em vez de grãos refinados, escolher fontes saudáveis de proteína e de gorduras insaturadas, além de minimizar o consumo de alimentos ultraprocessados e reduzir a ingestão de sódio.",
+    "question": "Para eu comer melhor no dia a dia, o que o SUS faz para ajudar na alimentação saudável?",
+    "answer": "O SUS trabalha com incentivo, apoio e proteção da saúde, junto com políticas públicas saudáveis, criação de ambientes saudáveis, desenvolvimento de habilidades pessoais e reorientação dos serviços de saúde.",
     "contexts": [
-      "The Dietary Guidelines for the Brazilian population present a set of information and recommendations about food aimed at promoting the health of individuals, families, communities, and Brazilian society as a whole, both now and in the future. This guide is intended for all Brazilians, including workers whose profession involves promoting the health of the population, such as health professionals, community agents, educators, and human resources trainers. These workers will be fundamental for the widespread dissemination of this material and for ensuring that the content is understood by all, including those with reading difficulties. It is hoped that this guide will be used in people's homes, health units, schools, and any space where health promotion activities take place, such as community centers, social assistance reference centers, unions, training centers for workers, and social movement headquarters. Although the focus of this material is on health promotion and disease prevention, its recommendations may also be useful for those suffering from specific diseases. In such cases, it is essential that nutritionists adapt the recommendations to the specific conditions of each individual, supporting health professionals in organizing nutritional care.\n\nEvery structured human action is implicitly or explicitly guided by principles. The formulation of dietary guidelines is no exception. The principles that guided the preparation of this guide are presented in this chapter. Food is more than nutrient intake; it concerns the foods that contain and provide nutrients, how foods are combined and prepared, the characteristics of eating habits, and the cultural and social dimensions of food practices. All these aspects influence health and well-being. Nutrient intake, provided by food, is essential for good health. Equally important for health are the specific foods that provide nutrients, the numerous possible combinations between them, and their preparation methods, as well as the characteristics of eating habits and the cultural and social dimensions of food practices. The science of nutrition emerged with the identification and isolation of nutrients present in foods and with studies on the effect of individual nutrients on the incidence of certain diseases. These studies were fundamental for formulating policies and actions aimed at preventing specific nutritional deficiencies and cardiovascular diseases associated with excessive sodium or animal fat consumption. However, the effect of individual nutrients has progressively proven insufficient to explain the relationship between food and health."
+      "A promoção da alimentação adequada e saudável no Sistema Único de Saúde (SUS) deve fundamentar-se nas dimensões de incentivo, apoio\n\ne proteção da saúde e deve combinar iniciativas focadas em políticas públicas saudáveis, na criação de ambientes saudáveis, no desenvolvimento de habilidades pessoais e na reorientação dos serviços de saúde na perspectiva da promoção da saúde."
     ],
-    "ground_truth": "Para prevenir doenças cardiovasculares, é recomendado ajustar a ingestão de energia para manter um peso saudável, consumir uma variedade de frutas e vegetais, optar por grãos integrais em vez de grãos refinados, escolher fontes saudáveis de proteína e de gorduras insaturadas, além de minimizar o consumo de alimentos ultraprocessados e reduzir a ingestão de sódio.",
+    "ground_truth": "O SUS trabalha com incentivo, apoio e proteção da saúde, junto com políticas públicas saudáveis, criação de ambientes saudáveis, desenvolvimento de habilidades pessoais e reorientação dos serviços de saúde.",
     "source": "guia_alimentar_populacao_brasileira_2ed.pdf",
-    "metadata": {
-      "type": "multi-hop",
-      "difficulty": "medium",
-      "topic_path": [
-        "Document Topics",
-        "guia_alimentar_populacao_brasileira_2ed.pdf",
-        "Dietary Guidelines for the Brazilian Population",
-        "Overview of Dietary Guidelines"
-      ],
-      "source": "guia_alimentar_populacao_brasileira_2ed.pdf"
-    }
+    "metadata": {}
   },
   {
-    "question": "É verdade que a qualidade da dieta influencia o risco de doenças cardiovasculares desde a infância?",
-    "answer": "VERDADEIRO. Estudos mostram que padrões alimentares na infância estão associados a parâmetros cardiovasculares como obesidade e hipertensão, além de influenciar hábitos alimentares ao longo da vida e o risco cardiovascular na idade adulta.",
+    "question": "Se eu tenho uma doença, essas orientações podem ser adaptadas para o meu caso?",
+    "answer": "Sim. , quando a pessoa tem doenças específicas, nutricionistas devem adaptar as recomendações às condições de cada pessoa, ajudando na organização da atenção nutricional.",
     "contexts": [
-      "The Dietary Guidelines for the Brazilian population present a set of information and recommendations about food aimed at promoting the health of individuals, families, communities, and Brazilian society as a whole, both now and in the future. This guide is intended for all Brazilians, including workers whose profession involves promoting the health of the population, such as health professionals, community agents, educators, and human resources trainers. These workers will be fundamental for the widespread dissemination of this material and for ensuring that the content is understood by all, including those with reading difficulties. It is hoped that this guide will be used in people's homes, health units, schools, and any space where health promotion activities take place, such as community centers, social assistance reference centers, unions, training centers for workers, and social movement headquarters. Although the focus of this material is on health promotion and disease prevention, its recommendations may also be useful for those suffering from specific diseases. In such cases, it is essential that nutritionists adapt the recommendations to the specific conditions of each individual, supporting health professionals in organizing nutritional care.\n\nEvery structured human action is implicitly or explicitly guided by principles. The formulation of dietary guidelines is no exception. The principles that guided the preparation of this guide are presented in this chapter. Food is more than nutrient intake; it concerns the foods that contain and provide nutrients, how foods are combined and prepared, the characteristics of eating habits, and the cultural and social dimensions of food practices. All these aspects influence health and well-being. Nutrient intake, provided by food, is essential for good health. Equally important for health are the specific foods that provide nutrients, the numerous possible combinations between them, and their preparation methods, as well as the characteristics of eating habits and the cultural and social dimensions of food practices. The science of nutrition emerged with the identification and isolation of nutrients present in foods and with studies on the effect of individual nutrients on the incidence of certain diseases. These studies were fundamental for formulating policies and actions aimed at preventing specific nutritional deficiencies and cardiovascular diseases associated with excessive sodium or animal fat consumption. However, the effect of individual nutrients has progressively proven insufficient to explain the relationship between food and health."
+      "Embora o foco deste material seja a promoção da saúde e a prevenção de enfermidades, suas recomendações poderão ser úteis a todos aqueles que padeçam de doenças específicas. Neste caso, é imprescindível que nutricionistas adaptem as recomendações às condições específicas de cada pessoa, apoiando profissionais de saúde na organização da atenção nutricional."
     ],
-    "ground_truth": "VERDADEIRO. Estudos mostram que padrões alimentares na infância estão associados a parâmetros cardiovasculares como obesidade e hipertensão, além de influenciar hábitos alimentares ao longo da vida e o risco cardiovascular na idade adulta.",
+    "ground_truth": "Sim. , quando a pessoa tem doenças específicas, nutricionistas devem adaptar as recomendações às condições de cada pessoa, ajudando na organização da atenção nutricional.",
     "source": "guia_alimentar_populacao_brasileira_2ed.pdf",
-    "metadata": {
-      "type": "inference",
-      "difficulty": "hard",
-      "topic_path": [
-        "Document Topics",
-        "guia_alimentar_populacao_brasileira_2ed.pdf",
-        "Dietary Guidelines for the Brazilian Population",
-        "Overview of Dietary Guidelines"
-      ],
-      "source": "guia_alimentar_populacao_brasileira_2ed.pdf"
-    }
+    "metadata": {}
   },
   {
-    "question": "Se eu quero ter uma dieta equilibrada e sustentável, quais aspectos devo prestar atenção na escolha dos alimentos?",
-    "answer": "É importante que você escolha alimentos que sejam nutricionalmente equilibrados, saborosos e culturalmente apropriados, levando em conta também o impacto social e ambiental da sua alimentação, além do tipo de processamento que os alimentos sofreram.",
+    "question": "Na minha comida do dia a dia, o que deve ser a base da alimentação?",
+    "answer": "A base da alimentação deve ser feita de alimentos in natura ou minimamente processados, em grande variedade e predominantemente de origem vegetal.",
     "contexts": [
-      "This chapter presents general recommendations that guide the choice of foods to compose a nutritionally balanced, tasty, culturally appropriate diet that also promotes socially and environmentally sustainable food systems. These recommendations were developed according to the principles outlined in the previous chapter and aim to maximize the health and well-being of all, now and in the future. The recommendations emphasize the type of processing that foods undergo before acquisition, preparation, and consumption. The type of processing employed in their production conditions the nutrient profile, taste, and flavor they add to the diet, as well as influencing with which other foods they will be consumed, in what circumstances (when, where, with whom), and even in what quantity. Four categories of foods, defined according to the type of processing employed in their production, are covered by the recommendations of this chapter."
+      "alimentos in natura ou minimamente processados, em grande variedade e predominantemente de origem vegetal, sejam a base da alimentação."
     ],
-    "ground_truth": "É importante que você escolha alimentos que sejam nutricionalmente equilibrados, saborosos e culturalmente apropriados, levando em conta também o impacto social e ambiental da sua alimentação, além do tipo de processamento que os alimentos sofreram.",
+    "ground_truth": "A base da alimentação deve ser feita de alimentos in natura ou minimamente processados, em grande variedade e predominantemente de origem vegetal.",
     "source": "guia_alimentar_populacao_brasileira_2ed.pdf",
-    "metadata": {
-      "type": "multi-hop",
-      "difficulty": "medium",
-      "topic_path": [
-        "Document Topics",
-        "guia_alimentar_populacao_brasileira_2ed.pdf",
-        "Dietary Guidelines for the Brazilian Population",
-        "Food Choices and Recommendations",
-        "General Recommendations"
-      ],
-      "source": "guia_alimentar_populacao_brasileira_2ed.pdf"
-    }
+    "metadata": {}
   },
   {
-    "question": "Quais alimentos são considerados in natura ou minimamente processados que eu posso incluir na minha dieta?",
-    "answer": "Você pode incluir alimentos in natura, como grãos secos, raízes e tubérculos lavados, cortes de carne refrigerados ou congelados e leite pasteurizado, além de alimentos minimamente processados que passaram por pequenas alterações.",
+    "question": "Se eu como sozinho vendo televisão, isso pode atrapalhar o quanto eu como?",
+    "answer": "Sim. As circunstâncias de comer, como comer sozinho, sentado no sofá e diante da televisão, ou compartilhar uma refeição sentado à mesa com familiares ou amigos, influenciam quais alimentos serão consumidos e, mais importante, em que quantidades.",
     "contexts": [
-      "The first category includes in natura or minimally processed foods. In natura foods are those obtained directly from plants or animals and acquired for consumption without any alteration after leaving nature. Minimally processed foods are in natura foods that have undergone minimal alterations before acquisition. Examples include dried grains, polished and packaged or ground into flour, washed roots and tubers, refrigerated or frozen cuts of meat, and pasteurized milk. The second category corresponds to products extracted from in natura foods or directly from nature and used by people to season and cook foods and create culinary preparations. Examples of these products include oils, fats, sugar, and salt. The third category corresponds to products manufactured essentially with the addition of salt or sugar to an in natura or minimally processed food, such as pickled vegetables, canned fruits, cheeses, and breads. The fourth category corresponds to products whose manufacturing involves various stages and techniques of processing and multiple ingredients, many of which are used exclusively in industrial settings. Examples include soft drinks, filled cookies, packaged snacks, and instant noodles."
+      "Há igualmente evidências de que circunstâncias que envolvem o consumo de alimentos – por exemplo, comer sozinho, sentado no sofá e diante da televisão ou compartilhar uma refeição, sentado à mesa com familiares ou amigos – são importantes para determinar quais serão consumidos e, mais importante, em que quantidades."
     ],
-    "ground_truth": "Você pode incluir alimentos in natura, como grãos secos, raízes e tubérculos lavados, cortes de carne refrigerados ou congelados e leite pasteurizado, além de alimentos minimamente processados que passaram por pequenas alterações.",
+    "ground_truth": "Sim. As circunstâncias de comer, como comer sozinho, sentado no sofá e diante da televisão, ou compartilhar uma refeição sentado à mesa com familiares ou amigos, influenciam quais alimentos serão consumidos e, mais importante, em que quantidades.",
     "source": "guia_alimentar_populacao_brasileira_2ed.pdf",
-    "metadata": {
-      "type": "single-hop",
-      "difficulty": "easy",
-      "topic_path": [
-        "Document Topics",
-        "guia_alimentar_populacao_brasileira_2ed.pdf",
-        "Dietary Guidelines for the Brazilian Population",
-        "Food Choices and Recommendations",
-        "Food Categories"
-      ],
-      "source": "guia_alimentar_populacao_brasileira_2ed.pdf"
-    }
+    "metadata": {}
   },
   {
-    "question": "Se eu quiser melhorar minha alimentação, quais categorias de alimentos devo priorizar e quais devo evitar?",
-    "answer": "Você deve priorizar alimentos in natura ou minimamente processados, como frutas e vegetais frescos. Evite produtos industrializados que passam por várias etapas de processamento, como refrigerantes e salgadinhos, que contêm muitos ingredientes artificiais.",
+    "question": "Se eu quiser fazer escolhas melhores na alimentação da minha família, isso ajuda a gente a ter mais autonomia e cuidar melhor da saúde?",
+    "answer": "Sim. Ter acesso a informações confiáveis ajuda pessoas, famílias e comunidades a ampliar a autonomia para fazer escolhas alimentares e a se fortalecer para cuidar da própria saúde.",
     "contexts": [
-      "The first category includes in natura or minimally processed foods. In natura foods are those obtained directly from plants or animals and acquired for consumption without any alteration after leaving nature. Minimally processed foods are in natura foods that have undergone minimal alterations before acquisition. Examples include dried grains, polished and packaged or ground into flour, washed roots and tubers, refrigerated or frozen cuts of meat, and pasteurized milk. The second category corresponds to products extracted from in natura foods or directly from nature and used by people to season and cook foods and create culinary preparations. Examples of these products include oils, fats, sugar, and salt. The third category corresponds to products manufactured essentially with the addition of salt or sugar to an in natura or minimally processed food, such as pickled vegetables, canned fruits, cheeses, and breads. The fourth category corresponds to products whose manufacturing involves various stages and techniques of processing and multiple ingredients, many of which are used exclusively in industrial settings. Examples include soft drinks, filled cookies, packaged snacks, and instant noodles."
+      "O acesso a informações confiáveis sobre características e determinantes da alimentação adequada e saudável contribui para que pessoas, famílias e comunidades ampliem a autonomia para fazer escolhas alimentares e para que exijam o cumprimento do direito humano à alimentação adequada e saudável.",
+      "A ampliação da autonomia nas escolhas de alimentos implica o fortalecimento das pessoas, famílias e comunidades para se tornarem",
+      "agentes produtores de sua saúde, desenvolvendo a capacidade de autocuidado e também de agir sobre os fatores do ambiente que determinam sua saúde."
     ],
-    "ground_truth": "Você deve priorizar alimentos in natura ou minimamente processados, como frutas e vegetais frescos. Evite produtos industrializados que passam por várias etapas de processamento, como refrigerantes e salgadinhos, que contêm muitos ingredientes artificiais.",
+    "ground_truth": "Sim. Ter acesso a informações confiáveis ajuda pessoas, famílias e comunidades a ampliar a autonomia para fazer escolhas alimentares e a se fortalecer para cuidar da própria saúde.",
     "source": "guia_alimentar_populacao_brasileira_2ed.pdf",
-    "metadata": {
-      "type": "multi-hop",
-      "difficulty": "medium",
-      "topic_path": [
-        "Document Topics",
-        "guia_alimentar_populacao_brasileira_2ed.pdf",
-        "Dietary Guidelines for the Brazilian Population",
-        "Food Choices and Recommendations",
-        "Food Categories"
-      ],
-      "source": "guia_alimentar_populacao_brasileira_2ed.pdf"
-    }
+    "metadata": {}
   },
   {
-    "question": "O que devo fazer para garantir que minha dieta seja saudável e sustentável?",
-    "answer": "Você deve fazer dos alimentos in natura ou minimamente processados a base da sua dieta, como grãos, legumes, frutas, e evitar alimentos ultraprocessados. Além disso, é importante usar óleos, gorduras, sal e açúcar em pequenas quantidades.",
+    "question": "Na minha alimentação do dia a dia, o que pode ser a base para eu comer melhor do coração?",
+    "answer": "A base da alimentação pode ser feita com alimentos in natura ou minimamente processados, em grande variedade e predominantemente de origem vegetal. Isso inclui grãos, tubérculos e raízes, legumes e verduras, frutas, leite, ovos, peixes, carnes e água.",
     "contexts": [
-      "Make in natura or minimally processed foods the basis of your diet. In natura or minimally processed foods, in a wide variety and predominantly of plant origin, are the foundation for a nutritionally balanced, tasty, culturally appropriate diet that promotes a socially and environmentally sustainable food system. These foods include many varieties of grains, tubers and roots, legumes and vegetables, fruits, milk, eggs, fish, meats, and also water. The acquisition of in natura foods is limited to some varieties such as fruits, vegetables, greens, roots, tubers, and eggs. Even so, it is common for even these foods to undergo some alteration before being acquired, such as cleaning, removal of inedible parts, and refrigeration. Other foods like rice, beans, milk, and meat are commonly acquired after drying, packaging, pasteurization, cooling, or freezing. The guide recommends making in natura or minimally processed foods the basis of your diet due to their nutritional benefits and their role in promoting a sustainable food system.\n\n1. Make in natura or minimally processed foods the basis of your diet. 2. Use oils, fats, salt, and sugar in small quantities when seasoning and cooking foods and creating culinary preparations. 3. Limit the consumption of processed foods, consuming them in small quantities as ingredients in culinary preparations or as part of meals based on in natura or minimally processed foods. 4. Avoid ultraprocessed foods. 5. Eat regularly and attentively, in appropriate environments, and whenever possible, in company. 6. Shop in places that offer a variety of in natura or minimally processed foods. 7. Develop, practice, and share culinary skills. 8. Plan the use of time to give food the space it deserves. 9. Prefer, when eating out, places that serve freshly prepared meals. 10. Be critical of information, guidance, and messages about food conveyed in commercial advertisements."
+      "Alimentos in natura ou minimamente processados, em grande variedade e predominantemente de origem vegetal, são a base para uma alimentação nutricionalmente balanceada, saborosa, culturalmente apropriada e promotora de um sistema alimentar socialmente e ambientalmente sustentável.",
+      "Alimentos in natura ou minimamente processados incluem muitas variedades de grãos, tubérculos e raízes, legumes e verduras, frutas, leite, ovos, peixes, carnes e, também, a água."
     ],
-    "ground_truth": "Você deve fazer dos alimentos in natura ou minimamente processados a base da sua dieta, como grãos, legumes, frutas, e evitar alimentos ultraprocessados. Além disso, é importante usar óleos, gorduras, sal e açúcar em pequenas quantidades.",
+    "ground_truth": "A base da alimentação pode ser feita com alimentos in natura ou minimamente processados, em grande variedade e predominantemente de origem vegetal. Isso inclui grãos, tubérculos e raízes, legumes e verduras, frutas, leite, ovos, peixes, carnes e água.",
     "source": "guia_alimentar_populacao_brasileira_2ed.pdf",
-    "metadata": {
-      "type": "single-hop",
-      "difficulty": "easy",
-      "topic_path": [
-        "Document Topics",
-        "guia_alimentar_populacao_brasileira_2ed.pdf",
-        "Dietary Guidelines for the Brazilian Population",
-        "Food Choices and Recommendations",
-        "Practical Eating Steps"
-      ],
-      "source": "guia_alimentar_populacao_brasileira_2ed.pdf"
-    }
+    "metadata": {}
   },
   {
-    "question": "Se eu quiser comer de forma mais saudável, quais práticas devo adotar além de escolher alimentos frescos?",
-    "answer": "Além de escolher alimentos in natura, você deve limitar o consumo de alimentos processados, comer regularmente e atentamente, e desenvolver habilidades culinárias. É recomendável também planejar o uso do tempo para dar ao alimento o espaço que merece e ser crítico em relação às informações sobre alimentos que recebe.",
+    "question": "Se eu quiser comer arroz com feijão e outras comidas parecidas, isso ajuda mesmo a completar melhor os nutrientes?",
+    "answer": "Sim. Misturar alimentos de origem vegetal pode ajudar porque eles se complementam. O arroz com feijão é um exemplo, assim como cereais com legumes e verduras, tubérculos com leguminosas e cereais ou tubérculos com frutas.",
     "contexts": [
-      "Make in natura or minimally processed foods the basis of your diet. In natura or minimally processed foods, in a wide variety and predominantly of plant origin, are the foundation for a nutritionally balanced, tasty, culturally appropriate diet that promotes a socially and environmentally sustainable food system. These foods include many varieties of grains, tubers and roots, legumes and vegetables, fruits, milk, eggs, fish, meats, and also water. The acquisition of in natura foods is limited to some varieties such as fruits, vegetables, greens, roots, tubers, and eggs. Even so, it is common for even these foods to undergo some alteration before being acquired, such as cleaning, removal of inedible parts, and refrigeration. Other foods like rice, beans, milk, and meat are commonly acquired after drying, packaging, pasteurization, cooling, or freezing. The guide recommends making in natura or minimally processed foods the basis of your diet due to their nutritional benefits and their role in promoting a sustainable food system.\n\n1. Make in natura or minimally processed foods the basis of your diet. 2. Use oils, fats, salt, and sugar in small quantities when seasoning and cooking foods and creating culinary preparations. 3. Limit the consumption of processed foods, consuming them in small quantities as ingredients in culinary preparations or as part of meals based on in natura or minimally processed foods. 4. Avoid ultraprocessed foods. 5. Eat regularly and attentively, in appropriate environments, and whenever possible, in company. 6. Shop in places that offer a variety of in natura or minimally processed foods. 7. Develop, practice, and share culinary skills. 8. Plan the use of time to give food the space it deserves. 9. Prefer, when eating out, places that serve freshly prepared meals. 10. Be critical of information, guidance, and messages about food conveyed in commercial advertisements."
+      "Exemplos de combinações de alimentos de origem vegetal que se complementam do ponto de vista nutricional são encontrados na mistura de cereais com leguminosas (comum na culinária mexicana e presente no nosso arroz com feijão), de cereais com legumes e verduras (comum na culinária de países asiáticos e presente no arroz com jambu do Pará), de tubérculos com leguminosas (comum em",
+      "Por sua vez, alimentos de origem vegetal costumam ser boas fontes de fibras e de vários nutrientes e geralmente têm menos calorias por"
     ],
-    "ground_truth": "Além de escolher alimentos in natura, você deve limitar o consumo de alimentos processados, comer regularmente e atentamente, e desenvolver habilidades culinárias. É recomendável também planejar o uso do tempo para dar ao alimento o espaço que merece e ser crítico em relação às informações sobre alimentos que recebe.",
+    "ground_truth": "Sim. Misturar alimentos de origem vegetal pode ajudar porque eles se complementam. O arroz com feijão é um exemplo, assim como cereais com legumes e verduras, tubérculos com leguminosas e cereais ou tubérculos com frutas.",
     "source": "guia_alimentar_populacao_brasileira_2ed.pdf",
-    "metadata": {
-      "type": "multi-hop",
-      "difficulty": "medium",
-      "topic_path": [
-        "Document Topics",
-        "guia_alimentar_populacao_brasileira_2ed.pdf",
-        "Dietary Guidelines for the Brazilian Population",
-        "Food Choices and Recommendations",
-        "Practical Eating Steps"
-      ],
-      "source": "guia_alimentar_populacao_brasileira_2ed.pdf"
-    }
+    "metadata": {}
   },
   {
-    "question": "Quais obstáculos posso encontrar ao tentar adotar uma alimentação mais saudável?",
-    "answer": "Você pode enfrentar obstáculos como falta de informação, disponibilidade de alimentos, custo, habilidades culinárias, tempo e influência da publicidade ao tentar adotar uma alimentação mais saudável.",
+    "question": "Eu posso usar alho, cebola, pimentas, manjericão e coentro para dar sabor na comida sem precisar exagerar no sal?",
+    "answer": "Sim. Esses temperos de sabor intenso ajudam a dar sabor às preparações de alimentos.",
     "contexts": [
-      "This chapter addresses potential obstacles to adopting the recommendations regarding food choices, food combinations, and the act of eating. These obstacles are identified as: information, availability, cost, culinary skills, time, and advertising. Overcoming these obstacles may be easier or more difficult depending on the nature of the obstacle, the resources available to individuals, and the environment in which they live. Some obstacles may be completely and quickly removed, while others will require persistence. In some cases, removing obstacles will require individuals to reflect on the importance of food in their lives and to assign greater value to the process of acquiring, preparing, and consuming food. In other cases, it will require public policies and regulatory actions by the state to make the environment more conducive to adopting the recommendations."
+      "ão final. Papel semelhante tem a adição às preparações de alimentos de sabor intenso como alho, cebola, pimentas, manjericão e coentro."
     ],
-    "ground_truth": "Você pode enfrentar obstáculos como falta de informação, disponibilidade de alimentos, custo, habilidades culinárias, tempo e influência da publicidade ao tentar adotar uma alimentação mais saudável.",
+    "ground_truth": "Sim. Esses temperos de sabor intenso ajudam a dar sabor às preparações de alimentos.",
     "source": "guia_alimentar_populacao_brasileira_2ed.pdf",
-    "metadata": {
-      "type": "single-hop",
-      "difficulty": "easy",
-      "topic_path": [
-        "Document Topics",
-        "guia_alimentar_populacao_brasileira_2ed.pdf",
-        "Dietary Guidelines for the Brazilian Population",
-        "Challenges in Healthy Eating",
-        "Identifying Obstacles"
-      ],
-      "source": "guia_alimentar_populacao_brasileira_2ed.pdf"
-    }
+    "metadata": {}
   },
   {
-    "question": "Se eu tiver dificuldades para mudar meus hábitos alimentares, como posso superar esses desafios?",
-    "answer": "Para superar os desafios na mudança de hábitos alimentares, você deve refletir sobre a importância da comida na sua vida e valorizar o processo de aquisição, preparo e consumo dos alimentos. Além disso, algumas dificuldades podem exigir políticas públicas para melhorar o ambiente e facilitar a adoção das recomendações.",
+    "question": "Na minha comida do dia a dia, eu devo usar óleos, gorduras, sal e açúcar em pouca quantidade mesmo?",
+    "answer": "Sim. Eles devem ser usados em pequenas quantidades ao temperar e cozinhar alimentos e criar preparações culinárias.",
     "contexts": [
-      "This chapter addresses potential obstacles to adopting the recommendations regarding food choices, food combinations, and the act of eating. These obstacles are identified as: information, availability, cost, culinary skills, time, and advertising. Overcoming these obstacles may be easier or more difficult depending on the nature of the obstacle, the resources available to individuals, and the environment in which they live. Some obstacles may be completely and quickly removed, while others will require persistence. In some cases, removing obstacles will require individuals to reflect on the importance of food in their lives and to assign greater value to the process of acquiring, preparing, and consuming food. In other cases, it will require public policies and regulatory actions by the state to make the environment more conducive to adopting the recommendations."
+      "Utilize óleos, gorduras, sal e açúcar em pequenas quantidades ao temperar e cozinhar alimentos e criar preparações culinárias.",
+      "Desde que utilizados com moderação em preparações culinárias com base em alimentos in natura ou minimamente processados, os óleos, as gorduras, o sal e o açúcar contribuem para diversificar e tornar mais saborosa a alimentação sem que fique nutricionalmente desbalanceada."
     ],
-    "ground_truth": "Para superar os desafios na mudança de hábitos alimentares, você deve refletir sobre a importância da comida na sua vida e valorizar o processo de aquisição, preparo e consumo dos alimentos. Além disso, algumas dificuldades podem exigir políticas públicas para melhorar o ambiente e facilitar a adoção das recomendações.",
+    "ground_truth": "Sim. Eles devem ser usados em pequenas quantidades ao temperar e cozinhar alimentos e criar preparações culinárias.",
     "source": "guia_alimentar_populacao_brasileira_2ed.pdf",
-    "metadata": {
-      "type": "multi-hop",
-      "difficulty": "medium",
-      "topic_path": [
-        "Document Topics",
-        "guia_alimentar_populacao_brasileira_2ed.pdf",
-        "Dietary Guidelines for the Brazilian Population",
-        "Challenges in Healthy Eating",
-        "Identifying Obstacles"
-      ],
-      "source": "guia_alimentar_populacao_brasileira_2ed.pdf"
-    }
+    "metadata": {}
   },
   {
-    "question": "O que devo fazer para ter acesso a alimentos saudáveis e frescos?",
-    "answer": "Para ter acesso a alimentos saudáveis e frescos, você deve fazer compras em mercados e feiras que oferecem produtos in natura ou minimamente processados.",
+    "question": "Se eu comer alimentos processados, preciso limitar a quantidade?",
+    "answer": "Sim. O consumo de alimentos processados deve ser limitado a pequenas quantidades, de preferência como ingrediente de preparações culinárias ou como acompanhamento de refeições baseadas em alimentos in natura ou minimamente processados.",
     "contexts": [
-      "To overcome the obstacles identified, individuals can take several actions. For information, use this guide as a reliable source and discuss its content with family and friends. For availability, shop at markets and fairs that offer in natura or minimally processed foods. For cost, prefer seasonal fruits and vegetables and consider community-supported agriculture. For culinary skills, develop and share cooking skills with others. For time, plan meals and share responsibilities for food preparation with family members. For advertising, educate children about the purpose of advertising and advocate for regulations that protect consumers from misleading food marketing."
+      "Limite o uso de alimentos processados, consumindo-os, em pequenas quantidades, como ingredientes de preparações culinárias ou como parte de refeições baseadas em alimentos in natura ou minimamente processados",
+      "Pelas razões descritas acima, o consumo de alimentos processados deve ser limitado a pequenas quantidades, seja como ingredientes de preparações culinárias, seja como acompanhamento de refeições"
     ],
-    "ground_truth": "Para ter acesso a alimentos saudáveis e frescos, você deve fazer compras em mercados e feiras que oferecem produtos in natura ou minimamente processados.",
+    "ground_truth": "Sim. O consumo de alimentos processados deve ser limitado a pequenas quantidades, de preferência como ingrediente de preparações culinárias ou como acompanhamento de refeições baseadas em alimentos in natura ou minimamente processados.",
     "source": "guia_alimentar_populacao_brasileira_2ed.pdf",
-    "metadata": {
-      "type": "single-hop",
-      "difficulty": "easy",
-      "topic_path": [
-        "Document Topics",
-        "guia_alimentar_populacao_brasileira_2ed.pdf",
-        "Dietary Guidelines for the Brazilian Population",
-        "Challenges in Healthy Eating",
-        "Strategies to Overcome Obstacles"
-      ],
-      "source": "guia_alimentar_populacao_brasileira_2ed.pdf"
-    }
+    "metadata": {}
   },
   {
-    "question": "Se eu quiser melhorar minhas habilidades culinárias, o que posso fazer?",
-    "answer": "Para melhorar suas habilidades culinárias, você pode desenvolver e compartilhar essas habilidades com outras pessoas, além de planejar refeições e dividir responsabilidades de preparo com membros da família.",
+    "question": "Por que eu devo evitar biscoitos recheados, salgadinhos de pacote, refrigerantes e macarrão instantâneo?",
+    "answer": "Porque esses alimentos são nutricionalmente desbalanceados, tendem a ser consumidos em excesso e podem substituir alimentos in natura ou minimamente processados. Além disso, suas formas de produção, distribuição, comercialização e consumo afetam de modo desfavorável a cultura, a vida social e o meio ambiente.",
     "contexts": [
-      "To overcome the obstacles identified, individuals can take several actions. For information, use this guide as a reliable source and discuss its content with family and friends. For availability, shop at markets and fairs that offer in natura or minimally processed foods. For cost, prefer seasonal fruits and vegetables and consider community-supported agriculture. For culinary skills, develop and share cooking skills with others. For time, plan meals and share responsibilities for food preparation with family members. For advertising, educate children about the purpose of advertising and advocate for regulations that protect consumers from misleading food marketing."
+      "Evite alimentos ultraprocessados",
+      "Devido a seus ingredientes, alimentos ultraprocessados – como biscoitos recheados, salgadinhos “de pacote”, refrigerantes e macarrão “instantâneo” – são nutricionalmente desbalanceados. Por conta de sua formulação e apresentação, tendem a ser consumidos em excesso e a substituir alimentos in natura ou minimamente processados. As formas de produção, distribuição, comercialização e consumo afetam de modo desfavorável a cultura, a vida social e o meio ambiente"
     ],
-    "ground_truth": "Para melhorar suas habilidades culinárias, você pode desenvolver e compartilhar essas habilidades com outras pessoas, além de planejar refeições e dividir responsabilidades de preparo com membros da família.",
+    "ground_truth": "Porque esses alimentos são nutricionalmente desbalanceados, tendem a ser consumidos em excesso e podem substituir alimentos in natura ou minimamente processados. Além disso, suas formas de produção, distribuição, comercialização e consumo afetam de modo desfavorável a cultura, a vida social e o meio ambiente.",
     "source": "guia_alimentar_populacao_brasileira_2ed.pdf",
-    "metadata": {
-      "type": "multi-hop",
-      "difficulty": "medium",
-      "topic_path": [
-        "Document Topics",
-        "guia_alimentar_populacao_brasileira_2ed.pdf",
-        "Dietary Guidelines for the Brazilian Population",
-        "Challenges in Healthy Eating",
-        "Strategies to Overcome Obstacles"
-      ],
-      "source": "guia_alimentar_populacao_brasileira_2ed.pdf"
-    }
+    "metadata": {}
   },
   {
-    "question": "O que devo incluir na minha dieta para ter uma alimentação saudável para o coração?",
-    "answer": "Para ter uma alimentação saudável para o coração, você deve incluir muitas frutas e vegetais variados, escolher grãos integrais em vez de grãos refinados, optar por fontes saudáveis de proteína, utilizar fontes de gordura insaturada em vez de gordura saturada, e consumir alimentos minimamente processados. Além disso, é importante minimizar a ingestão de açúcares adicionados e reduzir a ingestão de sódio, escolhendo alimentos com baixo teor de sódio.",
+    "question": "Como eu faço para saber se um alimento é ultraprocessado olhando o rótulo?",
+    "answer": "Você pode olhar a lista de ingredientes. Um número elevado de ingredientes, frequentemente cinco ou mais, e a presença de nomes pouco familiares e não usados em preparações culinárias, como gordura vegetal hidrogenada, óleos interesterificados, xarope de frutose, isolados proteicos, agentes de massa, espessantes, emulsificantes, corantes, aromatizantes e realçadores de sabor, indicam que o produto pertence à categoria de alimentos ultraprocessados.",
     "contexts": [
-      "Poor diet quality is strongly associated with elevated cardiovascular disease morbidity and mortality risk. This American Heart Association scientific statement for food-based cardiovascular health optimization and cardiovascular disease risk reduction guidance summarizes available evidence and provides contextual guidance for the key features of heart-healthy dietary patterns. It enumerates collateral benefits of adopting a heart-healthy dietary pattern in terms of nutrient intake adequacy and compatibility with other chronic disease risk reduction guidance. The features of a heart-healthy dietary pattern include (1) adjusting energy intake and expenditure to achieve and maintain a healthy body weight; (2) eating plenty of vegetables and fruits and choosing a wide variety; (3) choosing foods made mostly with whole grains rather than refined grains; (4) choosing healthy sources of protein; (5) choosing sources of unsaturated fats in place of sources of saturated fat; (6) choosing minimally processed foods instead of ultraprocessed foods; (7) minimizing intake of added sugars in beverages and foods; (8) reducing sodium intake by choosing foods low in sodium and preparing foods with minimal or no salt; and (9) if alcohol is not consumed, do not start; if alcohol is consumed, limit intake."
+      "Uma forma prática de distinguir alimentos ultraprocessados de alimentos processados é consultar a lista de ingredientes que, por lei, deve constar dos rótulos de alimentos embalados que possuem mais de um ingrediente.",
+      "Um número elevado de ingredientes (frequentemente cinco ou mais) e, sobretudo, a presença de ingredientes com nomes pouco familiares e não usados em preparações culinárias (gordura vegetal hidrogenada, óleos interesterificados, xarope de frutose, isolados proteicos, agentes de massa, espessantes, emulsificantes, corantes, aromatizantes, realçadores"
     ],
-    "ground_truth": "Para ter uma alimentação saudável para o coração, você deve incluir muitas frutas e vegetais variados, escolher grãos integrais em vez de grãos refinados, optar por fontes saudáveis de proteína, utilizar fontes de gordura insaturada em vez de gordura saturada, e consumir alimentos minimamente processados. Além disso, é importante minimizar a ingestão de açúcares adicionados e reduzir a ingestão de sódio, escolhendo alimentos com baixo teor de sódio.",
+    "ground_truth": "Você pode olhar a lista de ingredientes. Um número elevado de ingredientes, frequentemente cinco ou mais, e a presença de nomes pouco familiares e não usados em preparações culinárias, como gordura vegetal hidrogenada, óleos interesterificados, xarope de frutose, isolados proteicos, agentes de massa, espessantes, emulsificantes, corantes, aromatizantes e realçadores de sabor, indicam que o produto pertence à categoria de alimentos ultraprocessados.",
+    "source": "guia_alimentar_populacao_brasileira_2ed.pdf",
+    "metadata": {}
+  },
+  {
+    "question": "Por que esses alimentos fazem mal para o coração e para a saúde em geral?",
+    "answer": "Eles costumam ser ricos em gorduras ou açúcares, muitas vezes nos dois ao mesmo tempo, e também têm muito sódio. Além disso, tendem a ser pobres em fibras, vitaminas e minerais. Isso favorece doenças do coração, diabetes e vários tipos de câncer, além de aumentar o risco de deficiências nutricionais.",
+    "contexts": [
+      "Os ingredientes principais dos alimentos ultraprocessados fazem com que, com frequência, eles sejam ricos em gorduras ou açúcares e, muitas vezes, simultaneamente ricos em gorduras e açúcares.",
+      "É comum que apresentem alto teor de sódio, por conta da adição de grandes quantidades de sal, necessárias para estender a duração dos produtos e intensificar o sabor, ou mesmo para encobrir sabores indesejáveis oriundos de aditivos ou de substâncias geradas pelas técnicas envolvidas no ultraprocessamento.",
+      "Alimentos ultraprocessados tendem a ser muito pobres em fibras, que são essenciais para a prevenção de doenças do coração, diabetes e vários tipos de câncer.",
+      "Essa mesma condição faz com que os alimentos ultraprocessados sejam pobres também em vitaminas, minerais e outras substâncias com atividade biológica que estão naturalmente presentes em alimentos in natura ou minimamente processados.",
+      "Assim, em resumo, a composição nutricional desbalanceada inerente à natureza dos ingredientes dos alimentos ultraprocessados favorece doenças do coração, diabetes e vários tipos de câncer, além de contribuir para aumentar o risco de deficiências nutricionais."
+    ],
+    "ground_truth": "Eles costumam ser ricos em gorduras ou açúcares, muitas vezes nos dois ao mesmo tempo, e também têm muito sódio. Além disso, tendem a ser pobres em fibras, vitaminas e minerais. Isso favorece doenças do coração, diabetes e vários tipos de câncer, além de aumentar o risco de deficiências nutricionais.",
+    "source": "guia_alimentar_populacao_brasileira_2ed.pdf",
+    "metadata": {}
+  },
+  {
+    "question": "Se eu comer muito alimento ultraprocessado, isso pode me fazer engordar mais fácil?",
+    "answer": "Sim. Esses alimentos podem fazer a pessoa comer mais calorias do que precisa, e o excesso acaba virando gordura no corpo, aumentando o risco de obesidade.",
+    "contexts": [
+      "Como consequência, quando consumimos alimentos ultraprocessados, tendemos, sem perceber, a ingerir mais calorias do que necessitamos; e calorias ingeridas e não gastas inevitavelmente acabam estocadas em nosso corpo na forma de gordura. O resultado é a obesidade.",
+      "A elevada quantidade de calorias por grama, comum à maioria dos alimentos ultraprocessados, é um dos principais mecanismos que desregulam o balanço de energia e aumentam o risco de obesidade."
+    ],
+    "ground_truth": "Sim. Esses alimentos podem fazer a pessoa comer mais calorias do que precisa, e o excesso acaba virando gordura no corpo, aumentando o risco de obesidade.",
+    "source": "guia_alimentar_populacao_brasileira_2ed.pdf",
+    "metadata": {}
+  },
+  {
+    "question": "No dia a dia, o que eu posso trocar para comer menos ultraprocessados?",
+    "answer": "Você pode preferir água, leite e frutas no lugar de refrigerantes, bebidas lácteas e biscoitos recheados; comida feita na hora no lugar de sopas de pacote, macarrão instantâneo, pratos congelados prontos para aquecer, sanduíches, frios e embutidos, maioneses e molhos industrializados, misturas prontas para tortas; e sobremesas caseiras no lugar das industrializadas.",
+    "contexts": [
+      "prefira sempre alimentos in natura ou minimamente processados e preparações culinárias a alimentos ultraprocessados.",
+      "opte por água, leite e frutas no lugar de refrigerantes, bebidas lácteas e biscoitos recheados; não troque comida feita na hora (caldos, sopas, saladas, molhos, arroz e feijão, macarronada, refogados de legumes e verduras, farofas, tortas) por produtos que dispensam preparação culinária (sopas “de pacote”, macarrão “instantâneo”, pratos congelados prontos para aquecer, sanduíches, frios e embutidos, maioneses e molhos industrializados, misturas prontas para tortas); e fique com sobremesas caseiras, dispensando as industrializadas."
+    ],
+    "ground_truth": "Você pode preferir água, leite e frutas no lugar de refrigerantes, bebidas lácteas e biscoitos recheados; comida feita na hora no lugar de sopas de pacote, macarrão instantâneo, pratos congelados prontos para aquecer, sanduíches, frios e embutidos, maioneses e molhos industrializados, misturas prontas para tortas; e sobremesas caseiras no lugar das industrializadas.",
+    "source": "guia_alimentar_populacao_brasileira_2ed.pdf",
+    "metadata": {}
+  },
+  {
+    "question": "Eu posso trocar a comida feita na hora por sopa de pacote, macarrão instantâneo ou prato congelado?",
+    "answer": "Não. É melhor não trocar a comida feita na hora por produtos que dispensam preparação culinária. O melhor é ficar com comida feita na hora e sobremesas caseiras, deixando as industrializadas de lado.",
+    "contexts": [
+      "não troque a “comida feita na hora” (caldos, sopas, saladas, molhos, arroz e feijão, macarronada, refogados de legumes e verduras, farofas, tortas) por produtos que dispensam preparação culinária (“sopas de pacote”, “macarrão instantâneo”, pratos congelados prontos para aquecer, sanduíches, frios e embutidos, maioneses e molhos industrializados, misturas prontas para tortas)",
+      "e fique com sobremesas caseiras, dispensando as industrializadas."
+    ],
+    "ground_truth": "Não. É melhor não trocar a comida feita na hora por produtos que dispensam preparação culinária. O melhor é ficar com comida feita na hora e sobremesas caseiras, deixando as industrializadas de lado.",
+    "source": "guia_alimentar_populacao_brasileira_2ed.pdf",
+    "metadata": {}
+  },
+  {
+    "question": "No meu dia a dia, o que eu devo comer mais: comida in natura ou ultraprocessados?",
+    "answer": "Você deve preferir sempre alimentos in natura ou minimamente processados e preparações culinárias, e evitar alimentos ultraprocessados.",
+    "contexts": [
+      "Faça de alimentos in natura ou minimamente processados a base de sua alimentação",
+      "Evite alimentos ultraprocessados",
+      "A regra de ouro. Prefira sempre alimentos in natura ou minimamente processados e preparações culinárias a alimentos ultraprocessados"
+    ],
+    "ground_truth": "Você deve preferir sempre alimentos in natura ou minimamente processados e preparações culinárias, e evitar alimentos ultraprocessados.",
+    "source": "guia_alimentar_populacao_brasileira_2ed.pdf",
+    "metadata": {}
+  },
+  {
+    "question": "Se eu como arroz com feijão quase todo dia, isso é uma combinação boa para mim?",
+    "answer": "Sim. A mistura de feijão com arroz aparece em quase todos os almoços mostrados, e isso combina com a alimentação da maioria das pessoas que comem mais alimentos in natura ou minimamente processados.",
+    "contexts": [
+      "A mistura de feijão com arroz aparece em quase todos os almoços selecionados.",
+      "Esta situação traduz a realidade alimentar da imensa maioria dos brasileiros que privilegiam alimentos in natura ou minimamente processados e, de fato, da grande maioria da população brasileira."
+    ],
+    "ground_truth": "Sim. A mistura de feijão com arroz aparece em quase todos os almoços mostrados, e isso combina com a alimentação da maioria das pessoas que comem mais alimentos in natura ou minimamente processados.",
+    "source": "guia_alimentar_populacao_brasileira_2ed.pdf",
+    "metadata": {}
+  },
+  {
+    "question": "Se eu quiser comer mais legumes e verduras, como posso fazer no almoço e no jantar?",
+    "answer": "Uma forma é colocar pelo menos um legume ou verdura no almoço e no jantar. Nos exemplos, aparecem alface, tomate, acelga, couve, repolho, abóbora, beterraba, quiabo, berinjela e jiló, crus em saladas ou cozidos e refogados.",
+    "contexts": [
+      "para atender ao desejável consumo regular de legumes e verduras (pouco consumidos em todo o Brasil), foram selecionados almoços e jantares em que havia a presença de pelo menos um desses alimentos.",
+      "Para ilustrar as possibilidades de aumentar e diversificar o consumo desses alimentos, procuramos refeições em que diferentes tipos de verduras e legumes (alface, tomate, acelga, couve, repolho, abóbora, beterraba, quiabo, berinjela, jiló) aparecem preparados de diversas formas, crus em saladas ou em preparações cozidas ou refogadas."
+    ],
+    "ground_truth": "Uma forma é colocar pelo menos um legume ou verdura no almoço e no jantar. Nos exemplos, aparecem alface, tomate, acelga, couve, repolho, abóbora, beterraba, quiabo, berinjela e jiló, crus em saladas ou cozidos e refogados.",
+    "source": "guia_alimentar_populacao_brasileira_2ed.pdf",
+    "metadata": {}
+  },
+  {
+    "question": "Quando eu faço um lanche fora de casa, o que é melhor levar para não acabar comendo salgadinho ou biscoito?",
+    "answer": "O melhor é planejar o que vai comer e levar de casa frutas frescas ou secas, leite, iogurte natural, castanhas ou nozes, ou até uma preparação culinária que você goste. Essas opções são práticas para transportar e consumir.",
+    "contexts": [
+      "Frutas frescas ou secas são excelentes alternativas, bem como leite, iogurte natural e castanhas ou nozes, na medida em que são alimentos com alto teor de nutrientes e grande poder de saciedade, além de serem práticos para transportar e consumir.",
+      "É muito importante planejar o que será consumido nas pequenas refeições, sobretudo quando se está fora de casa, por exemplo no trabalho ou na escola.",
+      "Para evitar que, por falta de opções, você tenha que consumir alimentos ultraprocessados, traga de casa frutas frescas ou secas ou outros alimentos in natura ou minimamente processados ou uma preparação culinária que você aprecie."
+    ],
+    "ground_truth": "O melhor é planejar o que vai comer e levar de casa frutas frescas ou secas, leite, iogurte natural, castanhas ou nozes, ou até uma preparação culinária que você goste. Essas opções são práticas para transportar e consumir.",
+    "source": "guia_alimentar_populacao_brasileira_2ed.pdf",
+    "metadata": {}
+  },
+  {
+    "question": "Se eu quiser comer arroz, o que posso colocar junto para ficar mais saudável?",
+    "answer": "Você pode usar cebola, alho, ervas e outros temperos naturais em abundância, e deve reduzir o óleo e o sal no preparo.",
+    "contexts": [
+      "o uso de óleo e sal no preparo culinário do arroz deve ser reduzido e a adição de cebola, alho, ervas e outros temperos naturais deve ser abundante."
+    ],
+    "ground_truth": "Você pode usar cebola, alho, ervas e outros temperos naturais em abundância, e deve reduzir o óleo e o sal no preparo.",
+    "source": "guia_alimentar_populacao_brasileira_2ed.pdf",
+    "metadata": {}
+  },
+  {
+    "question": "Na minha alimentação do dia a dia, é melhor comer batata e mandioca cozidas ou fritas?",
+    "answer": "É melhor preferir as raízes e tubérculos cozidos ou assados, porque quando são fritos absorvem grande quantidade de óleo ou gordura.",
+    "contexts": [
+      "Raízes e tubérculos devem ser preferentemente cozidos ou assados, pois, quando fritos, absorvem grande quantidade de óleo ou gordura."
+    ],
+    "ground_truth": "É melhor preferir as raízes e tubérculos cozidos ou assados, porque quando são fritos absorvem grande quantidade de óleo ou gordura.",
+    "source": "guia_alimentar_populacao_brasileira_2ed.pdf",
+    "metadata": {}
+  },
+  {
+    "question": "Se eu comer salada crua, como faço para lavar direito antes de comer?",
+    "answer": "Antes de serem preparados e consumidos, os legumes e verduras devem ser lavados em água corrente e colocados em um recipiente com água adicionada de hipoclorito de sódio. O rótulo do hipoclorito informa a quantidade que deve ser utilizada e o tempo em que os alimentos devem ficar de molho. O molho em solução de vinagre não tem a mesma capacidade de eliminar os micro-organismos que podem contaminar legumes e verduras.",
+    "contexts": [
+      "Assim, antes de serem preparados e consumidos, devem ser lavados em água corrente e colocados em um recipiente com água adicionada de hipoclorito de sódio, que pode ser adquirido em supermercados e sacolões.",
+      "O rótulo do hipoclorito informa a quantidade que deve ser utilizada e o tempo em que os alimentos devem ficar de molho.",
+      "O molho em solução de vinagre não tem a mesma capacidade de eliminar os micro-organismos que podem contaminar legumes e verduras."
+    ],
+    "ground_truth": "Antes de serem preparados e consumidos, os legumes e verduras devem ser lavados em água corrente e colocados em um recipiente com água adicionada de hipoclorito de sódio. O rótulo do hipoclorito informa a quantidade que deve ser utilizada e o tempo em que os alimentos devem ficar de molho. O molho em solução de vinagre não tem a mesma capacidade de eliminar os micro-organismos que podem contaminar legumes e verduras.",
+    "source": "guia_alimentar_populacao_brasileira_2ed.pdf",
+    "metadata": {}
+  },
+  {
+    "question": "Se eu quiser cuidar do coração, é melhor comer a fruta inteira ou tomar suco?",
+    "answer": "O melhor é consumir a fruta inteira, porque os sucos naturais nem sempre trazem os mesmos benefícios. Fibras e muitos nutrientes podem ser perdidos no preparo, e a saciedade é menor que a da fruta inteira. Sucos e bebidas à base de fruta fabricados pela indústria tendem a ser alimentos ultraprocessados e devem ser evitados.",
+    "contexts": [
+      "Sucos naturais da fruta nem sempre proporcionam os mesmos benefícios da fruta inteira.",
+      "Fibras e muitos nutrientes podem ser perdidos durante o preparo e o poder de saciedade é sempre menor que o da fruta inteira.",
+      "Por isso, o melhor mesmo é consumi-las inteiras, seja nas refeições principais, seja em pequenas refeições.",
+      "Sucos e bebidas à base de fruta fabricados pela indústria são em geral feitos de extratos de frutas e adicionados de açúcar refinado, de concentrados de uva ou maçã (constituídos, predominantemente, por açúcares) ou de adoçantes artificiais.",
+      "Tendem, portanto, a ser alimentos ultraprocessados e, como tal, devem ser evitados."
+    ],
+    "ground_truth": "O melhor é consumir a fruta inteira, porque os sucos naturais nem sempre trazem os mesmos benefícios. Fibras e muitos nutrientes podem ser perdidos no preparo, e a saciedade é menor que a da fruta inteira. Sucos e bebidas à base de fruta fabricados pela indústria tendem a ser alimentos ultraprocessados e devem ser evitados.",
+    "source": "guia_alimentar_populacao_brasileira_2ed.pdf",
+    "metadata": {}
+  },
+  {
+    "question": "Se eu como queijo, é melhor comer pouco mesmo? E os iogurtes adoçados, posso tomar?",
+    "answer": "Queijos devem ser consumidos sempre em pequenas quantidades, e bebidas lácteas e iogurtes adoçados e adicionados de corantes e saborizantes devem ser evitados.",
+    "contexts": [
+      "Por isso, queijos, como todos os alimentos processados, devem ser consumidos sempre em pequenas quantidades, como parte ou acompanhamento de preparações culinárias com base em alimentos in natura ou minimamente processados.",
+      "Bebidas lácteas e iogurtes adoçados e adicionados de corantes e saborizantes são alimentos ultraprocessados e, como tal, devem ser evitados."
+    ],
+    "ground_truth": "Queijos devem ser consumidos sempre em pequenas quantidades, e bebidas lácteas e iogurtes adoçados e adicionados de corantes e saborizantes devem ser evitados.",
+    "source": "guia_alimentar_populacao_brasileira_2ed.pdf",
+    "metadata": {}
+  },
+  {
+    "question": "Pra cuidar do coração, é melhor tirar a pele do frango e comer peixe com mais frequência?",
+    "answer": "Sim. As carnes de aves devem ser consumidas sem a pele, e os peixes têm menos gordura e mais gorduras saudáveis, sendo excelentes substitutos para as carnes vermelhas.",
+    "contexts": [
+      "Neste sentido, recomenda-se que as carnes de aves sejam consumidas sem a pele.",
+      "Pelo menor conteúdo de gorduras e, em particular, pela alta proporção de gorduras saudáveis (gorduras insaturadas), os peixes, tanto quanto os legumes e verduras, são excelentes substitutos para as carnes vermelhas."
+    ],
+    "ground_truth": "Sim. As carnes de aves devem ser consumidas sem a pele, e os peixes têm menos gordura e mais gorduras saudáveis, sendo excelentes substitutos para as carnes vermelhas.",
+    "source": "guia_alimentar_populacao_brasileira_2ed.pdf",
+    "metadata": {}
+  },
+  {
+    "question": "Quantos litros de água por dia eu posso precisar, e o que faz essa quantidade mudar?",
+    "answer": "A quantidade de água por dia pode variar bastante. Para alguns, dois litros por dia pode ser suficiente; outros precisarão de três ou quatro litros ou mesmo mais, como no caso dos esportistas. Isso muda com a idade, o peso, a atividade física, o clima e a temperatura do lugar onde a pessoa vive.",
+    "contexts": [
+      "Para alguns, a ingestão de dois litros de água por dia pode ser suficiente; outros precisarão de três ou quatro litros ou mesmo mais, como no caso dos esportistas.",
+      "Como qualquer alimento, a quantidade de água que precisamos ingerir por dia é muito variável e depende de vários fatores. Entre eles estão a idade e o peso da pessoa, a atividade física que realiza e, ainda, o clima e a temperatura do ambiente onde vive."
+    ],
+    "ground_truth": "A quantidade de água por dia pode variar bastante. Para alguns, dois litros por dia pode ser suficiente; outros precisarão de três ou quatro litros ou mesmo mais, como no caso dos esportistas. Isso muda com a idade, o peso, a atividade física, o clima e a temperatura do lugar onde a pessoa vive.",
+    "source": "guia_alimentar_populacao_brasileira_2ed.pdf",
+    "metadata": {}
+  },
+  {
+    "question": "Eu preciso comer mais verduras, frutas e grãos integrais para cuidar do coração?",
+    "answer": "Sim. Uma alimentação boa para o coração inclui comer bastante verduras e frutas, escolher uma grande variedade e preferir alimentos feitos principalmente com grãos integrais em vez de grãos refinados.",
+    "contexts": [
+      "eating plenty of vegetables and fruits and choosing a wide variety",
+      "choosing foods made mostly with whole grains rather than refined grains"
+    ],
+    "ground_truth": "Sim. Uma alimentação boa para o coração inclui comer bastante verduras e frutas, escolher uma grande variedade e preferir alimentos feitos principalmente com grãos integrais em vez de grãos refinados.",
     "source": "lichtenstein-et-al-2026-2026-dietary-guidance-to-improve-cardiovascular-health-a-scientific-statement-from-the-american.pdf",
-    "metadata": {
-      "type": "single-hop",
-      "difficulty": "easy",
-      "topic_path": [
-        "Document Topics",
-        "lichtenstein-et-al-2026-2026-dietary-guidance-to-improve-cardiovascular-health-a-scientific-statement-from-the-american.pdf",
-        "Dietary Guidance to Improve Cardiovascular Health",
-        "Overview of Dietary Guidance"
-      ],
-      "source": "lichtenstein-et-al-2026-2026-dietary-guidance-to-improve-cardiovascular-health-a-scientific-statement-from-the-american.pdf"
-    }
+    "metadata": {}
   },
   {
-    "question": "Se eu quiser manter um peso saudável e reduzir o risco de doenças do coração, quais mudanças na minha dieta eu poderia fazer?",
-    "answer": "Para manter um peso saudável e reduzir o risco de doenças do coração, você deve ajustar sua ingestão de energia e gasto energético. Isso inclui comer uma variedade de frutas e vegetais, escolher grãos integrais em vez de refinados, optar por proteínas saudáveis, e priorizar gorduras insaturadas. Além disso, é importante minimizar o consumo de alimentos ultraprocessados e evitar o excesso de açúcar e sódio.",
+    "question": "Que tipo de gordura é melhor eu usar no lugar da gordura saturada?",
+    "answer": "É melhor escolher fontes de gorduras insaturadas no lugar das fontes de gordura saturada.",
     "contexts": [
-      "Poor diet quality is strongly associated with elevated cardiovascular disease morbidity and mortality risk. This American Heart Association scientific statement for food-based cardiovascular health optimization and cardiovascular disease risk reduction guidance summarizes available evidence and provides contextual guidance for the key features of heart-healthy dietary patterns. It enumerates collateral benefits of adopting a heart-healthy dietary pattern in terms of nutrient intake adequacy and compatibility with other chronic disease risk reduction guidance. The features of a heart-healthy dietary pattern include (1) adjusting energy intake and expenditure to achieve and maintain a healthy body weight; (2) eating plenty of vegetables and fruits and choosing a wide variety; (3) choosing foods made mostly with whole grains rather than refined grains; (4) choosing healthy sources of protein; (5) choosing sources of unsaturated fats in place of sources of saturated fat; (6) choosing minimally processed foods instead of ultraprocessed foods; (7) minimizing intake of added sugars in beverages and foods; (8) reducing sodium intake by choosing foods low in sodium and preparing foods with minimal or no salt; and (9) if alcohol is not consumed, do not start; if alcohol is consumed, limit intake."
+      "choosing sources of unsaturated fats in place of sources of saturated fat"
     ],
-    "ground_truth": "Para manter um peso saudável e reduzir o risco de doenças do coração, você deve ajustar sua ingestão de energia e gasto energético. Isso inclui comer uma variedade de frutas e vegetais, escolher grãos integrais em vez de refinados, optar por proteínas saudáveis, e priorizar gorduras insaturadas. Além disso, é importante minimizar o consumo de alimentos ultraprocessados e evitar o excesso de açúcar e sódio.",
+    "ground_truth": "É melhor escolher fontes de gorduras insaturadas no lugar das fontes de gordura saturada.",
     "source": "lichtenstein-et-al-2026-2026-dietary-guidance-to-improve-cardiovascular-health-a-scientific-statement-from-the-american.pdf",
-    "metadata": {
-      "type": "multi-hop",
-      "difficulty": "medium",
-      "topic_path": [
-        "Document Topics",
-        "lichtenstein-et-al-2026-2026-dietary-guidance-to-improve-cardiovascular-health-a-scientific-statement-from-the-american.pdf",
-        "Dietary Guidance to Improve Cardiovascular Health",
-        "Overview of Dietary Guidance"
-      ],
-      "source": "lichtenstein-et-al-2026-2026-dietary-guidance-to-improve-cardiovascular-health-a-scientific-statement-from-the-american.pdf"
-    }
+    "metadata": {}
   },
   {
-    "question": "Qual é a importância de ter um padrão alimentar saudável desde a infância para a saúde cardiovascular?",
-    "answer": "Estabelecer um padrão alimentar saudável desde a infância é fundamental para manter a saúde cardiovascular ao longo da vida, pois está relacionado a parâmetros cardiovasculares na infância e ao risco cardiovascular na vida adulta.",
+    "question": "Se eu quiser melhorar a alimentação do meu coração, devo evitar alimentos muito processados?",
+    "answer": "Sim. É melhor escolher alimentos minimamente processados em vez de ultraprocessados.",
     "contexts": [
-      "The Table summarizes the features of a heart-healthy dietary pattern. The origins of CVD begin early in life. Establishing a heart-healthy dietary pattern is fundamental to maintaining cardiovascular health throughout the life course. The relevance of diet quality on cardiovascular health starts as early as the prenatal period. Prepregnancy maternal dietary patterns and other lifestyle behaviors are associated with risk of gestational diabetes and hypertensive disorders of pregnancy. Dietary patterns early in life are linked not only to childhood cardiovascular parameters such as obesity, metabolic syndrome, hypertension, dyslipidemia, and type 2 diabetes but also to lifelong dietary patterns and cardiovascular risk. Thus, a heart-healthy dietary pattern is recommended for children starting at 1 year of age and is a key component of a favorable cardiovascular health trajectory throughout adulthood."
+      "choosing minimally processed foods instead of ultraprocessed foods"
     ],
-    "ground_truth": "Estabelecer um padrão alimentar saudável desde a infância é fundamental para manter a saúde cardiovascular ao longo da vida, pois está relacionado a parâmetros cardiovasculares na infância e ao risco cardiovascular na vida adulta.",
+    "ground_truth": "Sim. É melhor escolher alimentos minimamente processados em vez de ultraprocessados.",
     "source": "lichtenstein-et-al-2026-2026-dietary-guidance-to-improve-cardiovascular-health-a-scientific-statement-from-the-american.pdf",
-    "metadata": {
-      "type": "single-hop",
-      "difficulty": "easy",
-      "topic_path": [
-        "Document Topics",
-        "lichtenstein-et-al-2026-2026-dietary-guidance-to-improve-cardiovascular-health-a-scientific-statement-from-the-american.pdf",
-        "Dietary Guidance to Improve Cardiovascular Health",
-        "Dietary Patterns for Cardiovascular Health",
-        "Features of Heart-Healthy Dietary Patterns"
-      ],
-      "source": "lichtenstein-et-al-2026-2026-dietary-guidance-to-improve-cardiovascular-health-a-scientific-statement-from-the-american.pdf"
-    }
+    "metadata": {}
   },
   {
-    "question": "Se eu começar a seguir uma dieta saudável aos 1 ano de idade, quais são os benefícios que posso esperar ao longo da vida?",
-    "answer": "Seguir uma dieta saudável desde os 1 ano de idade pode ajudar a prevenir problemas como obesidade, síndrome metabólica, hipertensão, dislipidemia e diabetes tipo 2 na infância, além de contribuir para padrões alimentares saudáveis e redução do risco cardiovascular na vida adulta.",
+    "question": "Eu preciso cortar o sal e os alimentos com muito sódio para proteger o coração?",
+    "answer": "Sim. A ideia é reduzir o sódio escolhendo alimentos com pouco sódio e preparando a comida com pouco sal ou sem sal.",
     "contexts": [
-      "The Table summarizes the features of a heart-healthy dietary pattern. The origins of CVD begin early in life. Establishing a heart-healthy dietary pattern is fundamental to maintaining cardiovascular health throughout the life course. The relevance of diet quality on cardiovascular health starts as early as the prenatal period. Prepregnancy maternal dietary patterns and other lifestyle behaviors are associated with risk of gestational diabetes and hypertensive disorders of pregnancy. Dietary patterns early in life are linked not only to childhood cardiovascular parameters such as obesity, metabolic syndrome, hypertension, dyslipidemia, and type 2 diabetes but also to lifelong dietary patterns and cardiovascular risk. Thus, a heart-healthy dietary pattern is recommended for children starting at 1 year of age and is a key component of a favorable cardiovascular health trajectory throughout adulthood."
+      "reducing sodium intake by choosing foods low in sodium and preparing foods with minimal or no salt"
     ],
-    "ground_truth": "Seguir uma dieta saudável desde os 1 ano de idade pode ajudar a prevenir problemas como obesidade, síndrome metabólica, hipertensão, dislipidemia e diabetes tipo 2 na infância, além de contribuir para padrões alimentares saudáveis e redução do risco cardiovascular na vida adulta.",
+    "ground_truth": "Sim. A ideia é reduzir o sódio escolhendo alimentos com pouco sódio e preparando a comida com pouco sal ou sem sal.",
     "source": "lichtenstein-et-al-2026-2026-dietary-guidance-to-improve-cardiovascular-health-a-scientific-statement-from-the-american.pdf",
-    "metadata": {
-      "type": "multi-hop",
-      "difficulty": "medium",
-      "topic_path": [
-        "Document Topics",
-        "lichtenstein-et-al-2026-2026-dietary-guidance-to-improve-cardiovascular-health-a-scientific-statement-from-the-american.pdf",
-        "Dietary Guidance to Improve Cardiovascular Health",
-        "Dietary Patterns for Cardiovascular Health",
-        "Features of Heart-Healthy Dietary Patterns"
-      ],
-      "source": "lichtenstein-et-al-2026-2026-dietary-guidance-to-improve-cardiovascular-health-a-scientific-statement-from-the-american.pdf"
-    }
+    "metadata": {}
   },
   {
-    "question": "Quais alimentos eu devo incluir na minha dieta para melhorar a saúde do coração?",
-    "answer": "Para melhorar a saúde do coração, você deve incluir vegetais e frutas, que são componentes essenciais de padrões alimentares saudáveis para o coração. Eles fornecem nutrientes essenciais e fibras dietéticas que ajudam na função gastrointestinal e no controle da glicose no sangue.",
+    "question": "Para manter o peso saudável, eu tenho que comer menos e me mexer mais?",
+    "answer": "A alimentação precisa ser ajustada junto com o gasto de energia para alcançar e manter um peso corporal saudável.",
     "contexts": [
-      "Whole or minimally processed vegetables and fruits are core components of heart-healthy dietary patterns. These patterns are consistently associated with cardiovascular health, including blood lipids, blood pressure, and type 2 diabetes control. Vegetables and fruits provide essential nutrients and dietary fiber, which supports gastrointestinal function, provides fuel for the gut microbiota, and plays a role in the regulation of blood glucose. Dietary patterns rich in fiber have been associated with reduced risk of CVD, type 2 diabetes, and colorectal cancer. Good sources include vegetables, fruits, whole grains, nuts, legumes, and seeds."
+      "adjusting energy intake and expenditure to achieve and maintain a healthy body weight"
     ],
-    "ground_truth": "Para melhorar a saúde do coração, você deve incluir vegetais e frutas, que são componentes essenciais de padrões alimentares saudáveis para o coração. Eles fornecem nutrientes essenciais e fibras dietéticas que ajudam na função gastrointestinal e no controle da glicose no sangue.",
+    "ground_truth": "A alimentação precisa ser ajustada junto com o gasto de energia para alcançar e manter um peso corporal saudável.",
     "source": "lichtenstein-et-al-2026-2026-dietary-guidance-to-improve-cardiovascular-health-a-scientific-statement-from-the-american.pdf",
-    "metadata": {
-      "type": "single-hop",
-      "difficulty": "easy",
-      "topic_path": [
-        "Document Topics",
-        "lichtenstein-et-al-2026-2026-dietary-guidance-to-improve-cardiovascular-health-a-scientific-statement-from-the-american.pdf",
-        "Dietary Guidance to Improve Cardiovascular Health",
-        "Dietary Patterns for Cardiovascular Health",
-        "Core Components of Dietary Patterns",
-        "Vegetables and Fruits"
-      ],
-      "source": "lichtenstein-et-al-2026-2026-dietary-guidance-to-improve-cardiovascular-health-a-scientific-statement-from-the-american.pdf"
-    }
+    "metadata": {}
   },
   {
-    "question": "Se eu aumentar a ingestão de fibras na minha dieta, o que posso esperar em relação à saúde do meu coração?",
-    "answer": "Ao aumentar a ingestão de fibras na sua dieta, você pode esperar uma redução do risco de doenças cardiovasculares, diabetes tipo 2 e câncer colorretal. Alimentos ricos em fibras, como vegetais, frutas, grãos integrais, nozes, legumes e sementes, são recomendados.",
+    "question": "Trocar pão branco, arroz branco e coisas refinadas por grãos integrais ajuda meu coração?",
+    "answer": "Sim. Grãos integrais, como trigo integral, aveia, arroz integral, quinoa, cevada e centeio, estão ligados a menos risco de doença do coração, derrame, diabetes tipo 2 e síndrome metabólica, além de melhor pressão, colesterol e controle do açúcar no sangue.",
     "contexts": [
-      "Whole or minimally processed vegetables and fruits are core components of heart-healthy dietary patterns. These patterns are consistently associated with cardiovascular health, including blood lipids, blood pressure, and type 2 diabetes control. Vegetables and fruits provide essential nutrients and dietary fiber, which supports gastrointestinal function, provides fuel for the gut microbiota, and plays a role in the regulation of blood glucose. Dietary patterns rich in fiber have been associated with reduced risk of CVD, type 2 diabetes, and colorectal cancer. Good sources include vegetables, fruits, whole grains, nuts, legumes, and seeds."
+      "Whole grains are defined by the presence of all 3 components of the grain kernel—the starchy endosperm, in­ ner germ, and outer bran—and provide a complex matrix of dietary fiber, vitamins, minerals, and other bioactive compounds.",
+      "Commonly consumed whole grains are whole wheat, oats, brown rice, quinoa, barley, and rye.",
+      "A substantial body of observational evidence from large cohort studies demonstrates that regular consumption of whole-grain foods compared with infrequent intake is associated with lower risks of CVD, coronary heart dis­ ease, stroke, type 2 diabetes, and metabolic syndrome and more favorable cardiovascular risk factors, includ­ ing blood pressure, blood lipids, and glycemic control."
     ],
-    "ground_truth": "Ao aumentar a ingestão de fibras na sua dieta, você pode esperar uma redução do risco de doenças cardiovasculares, diabetes tipo 2 e câncer colorretal. Alimentos ricos em fibras, como vegetais, frutas, grãos integrais, nozes, legumes e sementes, são recomendados.",
+    "ground_truth": "Sim. Grãos integrais, como trigo integral, aveia, arroz integral, quinoa, cevada e centeio, estão ligados a menos risco de doença do coração, derrame, diabetes tipo 2 e síndrome metabólica, além de melhor pressão, colesterol e controle do açúcar no sangue.",
     "source": "lichtenstein-et-al-2026-2026-dietary-guidance-to-improve-cardiovascular-health-a-scientific-statement-from-the-american.pdf",
-    "metadata": {
-      "type": "multi-hop",
-      "difficulty": "medium",
-      "topic_path": [
-        "Document Topics",
-        "lichtenstein-et-al-2026-2026-dietary-guidance-to-improve-cardiovascular-health-a-scientific-statement-from-the-american.pdf",
-        "Dietary Guidance to Improve Cardiovascular Health",
-        "Dietary Patterns for Cardiovascular Health",
-        "Core Components of Dietary Patterns",
-        "Vegetables and Fruits"
-      ],
-      "source": "lichtenstein-et-al-2026-2026-dietary-guidance-to-improve-cardiovascular-health-a-scientific-statement-from-the-american.pdf"
-    }
+    "metadata": {}
   },
   {
-    "question": "Eu devo incluir grãos integrais na minha dieta para reduzir o risco de doenças cardíacas?",
-    "answer": "Sim, incluir grãos integrais na sua dieta pode ajudar a reduzir o risco de doenças cardíacas. Estudos mostram que o consumo regular de grãos integrais, como trigo integral, aveia e arroz integral, está associado a menores riscos de doenças cardiovasculares e fatores de risco mais favoráveis, como controle da pressão arterial e dos lipídios no sangue.",
+    "question": "Se eu quiser comer carne vermelha, o que é melhor fazer?",
+    "answer": "Se quiser comer carne vermelha, o ideal é escolher cortes magros, evitar as formas processadas e comer porções menores.",
     "contexts": [
-      "Whole grains are defined by the presence of all 3 components of the grain kernel—the starchy endosperm, inner germ, and outer bran—and provide a complex matrix of dietary fiber, vitamins, minerals, and other bioactive compounds. Commonly consumed whole grains are whole wheat, oats, brown rice, quinoa, barley, and rye. A substantial body of observational evidence from large cohort studies demonstrates that regular consumption of whole-grain foods compared with infrequent intake is associated with lower risks of CVD, coronary heart disease, stroke, type 2 diabetes, and metabolic syndrome and more favorable cardiovascular risk factors, including blood pressure, blood lipids, and glycemic control."
+      "If Red Meat Is Desired, Choose Lean Cuts, Avoid Processed Forms, and Limit Portion Size",
+      "Approaches to reduce intake include choosing lean cuts and limiting portion size and frequency of consumption."
     ],
-    "ground_truth": "Sim, incluir grãos integrais na sua dieta pode ajudar a reduzir o risco de doenças cardíacas. Estudos mostram que o consumo regular de grãos integrais, como trigo integral, aveia e arroz integral, está associado a menores riscos de doenças cardiovasculares e fatores de risco mais favoráveis, como controle da pressão arterial e dos lipídios no sangue.",
+    "ground_truth": "Se quiser comer carne vermelha, o ideal é escolher cortes magros, evitar as formas processadas e comer porções menores.",
     "source": "lichtenstein-et-al-2026-2026-dietary-guidance-to-improve-cardiovascular-health-a-scientific-statement-from-the-american.pdf",
-    "metadata": {
-      "type": "inference",
-      "difficulty": "medium",
-      "topic_path": [
-        "Document Topics",
-        "lichtenstein-et-al-2026-2026-dietary-guidance-to-improve-cardiovascular-health-a-scientific-statement-from-the-american.pdf",
-        "Dietary Guidance to Improve Cardiovascular Health",
-        "Dietary Patterns for Cardiovascular Health",
-        "Core Components of Dietary Patterns",
-        "Whole Grains"
-      ],
-      "source": "lichtenstein-et-al-2026-2026-dietary-guidance-to-improve-cardiovascular-health-a-scientific-statement-from-the-american.pdf"
-    }
+    "metadata": {}
   },
   {
-    "question": "Posso incluir mais leguminosas na minha dieta para melhorar minha saúde cardíaca?",
-    "answer": "Sim, incluir leguminosas como feijões, ervilhas e lentilhas é uma boa escolha, pois elas são fontes de proteína ricas em gordura insaturada e fibra, e estão associadas a um menor risco de doenças cardiovasculares e coronárias.",
+    "question": "Para cuidar do coração, é melhor trocar a carne por feijão, lentilha, grão-de-bico ou castanhas?",
+    "answer": "Sim. Feijões, ervilhas, lentilhas e castanhas são boas fontes de proteína, têm gordura boa e fibras, e padrões alimentares com mais leguminosas e menos carne vermelha e processada estão ligados a menor risco de doença do coração.",
     "contexts": [
-      "Protein is an essential nutrient for growth, development, and overall health, but the relationship between protein quantity and cardiovascular health is uncertain. Recommendations for protein center on promoting heart-healthy protein sources which are determined predominantly by fatty acid profile and fiber content. Legumes (beans, peas, and lentils) and nuts are good sources of protein and are rich in unsaturated fat and fiber. Dietary patterns higher in legumes and lower in red and processed meat have been associated with lower CVD and coronary heart disease risk. Likewise, dietary patterns higher in nuts have been associated with lower CVD and all-cause mortality risk."
+      "Legumes (beans, peas, and lentils) and nuts are good sources of protein and are rich in unsaturated fat and fiber.",
+      "Dietary patterns higher in legumes and lower in red and processed meat have been associated with lower CVD and coronary heart disease risk."
     ],
-    "ground_truth": "Sim, incluir leguminosas como feijões, ervilhas e lentilhas é uma boa escolha, pois elas são fontes de proteína ricas em gordura insaturada e fibra, e estão associadas a um menor risco de doenças cardiovasculares e coronárias.",
+    "ground_truth": "Sim. Feijões, ervilhas, lentilhas e castanhas são boas fontes de proteína, têm gordura boa e fibras, e padrões alimentares com mais leguminosas e menos carne vermelha e processada estão ligados a menor risco de doença do coração.",
     "source": "lichtenstein-et-al-2026-2026-dietary-guidance-to-improve-cardiovascular-health-a-scientific-statement-from-the-american.pdf",
-    "metadata": {
-      "type": "paraphrase",
-      "difficulty": "easy",
-      "topic_path": [
-        "Document Topics",
-        "lichtenstein-et-al-2026-2026-dietary-guidance-to-improve-cardiovascular-health-a-scientific-statement-from-the-american.pdf",
-        "Dietary Guidance to Improve Cardiovascular Health",
-        "Dietary Patterns for Cardiovascular Health",
-        "Core Components of Dietary Patterns",
-        "Healthy Sources of Protein"
-      ],
-      "source": "lichtenstein-et-al-2026-2026-dietary-guidance-to-improve-cardiovascular-health-a-scientific-statement-from-the-american.pdf"
-    }
+    "metadata": {}
   },
   {
-    "question": "Afirme: Substituir fontes de gordura saturada por fontes de gordura poli-insaturada e mono-insaturada pode ajudar a reduzir o colesterol LDL, que é um fator de risco para doenças cardiovasculares.",
-    "answer": "VERDADEIRO. Substituir fontes de gordura saturada por fontes de gordura poli-insaturada e, em menor medida, por fontes de gordura mono-insaturada reduz as concentrações de colesterol LDL, um fator de risco causal para doenças cardiovasculares.",
+    "question": "Se eu trocar carne vermelha e carne processada por feijão, nozes, frango, leite e ovos, isso ajuda meu coração?",
+    "answer": "Sim. Trocar carne vermelha e carne processada por feijão, nozes, frango, leite e ovos foi associado a menor risco de doença nas coronárias.",
     "contexts": [
-      "Clinical trial evidence consistently shows that replacing sources of saturated fat with sources of polyunsaturated fat and, to a lesser extent, sources of monounsaturated fat reduces low-density lipoprotein cholesterol concentrations, a causal risk factor for CVD. Strong evidence shows that replacing butter with plant oils and spreads containing predominantly unsaturated fat decreases low-density lipoprotein cholesterol concentrations. Limited evidence shows that substituting butter with plant oils and spreads with predominantly unsaturated fat is associated with a lower CVD morbidity and mortality risk."
+      "the replacement of red and pro­ cessed meat with alternative foods (legumes, nuts, poul­ try, dairy, and eggs) was associated with a lower coronary heart disease risk.",
+      "In summary, dietary patterns higher in plant sources of protein and lower in animal sources of protein are asso­ ciated with better cardiovascular health."
     ],
-    "ground_truth": "VERDADEIRO. Substituir fontes de gordura saturada por fontes de gordura poli-insaturada e, em menor medida, por fontes de gordura mono-insaturada reduz as concentrações de colesterol LDL, um fator de risco causal para doenças cardiovasculares.",
+    "ground_truth": "Sim. Trocar carne vermelha e carne processada por feijão, nozes, frango, leite e ovos foi associado a menor risco de doença nas coronárias.",
     "source": "lichtenstein-et-al-2026-2026-dietary-guidance-to-improve-cardiovascular-health-a-scientific-statement-from-the-american.pdf",
-    "metadata": {
-      "type": "true-false",
-      "difficulty": "hard",
-      "topic_path": [
-        "Document Topics",
-        "lichtenstein-et-al-2026-2026-dietary-guidance-to-improve-cardiovascular-health-a-scientific-statement-from-the-american.pdf",
-        "Dietary Guidance to Improve Cardiovascular Health",
-        "Dietary Patterns for Cardiovascular Health",
-        "Core Components of Dietary Patterns",
-        "Sources of Unsaturated Fat"
-      ],
-      "source": "lichtenstein-et-al-2026-2026-dietary-guidance-to-improve-cardiovascular-health-a-scientific-statement-from-the-american.pdf"
-    }
+    "metadata": {}
   },
   {
-    "question": "O que devo evitar na minha alimentação para melhorar a saúde do meu coração?",
-    "answer": "Para melhorar a saúde do seu coração, você deve evitar o consumo excessivo de açúcares adicionados, pois dietas altas em açúcares adicionados estão consistentemente associadas a problemas cardiovasculares e maior risco de doenças cardíacas.",
+    "question": "Se eu comer peixe e frutos do mar sem fritar, isso pode ajudar a diminuir meu risco de infarto?",
+    "answer": "Sim. Padrões alimentares com peixe e frutos do mar sem fritura foram associados a menor risco de eventos do coração e de infarto do miocárdio.",
     "contexts": [
-      "Added sugars are defined as all forms of sugar that are added to foods and beverages during processing or preparation. There is strong evidence to support recommendations to minimize added sugar intake across the life course. Dietary patterns high in added sugars are consistently associated with adverse cardiovascular health and higher CVD risk. Systematic reviews have linked sugar-sweetened beverages to higher risk of obesity, type 2 diabetes, coronary heart disease, and cardiovascular mortality."
+      "dietary patterns containing nonfried fish and seafood are as­ sociated with lower overall CVD events and myocardial infarction risk.",
+      "These associations may be due to the omega-3 fatty acid content of the fish and seafood, re­ placement of other sources of animal protein that tend to be high in saturated fat and low in unsaturated fat, or both."
     ],
-    "ground_truth": "Para melhorar a saúde do seu coração, você deve evitar o consumo excessivo de açúcares adicionados, pois dietas altas em açúcares adicionados estão consistentemente associadas a problemas cardiovasculares e maior risco de doenças cardíacas.",
+    "ground_truth": "Sim. Padrões alimentares com peixe e frutos do mar sem fritura foram associados a menor risco de eventos do coração e de infarto do miocárdio.",
     "source": "lichtenstein-et-al-2026-2026-dietary-guidance-to-improve-cardiovascular-health-a-scientific-statement-from-the-american.pdf",
-    "metadata": {
-      "type": "multi-hop",
-      "difficulty": "easy",
-      "topic_path": [
-        "Document Topics",
-        "lichtenstein-et-al-2026-2026-dietary-guidance-to-improve-cardiovascular-health-a-scientific-statement-from-the-american.pdf",
-        "Dietary Guidance to Improve Cardiovascular Health",
-        "Dietary Patterns for Cardiovascular Health",
-        "Core Components of Dietary Patterns",
-        "Minimizing Added Sugars"
-      ],
-      "source": "lichtenstein-et-al-2026-2026-dietary-guidance-to-improve-cardiovascular-health-a-scientific-statement-from-the-american.pdf"
-    }
+    "metadata": {}
   },
   {
-    "question": "Se eu reduzir minha ingestão de sódio para menos de 2g por dia, isso realmente vai ajudar a controlar minha pressão arterial?",
-    "answer": "Sim, reduzir sua ingestão de sódio para menos de 2g por dia pode ajudar a controlar sua pressão arterial e diminuir o risco de doenças cardiovasculares, conforme recomendado.",
+    "question": "Se eu quiser cortar carne processada, o que entra nisso e o que eu posso comer no lugar?",
+    "answer": "Carne processada inclui bacon, sausage, hot dogs e deli meat, como turkey, ham, pepperoni e salami. Para trocar, outras fontes de proteína foram associadas a menor mortalidade.",
     "contexts": [
-      "In general, dietary sodium intake and potassium intake have opposite effects on blood pressure, the leading modifiable risk factor for preventable mortality. An increased intake of sodium chloride (salt) raises blood pressure, whereas an increased intake of potassium lowers blood pressure. Reducing sodium intake lowers blood pressure in both nonhypertensive and hypertensive individuals. In prospective cohort studies, lower sodium intakes are associated with blunted age-related rise in systolic blood pressure and lower CVD risk."
+      "The term processed meats generally refers to meat, poultry, or seafood products produced by smoking, curing, or salting or the addition of chemical preservatives.",
+      "Com­ mon examples include bacon, sausage, hot dogs, and deli meat (eg, turkey, ham, pepperoni, and salami).",
+      "Substitution analyses indicate that the replacement of processed meats with other pro­ tein sources is associated with lower mortality rates."
     ],
-    "ground_truth": "Sim, reduzir sua ingestão de sódio para menos de 2g por dia pode ajudar a controlar sua pressão arterial e diminuir o risco de doenças cardiovasculares, conforme recomendado.",
+    "ground_truth": "Carne processada inclui bacon, sausage, hot dogs e deli meat, como turkey, ham, pepperoni e salami. Para trocar, outras fontes de proteína foram associadas a menor mortalidade.",
     "source": "lichtenstein-et-al-2026-2026-dietary-guidance-to-improve-cardiovascular-health-a-scientific-statement-from-the-american.pdf",
-    "metadata": {
-      "type": "single-hop",
-      "difficulty": "hard",
-      "topic_path": [
-        "Document Topics",
-        "lichtenstein-et-al-2026-2026-dietary-guidance-to-improve-cardiovascular-health-a-scientific-statement-from-the-american.pdf",
-        "Dietary Guidance to Improve Cardiovascular Health",
-        "Dietary Patterns for Cardiovascular Health",
-        "Core Components of Dietary Patterns",
-        "Low Sodium Foods"
-      ],
-      "source": "lichtenstein-et-al-2026-2026-dietary-guidance-to-improve-cardiovascular-health-a-scientific-statement-from-the-american.pdf"
-    }
+    "metadata": {}
   },
   {
-    "question": "Afirme: A obesidade afeta 21% das crianças e adolescentes nos Estados Unidos.",
-    "answer": "VERDADEIRO. Atualmente, a obesidade afeta 21% das crianças e adolescentes nos Estados Unidos.",
+    "question": "Se eu trocar manteiga por óleo de soja, canola ou azeite, isso ajuda no colesterol?",
+    "answer": "Sim. Trocar manteiga por óleos e pastas com gordura principalmente insaturada diminui o colesterol ruim no sangue.",
     "contexts": [
-      "Preserving a healthy body weight across the life course is central to optimizing cardiovascular health. Currently, obesity affects 21% of children and adolescents, and 40% of adults in the United States. Excess body fat contributes to the development of type 2 diabetes, hypertension, and cardiovascular-kidney metabolic syndrome, which negatively influences cardiovascular health. Excess energy intake coupled with inadequate physical activity results in positive energy balance and subsequent overweight and obesity. Individual energy needs depend on a number of factors such as age, sex, height, weight, physical activity level, and pregnancy or lactation status. Energy intake should be adjusted to achieve and maintain a healthy body weight. Dietary habits and dietary patterns are shared, experienced, and transmitted among household members. They are learned early in life, although there are key inflection points where dietary trajectories can change along the life course, including childhood, adolescence, and young adulthood."
+      "replacing butter with plant oils and spreads containing predomi­ nantly unsaturated fat decreases low-density lipoprotein cholesterol concentrations.",
+      "Animal fats (eg, beef tallow and butter) and tropical oils (eg, coconut oil, cocoa butter, and palm oil) are rela­ tively high in saturated fat, whereas nontropical plant oils (eg, soybean, canola, and olive oils) are relatively high in unsaturated fat."
     ],
-    "ground_truth": "VERDADEIRO. Atualmente, a obesidade afeta 21% das crianças e adolescentes nos Estados Unidos.",
+    "ground_truth": "Sim. Trocar manteiga por óleos e pastas com gordura principalmente insaturada diminui o colesterol ruim no sangue.",
     "source": "lichtenstein-et-al-2026-2026-dietary-guidance-to-improve-cardiovascular-health-a-scientific-statement-from-the-american.pdf",
-    "metadata": {
-      "type": "true-false",
-      "difficulty": "easy",
-      "topic_path": [
-        "Document Topics",
-        "lichtenstein-et-al-2026-2026-dietary-guidance-to-improve-cardiovascular-health-a-scientific-statement-from-the-american.pdf",
-        "Dietary Guidance to Improve Cardiovascular Health",
-        "Energy Intake and Expenditure"
-      ],
-      "source": "lichtenstein-et-al-2026-2026-dietary-guidance-to-improve-cardiovascular-health-a-scientific-statement-from-the-american.pdf"
-    }
+    "metadata": {}
   },
   {
-    "question": "O que devo incluir na minha alimentação para proteger a saúde do meu coração?",
-    "answer": "Para proteger a saúde do coração, é importante incluir frutas, vegetais, grãos integrais e fontes saudáveis de proteínas na sua alimentação, além de optar por alimentos minimamente processados e reduzir a quantidade de açúcar, sal e gorduras.",
+    "question": "Se eu cortar refrigerante, suco adoçado e açúcar adicionado, isso faz diferença para o coração?",
+    "answer": "Sim. Dietas com muito açúcar adicionado foram associadas a pior saúde do coração e maior risco cardiovascular. Bebidas adoçadas com açúcar também foram ligadas a mais obesidade, diabetes tipo 2, doença nas coronárias e morte cardiovascular.",
     "contexts": [
-      "As doenças cardiovasculares estão associadas a pior qualidade de vida e altos níveis de mortalidade. Um padrão alimentar que protege a saúde do coração vai além de consumir alimentos “bons” ou “ruins”. É necessário equilíbrio e variedade na alimentação. Os padrões alimentares cardioprotetores se caracterizam pela inclusão de frutas e vegetais, grãos integrais, fontes saudáveis de proteínas, alimentos minimamente processados, pequenas quantidades de açúcar, sal e gorduras. Portanto, manter hábitos alimentares adequados é muito importante tanto na prevenção quanto no controle da doença cardiovascular já presente. Diante disso, para ajudar na adoção de hábitos alimentares cardioprotetores, este manual foi elaborado pela equipe de nutricionistas da Cardiologia do Hospital de Clínicas de Porto Alegre, a partir do Guia Alimentar para a População Brasileira e da literatura científica mais atual sobre o assunto.\n\nDe acordo com a Organização Mundial da Saúde (OMS), cerca de três quartos das mortes por doenças cardiovasculares podem ser prevenidas por mudanças de estilo de vida e controle de fatores de risco, como hipertensão, diabetes, obesidade, dislipidemia etc. O que mais favorece o desenvolvimento de doenças cardiovasculares é obesidade, sedentarismo, tabagismo, consumo excessivo de álcool, diabetes não controlada e dieta não saudável."
+      "There is strong evi­ dence to support recommendations to minimize added sugar intake across the life course.",
+      "Dietary patterns high in added sugars are consis­ tently associated with adverse cardiovascular health and higher CVD risk.",
+      "Systematic reviews have linked sugar-sweetened beverages to higher risk of obesity, type 2 diabetes, coronary heart disease, and cardio­ vascular mortality."
     ],
-    "ground_truth": "Para proteger a saúde do coração, é importante incluir frutas, vegetais, grãos integrais e fontes saudáveis de proteínas na sua alimentação, além de optar por alimentos minimamente processados e reduzir a quantidade de açúcar, sal e gorduras.",
+    "ground_truth": "Sim. Dietas com muito açúcar adicionado foram associadas a pior saúde do coração e maior risco cardiovascular. Bebidas adoçadas com açúcar também foram ligadas a mais obesidade, diabetes tipo 2, doença nas coronárias e morte cardiovascular.",
+    "source": "lichtenstein-et-al-2026-2026-dietary-guidance-to-improve-cardiovascular-health-a-scientific-statement-from-the-american.pdf",
+    "metadata": {}
+  },
+  {
+    "question": "Se eu cortar o sal e comer mais frutas e verduras, isso pode ajudar a baixar minha pressão?",
+    "answer": "Sim. Reduzir o sal ajuda a baixar a pressão, e aumentar o potássio com uma alimentação rica em verduras e frutas também pode ajudar.",
+    "contexts": [
+      "Reducing sodium intake lowers blood pressure in both nonhypertensive and hypertensive individuals.",
+      "In general, dietary sodium intake and potassium intake have opposite effects on blood pressure, the leading modifiable risk factor for preventable mortality.",
+      "An increased intake of sodium chloride (salt) raises blood pressure, whereas an increased intake of potassium low­ ers blood pressure.",
+      "Potassium intake can be increased by consuming a dietary pattern rich in veg­ etables and fruits."
+    ],
+    "ground_truth": "Sim. Reduzir o sal ajuda a baixar a pressão, e aumentar o potássio com uma alimentação rica em verduras e frutas também pode ajudar.",
+    "source": "lichtenstein-et-al-2026-2026-dietary-guidance-to-improve-cardiovascular-health-a-scientific-statement-from-the-american.pdf",
+    "metadata": {}
+  },
+  {
+    "question": "Posso usar sal com mais potássio no lugar do sal comum para cuidar da pressão?",
+    "answer": "Pode ser uma opção, porque trocar o sal comum por substitutos com mais potássio e menos sódio pode ajudar. Mas ainda ficam dúvidas quando a maior parte do sal vem de comidas prontas, e existe risco teórico para quem tem dificuldade de eliminar potássio pela urina.",
+    "contexts": [
+      "This can include reducing sodium intake in the context of a potassium-rich diet such as one high in vegetables and fruits or replacing regular table salt, sodium chlo­ ride, with potassium-enriched salt substitutes, which are lower in sodium.",
+      "Many questions remain for the latter approach, particularly the relevance of salt substitutes in populations in whom the major source of sodium is commercially prepared foods and the theoretical risk of hyperkalemia in people with impaired urinary potassium excretion."
+    ],
+    "ground_truth": "Pode ser uma opção, porque trocar o sal comum por substitutos com mais potássio e menos sódio pode ajudar. Mas ainda ficam dúvidas quando a maior parte do sal vem de comidas prontas, e existe risco teórico para quem tem dificuldade de eliminar potássio pela urina.",
+    "source": "lichtenstein-et-al-2026-2026-dietary-guidance-to-improve-cardiovascular-health-a-scientific-statement-from-the-american.pdf",
+    "metadata": {}
+  },
+  {
+    "question": "Se eu não bebo álcool, vale a pena começar a beber para ajudar o coração?",
+    "answer": "Não. Se você não consome álcool, não deve começar. E, se já consome, o ideal é limitar a quantidade.",
+    "contexts": [
+      "If Alcohol Is Not Consumed, Do Not Start; if Alcohol Is Consumed, Limit Intake",
+      "Initiation of alcohol intake at any level to improve cardiovascular health is not recommended"
+    ],
+    "ground_truth": "Não. Se você não consome álcool, não deve começar. E, se já consome, o ideal é limitar a quantidade.",
+    "source": "lichtenstein-et-al-2026-2026-dietary-guidance-to-improve-cardiovascular-health-a-scientific-statement-from-the-american.pdf",
+    "metadata": {}
+  },
+  {
+    "question": "Quais comidas eu devo evitar para não aumentar o colesterol e a gordura ruim da alimentação?",
+    "answer": "É melhor evitar comidas com muito colesterol, como cortes gordos de carne e alimentos que costumam ser comidos com ovos, como carnes processadas, por exemplo salsicha ou bacon. O consumo moderado de ovos pode entrar na alimentação.",
+    "contexts": [
+      "heart- healthy dietary patterns are low in foods high in cho­ lesterol such as fatty cuts of meat and foods typically eaten with eggs such as processed meats (sausage or bacon).",
+      "Moderate egg consumption can be included as part of a heart-healthy dietary pattern."
+    ],
+    "ground_truth": "É melhor evitar comidas com muito colesterol, como cortes gordos de carne e alimentos que costumam ser comidos com ovos, como carnes processadas, por exemplo salsicha ou bacon. O consumo moderado de ovos pode entrar na alimentação.",
+    "source": "lichtenstein-et-al-2026-2026-dietary-guidance-to-improve-cardiovascular-health-a-scientific-statement-from-the-american.pdf",
+    "metadata": {}
+  },
+  {
+    "question": "Se eu quiser cuidar do coração, preciso focar em comer mais vegetais e frutas?",
+    "answer": "Sim. O foco é comer bastante vegetais e frutas, escolhendo uma grande variedade.",
+    "contexts": [
+      "(2) eating plenty of vegetables and fruits and choosing a wide variety;"
+    ],
+    "ground_truth": "Sim. O foco é comer bastante vegetais e frutas, escolhendo uma grande variedade.",
+    "source": "lichtenstein-et-al-2026-2026-dietary-guidance-to-improve-cardiovascular-health-a-scientific-statement-from-the-american.pdf",
+    "metadata": {}
+  },
+  {
+    "question": "Para o meu coração, é melhor trocar pão branco e arroz branco por alimentos com grãos integrais?",
+    "answer": "Sim. É melhor escolher alimentos feitos principalmente com grãos integrais em vez de grãos refinados.",
+    "contexts": [
+      "(3) choosing foods made mostly with whole grains rather than refined grains;"
+    ],
+    "ground_truth": "Sim. É melhor escolher alimentos feitos principalmente com grãos integrais em vez de grãos refinados.",
+    "source": "lichtenstein-et-al-2026-2026-dietary-guidance-to-improve-cardiovascular-health-a-scientific-statement-from-the-american.pdf",
+    "metadata": {}
+  },
+  {
+    "question": "Se eu tenho problema no coração, devo trocar gorduras ruins por gorduras mais saudáveis?",
+    "answer": "Sim. A ideia é escolher fontes de gorduras insaturadas no lugar de fontes de gordura saturada.",
+    "contexts": [
+      "(5) choosing sources of unsaturated fats in place of sources of saturated fat;"
+    ],
+    "ground_truth": "Sim. A ideia é escolher fontes de gorduras insaturadas no lugar de fontes de gordura saturada.",
+    "source": "lichtenstein-et-al-2026-2026-dietary-guidance-to-improve-cardiovascular-health-a-scientific-statement-from-the-american.pdf",
+    "metadata": {}
+  },
+  {
+    "question": "Eu preciso cortar os alimentos ultraprocessados para ajudar meu coração?",
+    "answer": "Sim. A ideia é escolher alimentos minimamente processados em vez de ultraprocessados.",
+    "contexts": [
+      "(6) choosing minimally processed foods instead of ultraprocessed foods;"
+    ],
+    "ground_truth": "Sim. A ideia é escolher alimentos minimamente processados em vez de ultraprocessados.",
+    "source": "lichtenstein-et-al-2026-2026-dietary-guidance-to-improve-cardiovascular-health-a-scientific-statement-from-the-american.pdf",
+    "metadata": {}
+  },
+  {
+    "question": "Se eu beber álcool, posso continuar tomando ou é melhor não começar?",
+    "answer": "Se você não bebe álcool, não comece. Se já bebe, limite a quantidade.",
+    "contexts": [
+      "no salt; and (9) if alcohol is not consumed, do not start; if alcohol is consumed, limit intake."
+    ],
+    "ground_truth": "Se você não bebe álcool, não comece. Se já bebe, limite a quantidade.",
+    "source": "lichtenstein-et-al-2026-2026-dietary-guidance-to-improve-cardiovascular-health-a-scientific-statement-from-the-american.pdf",
+    "metadata": {}
+  },
+  {
+    "question": "Se eu comer mais verduras, isso pode ajudar a diminuir o risco de morrer por problema do coração?",
+    "answer": "Uma análise sobre isso, ligando maior consumo de verduras a menor risco de morte.",
+    "contexts": [
+      "vegetable intake and mortality: results from 2 prospective cohort studies of US Men and women and a meta-analysis of 26 cohort studies."
+    ],
+    "ground_truth": "Uma análise sobre isso, ligando maior consumo de verduras a menor risco de morte.",
+    "source": "lichtenstein-et-al-2026-2026-dietary-guidance-to-improve-cardiovascular-health-a-scientific-statement-from-the-american.pdf",
+    "metadata": {}
+  },
+  {
+    "question": "Comer grãos integrais faz diferença para o risco de infarto e derrame?",
+    "answer": "Sobre consumo de grãos integrais e refinados e o risco de eventos de doença do coração e morte por qualquer causa.",
+    "contexts": [
+      "Consumption of whole grains and refined grains and associated risk of cardiovascular disease events and all-cause mortality:"
+    ],
+    "ground_truth": "Sobre consumo de grãos integrais e refinados e o risco de eventos de doença do coração e morte por qualquer causa.",
+    "source": "lichtenstein-et-al-2026-2026-dietary-guidance-to-improve-cardiovascular-health-a-scientific-statement-from-the-american.pdf",
+    "metadata": {}
+  },
+  {
+    "question": "Por que eu preciso mudar minha alimentação agora para cuidar do coração?",
+    "answer": "Porque as doenças cardiovasculares podem ser prevenidas em parte com mudanças de estilo de vida e controle de fatores de risco, e também porque hábitos alimentares adequados ajudam na prevenção e no controle da doença já presente.",
+    "contexts": [
+      "cerca de três quartos das mortes por doenças cardiovasculares podem ser prevenidas por mudanças de estilo de vida e controle de fatores de risco, como hipertensão, diabetes, obesidade, dislipidemia etc.",
+      "Portanto, manter hábitos alimentares adequados é muito importante tanto na prevenção quanto no controle da doença cardiovascular já presente."
+    ],
+    "ground_truth": "Porque as doenças cardiovasculares podem ser prevenidas em parte com mudanças de estilo de vida e controle de fatores de risco, e também porque hábitos alimentares adequados ajudam na prevenção e no controle da doença já presente.",
     "source": "pes160_-_311421_alimentação_e_saúde_cardiovascular.pdf",
-    "metadata": {
-      "type": "single-hop",
-      "difficulty": "easy",
-      "topic_path": [
-        "Document Topics",
-        "pes160_-_311421_alimentação_e_saúde_cardiovascular.pdf",
-        "Alimentação e Saúde Cardiovascular",
-        "Introdução à Saúde Cardiovascular"
-      ],
-      "source": "pes160_-_311421_alimentação_e_saúde_cardiovascular.pdf"
-    }
+    "metadata": {}
   },
   {
-    "question": "Se eu tiver hipertensão e quiser melhorar minha alimentação, quais mudanças posso fazer para prevenir doenças cardiovasculares?",
-    "answer": "Se você tem hipertensão, deve adotar uma alimentação equilibrada e variada, incluindo mais frutas e vegetais, grãos integrais, e evitar alimentos processados, açúcar, sal e gorduras em excesso. Além disso, controlar o peso e praticar atividade física são fundamentais para a prevenção de doenças cardiovasculares.",
+    "question": "O que mais costuma piorar a saúde do coração na alimentação e no dia a dia?",
+    "answer": "Obesidade, sedentarismo, tabagismo, consumo excessivo de álcool, diabetes não controlada e dieta não saudável favorecem o desenvolvimento de doenças cardiovasculares.",
     "contexts": [
-      "As doenças cardiovasculares estão associadas a pior qualidade de vida e altos níveis de mortalidade. Um padrão alimentar que protege a saúde do coração vai além de consumir alimentos “bons” ou “ruins”. É necessário equilíbrio e variedade na alimentação. Os padrões alimentares cardioprotetores se caracterizam pela inclusão de frutas e vegetais, grãos integrais, fontes saudáveis de proteínas, alimentos minimamente processados, pequenas quantidades de açúcar, sal e gorduras. Portanto, manter hábitos alimentares adequados é muito importante tanto na prevenção quanto no controle da doença cardiovascular já presente. Diante disso, para ajudar na adoção de hábitos alimentares cardioprotetores, este manual foi elaborado pela equipe de nutricionistas da Cardiologia do Hospital de Clínicas de Porto Alegre, a partir do Guia Alimentar para a População Brasileira e da literatura científica mais atual sobre o assunto.\n\nDe acordo com a Organização Mundial da Saúde (OMS), cerca de três quartos das mortes por doenças cardiovasculares podem ser prevenidas por mudanças de estilo de vida e controle de fatores de risco, como hipertensão, diabetes, obesidade, dislipidemia etc. O que mais favorece o desenvolvimento de doenças cardiovasculares é obesidade, sedentarismo, tabagismo, consumo excessivo de álcool, diabetes não controlada e dieta não saudável."
+      "O que mais favorece o desenvolvimento de doenças cardiovasculares é obesidade, sedentarismo, tabagismo, consumo excessivo de álcool, diabetes não controlada e dieta não saudável."
     ],
-    "ground_truth": "Se você tem hipertensão, deve adotar uma alimentação equilibrada e variada, incluindo mais frutas e vegetais, grãos integrais, e evitar alimentos processados, açúcar, sal e gorduras em excesso. Além disso, controlar o peso e praticar atividade física são fundamentais para a prevenção de doenças cardiovasculares.",
+    "ground_truth": "Obesidade, sedentarismo, tabagismo, consumo excessivo de álcool, diabetes não controlada e dieta não saudável favorecem o desenvolvimento de doenças cardiovasculares.",
     "source": "pes160_-_311421_alimentação_e_saúde_cardiovascular.pdf",
-    "metadata": {
-      "type": "multi-hop",
-      "difficulty": "medium",
-      "topic_path": [
-        "Document Topics",
-        "pes160_-_311421_alimentação_e_saúde_cardiovascular.pdf",
-        "Alimentação e Saúde Cardiovascular",
-        "Introdução à Saúde Cardiovascular"
-      ],
-      "source": "pes160_-_311421_alimentação_e_saúde_cardiovascular.pdf"
-    }
+    "metadata": {}
   },
   {
-    "question": "Quais são os alimentos que eu devo incluir na dieta Dash para ajudar a controlar minha hipertensão?",
-    "answer": "Na dieta Dash, você deve incluir alimentos ricos em fibras, vitaminas e minerais, como feijões, carnes magras, laticínios com baixo teor de gordura, grãos integrais, frutas e legumes, além de manter uma baixa quantidade de sal, doces e gordura saturada.",
+    "question": "Que tipo de alimentação ajuda a proteger o coração?",
+    "answer": "Uma alimentação que protege o coração tem equilíbrio e variedade, com frutas e vegetais, grãos integrais, fontes saudáveis de proteínas, alimentos minimamente processados e pequenas quantidades de açúcar, sal e gorduras.",
     "contexts": [
-      "Exemplos de padrões alimentares que protegem a saúde do coração são: a dieta Dash e a dieta mediterrânea. A dieta Dash é um padrão alimentar que foi desenvolvido para pessoas com hipertensão arterial e que demonstra benefícios cardiovasculares, como melhor controle da pressão arterial, dos níveis de glicose no sangue, da fome e da saciedade. Ela também ajuda a reduzir o colesterol ruim (LDL) e aumentar o colesterol bom (HDL). Essa dieta é composta por alimentos ricos em fibras, vitaminas e minerais, como feijões, carnes magras, laticínios com baixo teor de gordura, grãos integrais, frutas e legumes, e possui baixa quantidade de sal, doces e gordura saturada. A Dieta Mediterrânea, por sua vez, é um padrão alimentar voltado para quem precisa de uma alimentação saudável e estimula o consumo de legumes, frutas, verduras, peixe, grãos integrais e azeite de oliva."
+      "É necessário equilíbrio e variedade na alimentação.",
+      "Os padrões alimentares cardioprotetores se caracterizam pela inclusão de frutas e vegetais, grãos integrais, fontes saudáveis de proteínas, alimentos minimamente processados, pequenas quantidades de açúcar, sal e gorduras."
     ],
-    "ground_truth": "Na dieta Dash, você deve incluir alimentos ricos em fibras, vitaminas e minerais, como feijões, carnes magras, laticínios com baixo teor de gordura, grãos integrais, frutas e legumes, além de manter uma baixa quantidade de sal, doces e gordura saturada.",
+    "ground_truth": "Uma alimentação que protege o coração tem equilíbrio e variedade, com frutas e vegetais, grãos integrais, fontes saudáveis de proteínas, alimentos minimamente processados e pequenas quantidades de açúcar, sal e gorduras.",
     "source": "pes160_-_311421_alimentação_e_saúde_cardiovascular.pdf",
-    "metadata": {
-      "type": "single-hop",
-      "difficulty": "easy",
-      "topic_path": [
-        "Document Topics",
-        "pes160_-_311421_alimentação_e_saúde_cardiovascular.pdf",
-        "Alimentação e Saúde Cardiovascular",
-        "Padrões Alimentares Saudáveis",
-        "Dietas Específicas"
-      ],
-      "source": "pes160_-_311421_alimentação_e_saúde_cardiovascular.pdf"
-    }
+    "metadata": {}
   },
   {
-    "question": "Se eu seguir a dieta mediterrânea, quais tipos de alimentos devo priorizar para melhorar minha saúde cardiovascular?",
-    "answer": "Ao seguir a dieta mediterrânea, você deve priorizar o consumo de legumes, frutas, verduras, peixe, grãos integrais e azeite de oliva, pois essa dieta é voltada para uma alimentação saudável e traz benefícios ao coração.",
+    "question": "A dieta Dash pode me ajudar na pressão e no colesterol?",
+    "answer": "Sim. Ela foi desenvolvida para pessoas com hipertensão arterial e ajuda a melhorar o controle da pressão arterial, dos níveis de glicose no sangue, da fome e da saciedade. Também ajuda a reduzir o colesterol ruim e aumentar o colesterol bom.",
     "contexts": [
-      "Exemplos de padrões alimentares que protegem a saúde do coração são: a dieta Dash e a dieta mediterrânea. A dieta Dash é um padrão alimentar que foi desenvolvido para pessoas com hipertensão arterial e que demonstra benefícios cardiovasculares, como melhor controle da pressão arterial, dos níveis de glicose no sangue, da fome e da saciedade. Ela também ajuda a reduzir o colesterol ruim (LDL) e aumentar o colesterol bom (HDL). Essa dieta é composta por alimentos ricos em fibras, vitaminas e minerais, como feijões, carnes magras, laticínios com baixo teor de gordura, grãos integrais, frutas e legumes, e possui baixa quantidade de sal, doces e gordura saturada. A Dieta Mediterrânea, por sua vez, é um padrão alimentar voltado para quem precisa de uma alimentação saudável e estimula o consumo de legumes, frutas, verduras, peixe, grãos integrais e azeite de oliva."
+      "A dieta Dash é um padrão alimentar que foi desenvolvido para pessoas com hipertensão arterial e que demonstra benefícios cardiovasculares, como melhor controle da pressão arterial, dos níveis de glicose no sangue, da fome e da saciedade.",
+      "Ela também ajuda a reduzir o colesterol ruim (LDL) e aumentar o colesterol bom (HDL)."
     ],
-    "ground_truth": "Ao seguir a dieta mediterrânea, você deve priorizar o consumo de legumes, frutas, verduras, peixe, grãos integrais e azeite de oliva, pois essa dieta é voltada para uma alimentação saudável e traz benefícios ao coração.",
+    "ground_truth": "Sim. Ela foi desenvolvida para pessoas com hipertensão arterial e ajuda a melhorar o controle da pressão arterial, dos níveis de glicose no sangue, da fome e da saciedade. Também ajuda a reduzir o colesterol ruim e aumentar o colesterol bom.",
     "source": "pes160_-_311421_alimentação_e_saúde_cardiovascular.pdf",
-    "metadata": {
-      "type": "multi-hop",
-      "difficulty": "medium",
-      "topic_path": [
-        "Document Topics",
-        "pes160_-_311421_alimentação_e_saúde_cardiovascular.pdf",
-        "Alimentação e Saúde Cardiovascular",
-        "Padrões Alimentares Saudáveis",
-        "Dietas Específicas"
-      ],
-      "source": "pes160_-_311421_alimentação_e_saúde_cardiovascular.pdf"
-    }
+    "metadata": {}
   },
   {
-    "question": "O que devo incluir no meu prato para ter uma alimentação saudável?",
-    "answer": "Metade do seu prato deve ser composta por legumes e vegetais, um quarto por cereais e o outro um quarto por proteínas e leguminosas. Prefira grãos integrais e evite cereais refinados.",
+    "question": "O que costuma entrar na dieta Dash?",
+    "answer": "Ela é composta por alimentos ricos em fibras, vitaminas e minerais, como feijões, carnes magras, laticínios com baixo teor de gordura, grãos integrais, frutas e legumes, e tem pouca quantidade de sal, doces e gordura saturada.",
     "contexts": [
-      "Metade do prato deve ser composto por legumes e vegetais, um quarto por cereais e o outro um quarto por proteínas e leguminosas. Para carboidratos, prefira grãos integrais, batata doce, mandioca e mandioquinha, evitando cereais refinados. Para frutas, prefira as in natura, evitando frutas em calda e sucos adoçados. Nas leguminosas, prefira feijões, lentilha e grão-de-bico, evitando feijoadas com linguiça. Para proteínas, prefira frango sem pele, peixes assados/cozidos, ovos e carne bovina magra, evitando carnes gordurosas e fritas."
+      "Essa dieta é composta por alimentos ricos em fibras, vitaminas e minerais, como feijões, carnes magras, laticínios com baixo teor de gordura, grãos integrais, frutas e legumes, e possui baixa quantidade de sal, doces e gordura saturada."
     ],
-    "ground_truth": "Metade do seu prato deve ser composta por legumes e vegetais, um quarto por cereais e o outro um quarto por proteínas e leguminosas. Prefira grãos integrais e evite cereais refinados.",
+    "ground_truth": "Ela é composta por alimentos ricos em fibras, vitaminas e minerais, como feijões, carnes magras, laticínios com baixo teor de gordura, grãos integrais, frutas e legumes, e tem pouca quantidade de sal, doces e gordura saturada.",
     "source": "pes160_-_311421_alimentação_e_saúde_cardiovascular.pdf",
-    "metadata": {
-      "type": "single-hop",
-      "difficulty": "easy",
-      "topic_path": [
-        "Document Topics",
-        "pes160_-_311421_alimentação_e_saúde_cardiovascular.pdf",
-        "Alimentação e Saúde Cardiovascular",
-        "Padrões Alimentares Saudáveis",
-        "Componentes de um Prato Saudável"
-      ],
-      "source": "pes160_-_311421_alimentação_e_saúde_cardiovascular.pdf"
-    }
+    "metadata": {}
   },
   {
-    "question": "Se eu quiser melhorar minha alimentação, quais tipos de carne são mais recomendados e quais devo evitar?",
-    "answer": "Você deve preferir frango sem pele, peixes assados ou cozidos, ovos e carne bovina magra, enquanto deve evitar carnes gordurosas e fritas.",
+    "question": "A dieta mediterrânea pode servir para mim se eu quiser comer de um jeito mais saudável?",
+    "answer": "Sim. Ela é voltada para quem precisa de uma alimentação saudável e estimula legumes, frutas, verduras, peixe, grãos integrais e azeite de oliva.",
     "contexts": [
-      "Metade do prato deve ser composto por legumes e vegetais, um quarto por cereais e o outro um quarto por proteínas e leguminosas. Para carboidratos, prefira grãos integrais, batata doce, mandioca e mandioquinha, evitando cereais refinados. Para frutas, prefira as in natura, evitando frutas em calda e sucos adoçados. Nas leguminosas, prefira feijões, lentilha e grão-de-bico, evitando feijoadas com linguiça. Para proteínas, prefira frango sem pele, peixes assados/cozidos, ovos e carne bovina magra, evitando carnes gordurosas e fritas."
+      "A Dieta Mediterrânea, por sua vez, é um padrão alimentar voltado para quem precisa de uma alimentação saudável e estimula o consumo de legumes, frutas, verduras, peixe, grãos integrais e azeite de oliva."
     ],
-    "ground_truth": "Você deve preferir frango sem pele, peixes assados ou cozidos, ovos e carne bovina magra, enquanto deve evitar carnes gordurosas e fritas.",
+    "ground_truth": "Sim. Ela é voltada para quem precisa de uma alimentação saudável e estimula legumes, frutas, verduras, peixe, grãos integrais e azeite de oliva.",
     "source": "pes160_-_311421_alimentação_e_saúde_cardiovascular.pdf",
-    "metadata": {
-      "type": "multi-hop",
-      "difficulty": "medium",
-      "topic_path": [
-        "Document Topics",
-        "pes160_-_311421_alimentação_e_saúde_cardiovascular.pdf",
-        "Alimentação e Saúde Cardiovascular",
-        "Padrões Alimentares Saudáveis",
-        "Componentes de um Prato Saudável"
-      ],
-      "source": "pes160_-_311421_alimentação_e_saúde_cardiovascular.pdf"
-    }
+    "metadata": {}
   },
   {
-    "question": "O que devo priorizar na minha alimentação para manter uma dieta saudável?",
-    "answer": "Você deve priorizar alimentos in natura ou minimamente processados, como frutas, verduras, legumes, leite, iogurte natural, feijões, cereais, raízes, tubérculos, ovos e carnes resfriadas ou congeladas.",
+    "question": "Como eu posso deixar meu prato mais bom para o coração?",
+    "answer": "Tente deixar o prato o mais colorido possível, colocando frutas nos lanches e saladas e legumes e verduras nas refeições principais.",
     "contexts": [
-      "A base da alimentação deve ser composta por alimentos in natura ou minimamente processados. Alimentos in natura são aqueles que não sofreram qualquer alteração após deixar a natureza ou que sofreram alterações mínimas, como frutas, verduras, legumes, leite, iogurte natural, feijões, cereais, raízes, tubérculos, ovos e carnes resfriadas ou congeladas. Alimentos ultraprocessados, por outro lado, são produtos feitos pela indústria que possuem muitos ingredientes, sendo a maioria deles aditivos químicos, e uma pequena proporção de alimentos in natura. Exemplos incluem biscoitos, sucos em pó, refrigerantes e embutidos, que devem ser consumidos com moderação."
+      "Busque sempre deixar o seu prato o mais colorido possível.",
+      "Tente colocar frutas nos seus lanches e saladas, legumes e verduras nas refeições principais (almoço e jantar)."
     ],
-    "ground_truth": "Você deve priorizar alimentos in natura ou minimamente processados, como frutas, verduras, legumes, leite, iogurte natural, feijões, cereais, raízes, tubérculos, ovos e carnes resfriadas ou congeladas.",
+    "ground_truth": "Tente deixar o prato o mais colorido possível, colocando frutas nos lanches e saladas e legumes e verduras nas refeições principais.",
     "source": "pes160_-_311421_alimentação_e_saúde_cardiovascular.pdf",
-    "metadata": {
-      "type": "single-hop",
-      "difficulty": "easy",
-      "topic_path": [
-        "Document Topics",
-        "pes160_-_311421_alimentação_e_saúde_cardiovascular.pdf",
-        "Alimentação e Saúde Cardiovascular",
-        "Padrões Alimentares Saudáveis",
-        "Processamento de Alimentos"
-      ],
-      "source": "pes160_-_311421_alimentação_e_saúde_cardiovascular.pdf"
-    }
+    "metadata": {}
   },
   {
-    "question": "Se eu quiser evitar alimentos ultraprocessados, quais produtos devo evitar na minha dieta?",
-    "answer": "Você deve evitar produtos feitos pela indústria que contêm muitos ingredientes, principalmente aditivos químicos, como biscoitos, sucos em pó, refrigerantes e embutidos, que devem ser consumidos com moderação.",
+    "question": "Comer mais cores no prato faz diferença mesmo?",
+    "answer": "Sim. Quanto mais cores diferentes você consumir, mais nutrientes estará recebendo, como fibras, vitaminas e minerais.",
     "contexts": [
-      "A base da alimentação deve ser composta por alimentos in natura ou minimamente processados. Alimentos in natura são aqueles que não sofreram qualquer alteração após deixar a natureza ou que sofreram alterações mínimas, como frutas, verduras, legumes, leite, iogurte natural, feijões, cereais, raízes, tubérculos, ovos e carnes resfriadas ou congeladas. Alimentos ultraprocessados, por outro lado, são produtos feitos pela indústria que possuem muitos ingredientes, sendo a maioria deles aditivos químicos, e uma pequena proporção de alimentos in natura. Exemplos incluem biscoitos, sucos em pó, refrigerantes e embutidos, que devem ser consumidos com moderação."
+      "Dessa forma você já estará consumindo uma quantidade importante de fibras, vitaminas e minerais e contribuindo para a saúde do seu coração.",
+      "Quanto mais cores diferentes você consumir, mais nutrientes estará recebendo."
     ],
-    "ground_truth": "Você deve evitar produtos feitos pela indústria que contêm muitos ingredientes, principalmente aditivos químicos, como biscoitos, sucos em pó, refrigerantes e embutidos, que devem ser consumidos com moderação.",
+    "ground_truth": "Sim. Quanto mais cores diferentes você consumir, mais nutrientes estará recebendo, como fibras, vitaminas e minerais.",
     "source": "pes160_-_311421_alimentação_e_saúde_cardiovascular.pdf",
-    "metadata": {
-      "type": "multi-hop",
-      "difficulty": "medium",
-      "topic_path": [
-        "Document Topics",
-        "pes160_-_311421_alimentação_e_saúde_cardiovascular.pdf",
-        "Alimentação e Saúde Cardiovascular",
-        "Padrões Alimentares Saudáveis",
-        "Processamento de Alimentos"
-      ],
-      "source": "pes160_-_311421_alimentação_e_saúde_cardiovascular.pdf"
-    }
+    "metadata": {}
   },
   {
-    "question": "Qual é a quantidade máxima de álcool que eu posso consumir por dia se eu for homem e saudável?",
-    "answer": "Um homem saudável pode consumir no máximo 30g de álcool por dia para oferecer menor risco à saúde.",
+    "question": "Que tipo de gordura eu devo evitar no dia a dia?",
+    "answer": "Evite banha de porco, óleo de coco, pele de galinha e gordura aparente de carnes.",
     "contexts": [
-      "É importante destacar que não existe uma quantidade segura de consumo de bebidas alcoólicas e esse hábito pode causar danos ao organismo. O consumo de no máximo 30g de álcool por dia para homens e 20g por dia para mulheres, quando saudáveis, parece oferecer menor risco. Exemplos de quantidades de álcool em diferentes bebidas incluem: 90ml de vinho tinto (11g de álcool), 350ml de cerveja (17g de álcool) e 50ml de destilado (20g de álcool)."
+      "Evite gorduras como banha de porco, óleo de coco, pele de galinha e gordura aparente de carnes."
     ],
-    "ground_truth": "Um homem saudável pode consumir no máximo 30g de álcool por dia para oferecer menor risco à saúde.",
+    "ground_truth": "Evite banha de porco, óleo de coco, pele de galinha e gordura aparente de carnes.",
     "source": "pes160_-_311421_alimentação_e_saúde_cardiovascular.pdf",
-    "metadata": {
-      "type": "single-hop",
-      "difficulty": "easy",
-      "topic_path": [
-        "Document Topics",
-        "pes160_-_311421_alimentação_e_saúde_cardiovascular.pdf",
-        "Alimentação e Saúde Cardiovascular",
-        "Consumo de Bebidas"
-      ],
-      "source": "pes160_-_311421_alimentação_e_saúde_cardiovascular.pdf"
-    }
+    "metadata": {}
   },
   {
-    "question": "Se eu beber vinho, quantos mililitros eu posso consumir para não ultrapassar a quantidade recomendada de álcool?",
-    "answer": "Você pode consumir até 90ml de vinho tinto, que contém 11g de álcool, sem ultrapassar a quantidade recomendada.",
+    "question": "Posso comer carne vermelha todo dia?",
+    "answer": "É melhor não consumir carne vermelha mais de 3 vezes por semana.",
     "contexts": [
-      "É importante destacar que não existe uma quantidade segura de consumo de bebidas alcoólicas e esse hábito pode causar danos ao organismo. O consumo de no máximo 30g de álcool por dia para homens e 20g por dia para mulheres, quando saudáveis, parece oferecer menor risco. Exemplos de quantidades de álcool em diferentes bebidas incluem: 90ml de vinho tinto (11g de álcool), 350ml de cerveja (17g de álcool) e 50ml de destilado (20g de álcool)."
+      "Evite consumir carne vermelha mais de 3 vezes por semana."
     ],
-    "ground_truth": "Você pode consumir até 90ml de vinho tinto, que contém 11g de álcool, sem ultrapassar a quantidade recomendada.",
+    "ground_truth": "É melhor não consumir carne vermelha mais de 3 vezes por semana.",
     "source": "pes160_-_311421_alimentação_e_saúde_cardiovascular.pdf",
-    "metadata": {
-      "type": "multi-hop",
-      "difficulty": "medium",
-      "topic_path": [
-        "Document Topics",
-        "pes160_-_311421_alimentação_e_saúde_cardiovascular.pdf",
-        "Alimentação e Saúde Cardiovascular",
-        "Consumo de Bebidas"
-      ],
-      "source": "pes160_-_311421_alimentação_e_saúde_cardiovascular.pdf"
-    }
+    "metadata": {}
   },
   {
-    "question": "Afirme: Eu devo evitar biscoitos e cereais açucarados, mas posso consumir pães brancos com moderação.",
-    "answer": "FALSO. Eu devo evitar biscoitos e cereais açucarados e também devo consumir moderadamente pães brancos, mas a recomendação é preferir alimentos integrais.",
+    "question": "O azeite de oliva pode entrar na minha comida todo dia?",
+    "answer": "Sim. 1 colher de sopa de azeite de oliva extravirgem por dia é benéfico e diminui o risco cardiovascular.",
     "contexts": [
-      "As tabelas a seguir oferecem orientações sobre o que preferir, consumir com moderação e evitar em diferentes grupos alimentares. Para cereais, prefira alimentos integrais, consuma moderadamente pães brancos e evite biscoitos e cereais açucarados. Para vegetais, prefira vegetais crus e cozidos, evitando os preparados na manteiga. Para frutas, prefira frescas ou congeladas sem adição de açúcares, evitando geleias com açúcar. Para carnes, prefira peixes e frango sem pele, evitando salsichas e carnes gordurosas. Para laticínios, prefira opções semidesnatadas e desnatadas, evitando nata e creme de leite. Para cozinhar, utilize azeite de oliva e evite manteiga e gorduras trans."
+      "O consumo de 1 colher de sopa de azeite de oliva extravirgem por dia também é benéfico e diminui o risco cardiovascular."
     ],
-    "ground_truth": "FALSO. Eu devo evitar biscoitos e cereais açucarados e também devo consumir moderadamente pães brancos, mas a recomendação é preferir alimentos integrais.",
+    "ground_truth": "Sim. 1 colher de sopa de azeite de oliva extravirgem por dia é benéfico e diminui o risco cardiovascular.",
     "source": "pes160_-_311421_alimentação_e_saúde_cardiovascular.pdf",
-    "metadata": {
-      "type": "true-false",
-      "difficulty": "hard",
-      "topic_path": [
-        "Document Topics",
-        "pes160_-_311421_alimentação_e_saúde_cardiovascular.pdf",
-        "Alimentação e Saúde Cardiovascular",
-        "Planejamento Alimentar",
-        "Dicas de Planejamento"
-      ],
-      "source": "pes160_-_311421_alimentação_e_saúde_cardiovascular.pdf"
-    }
+    "metadata": {}
   },
   {
-    "question": "O que eu posso usar para fazer molhos saudáveis sem sal?",
-    "answer": "Você pode preparar molhos saudáveis utilizando cebola, alho, semente de mostarda, noz-moscada, páprica, cravo, óleo vegetal e vinagre.",
+    "question": "Trocar manteiga e margarina por outras coisas ajuda o coração?",
+    "answer": "Sim. Reduzir margarina, manteiga, maionese, leite integral e queijos amarelos também protege contra eventos do coração.",
     "contexts": [
-      "O manual também inclui receitas de molhos, pastas e temperos substitutos de sal. Por exemplo, um molho pode ser feito com cebola, alho, semente de mostarda, noz-moscada, páprica, cravo, óleo vegetal e vinagre. Outra receita é uma pasta de grão-de-bico que inclui grão-de-bico cozido, alho, azeite e salsinha. Além disso, há uma receita de maionese caseira sem óleo, que utiliza ovos cozidos, iogurte natural, limão e alho, ideal para acompanhar saladas e aperitivos."
+      "Reduzir a quantidade consumida de margarina, manteiga, maionese, leite integral ou queijos amarelos também protege contra eventos do coração."
     ],
-    "ground_truth": "Você pode preparar molhos saudáveis utilizando cebola, alho, semente de mostarda, noz-moscada, páprica, cravo, óleo vegetal e vinagre.",
+    "ground_truth": "Sim. Reduzir margarina, manteiga, maionese, leite integral e queijos amarelos também protege contra eventos do coração.",
     "source": "pes160_-_311421_alimentação_e_saúde_cardiovascular.pdf",
-    "metadata": {
-      "type": "paraphrase",
-      "difficulty": "easy",
-      "topic_path": [
-        "Document Topics",
-        "pes160_-_311421_alimentação_e_saúde_cardiovascular.pdf",
-        "Alimentação e Saúde Cardiovascular",
-        "Planejamento Alimentar",
-        "Receitas Saudáveis"
-      ],
-      "source": "pes160_-_311421_alimentação_e_saúde_cardiovascular.pdf"
-    }
+    "metadata": {}
   },
   {
-    "question": "O que eu devo considerar ao escolher alimentos para ter uma dieta saudável e equilibrada?",
-    "answer": "Você deve considerar o tipo de processamento dos alimentos, pois isso influencia no perfil nutricional, sabor e na combinação com outros alimentos. Além disso, é importante que a dieta seja saborosa, culturalmente apropriada e promova sistemas alimentares social e ambientalmente sustentáveis.",
+    "question": "No lugar do arroz branco, o que é melhor para mim?",
+    "answer": "Prefira grãos integrais, como arroz, pães e massas integrais, além de batata doce, mandioca e mandioquinha.",
     "contexts": [
-      "This chapter presents general recommendations that guide the choice of foods to compose a nutritionally balanced, tasty, culturally appropriate diet that also promotes socially and environmentally sustainable food systems. These recommendations were developed according to the principles outlined in the previous chapter and aim to maximize the health and well-being of all, now and in the future. The recommendations emphasize the type of processing that foods undergo before acquisition, preparation, and consumption. The type of processing employed in their production conditions the nutrient profile, taste, and flavor they add to the diet, as well as influencing with which other foods they will be consumed, in what circumstances (when, where, with whom), and even in what quantity. Four categories of foods, defined according to the type of processing employed in their production, are covered by the recommendations of this chapter."
+      "Prefira: grãos integrais",
+      "(arroz, pães e massas",
+      "integrais), batata doce, mandioca e",
+      "mandioquinha"
     ],
-    "ground_truth": "Você deve considerar o tipo de processamento dos alimentos, pois isso influencia no perfil nutricional, sabor e na combinação com outros alimentos. Além disso, é importante que a dieta seja saborosa, culturalmente apropriada e promova sistemas alimentares social e ambientalmente sustentáveis.",
-    "source": "guia_alimentar_populacao_brasileira_2ed.pdf",
-    "metadata": {
-      "type": "paraphrase",
-      "difficulty": "easy",
-      "topic_path": [
-        "Document Topics",
-        "guia_alimentar_populacao_brasileira_2ed.pdf",
-        "Dietary Guidelines for the Brazilian Population",
-        "Food Choices and Recommendations",
-        "General Recommendations"
-      ],
-      "source": "guia_alimentar_populacao_brasileira_2ed.pdf"
-    }
+    "ground_truth": "Prefira grãos integrais, como arroz, pães e massas integrais, além de batata doce, mandioca e mandioquinha.",
+    "source": "pes160_-_311421_alimentação_e_saúde_cardiovascular.pdf",
+    "metadata": {}
+  },
+  {
+    "question": "Que frutas eu posso comer sem açúcar?",
+    "answer": "Prefira frutas in natura, sucos naturais sem adição de açúcar e frutas secas.",
+    "contexts": [
+      "Prefira: frutas in natura , sucos naturais sem adição de açúcar e frutas secas"
+    ],
+    "ground_truth": "Prefira frutas in natura, sucos naturais sem adição de açúcar e frutas secas.",
+    "source": "pes160_-_311421_alimentação_e_saúde_cardiovascular.pdf",
+    "metadata": {}
+  },
+  {
+    "question": "Quais frutas eu devo evitar porque têm muito açúcar?",
+    "answer": "Evite frutas em calda e cristalizadas e sucos adoçados.",
+    "contexts": [
+      "Evite: frutas em calda e cristalizadas e sucos adoçados"
+    ],
+    "ground_truth": "Evite frutas em calda e cristalizadas e sucos adoçados.",
+    "source": "pes160_-_311421_alimentação_e_saúde_cardiovascular.pdf",
+    "metadata": {}
+  },
+  {
+    "question": "Que feijão e outras leguminosas eu posso colocar no prato?",
+    "answer": "Prefira feijões, lentilha e grão-de-bico.",
+    "contexts": [
+      "Prefira: feijões, lentilha e grão-de-bico"
+    ],
+    "ground_truth": "Prefira feijões, lentilha e grão-de-bico.",
+    "source": "pes160_-_311421_alimentação_e_saúde_cardiovascular.pdf",
+    "metadata": {}
+  },
+  {
+    "question": "Posso comer feijoada de vez em quando?",
+    "answer": "É melhor evitar feijoada com linguiça e carnes processadas.",
+    "contexts": [
+      "Evite: feijoada com",
+      "linguiça e carnes",
+      "processadas"
+    ],
+    "ground_truth": "É melhor evitar feijoada com linguiça e carnes processadas.",
+    "source": "pes160_-_311421_alimentação_e_saúde_cardiovascular.pdf",
+    "metadata": {}
+  },
+  {
+    "question": "Quais legumes e verduras eu devo escolher mais?",
+    "answer": "Prefira legumes e verduras in natura, lembrando que batatas não entram aqui.",
+    "contexts": [
+      "Prefira: legumes e verduras in natura (batatas não entram aqui)"
+    ],
+    "ground_truth": "Prefira legumes e verduras in natura, lembrando que batatas não entram aqui.",
+    "source": "pes160_-_311421_alimentação_e_saúde_cardiovascular.pdf",
+    "metadata": {}
+  },
+  {
+    "question": "Tem algum legume em conserva que eu devo evitar?",
+    "answer": "Sim. Evite legumes em conserva ou salmoura, como ervilha, azeitona e palmito.",
+    "contexts": [
+      "Evite: legumes em conserva/salmoura (ervilha, azeitona, palmito)"
+    ],
+    "ground_truth": "Sim. Evite legumes em conserva ou salmoura, como ervilha, azeitona e palmito.",
+    "source": "pes160_-_311421_alimentação_e_saúde_cardiovascular.pdf",
+    "metadata": {}
+  },
+  {
+    "question": "Que proteína é melhor para eu comer no almoço e no jantar?",
+    "answer": "Prefira frango sem pele, peixes assados ou cozidos, ovos e carne bovina magra.",
+    "contexts": [
+      "Prefira: frango sem pele, peixes assados/cozidos, ovos e carne bovina",
+      "magra"
+    ],
+    "ground_truth": "Prefira frango sem pele, peixes assados ou cozidos, ovos e carne bovina magra.",
+    "source": "pes160_-_311421_alimentação_e_saúde_cardiovascular.pdf",
+    "metadata": {}
+  },
+  {
+    "question": "Quais carnes eu devo evitar para não piorar o coração?",
+    "answer": "Evite carnes gordurosas e fritas, embutidos como presunto, bacon e peito de peru, e carne seca.",
+    "contexts": [
+      "Evite: carnes gordurosas e fritas, embutidos (presunto, bacon, peito de",
+      "peru) e carne seca"
+    ],
+    "ground_truth": "Evite carnes gordurosas e fritas, embutidos como presunto, bacon e peito de peru, e carne seca.",
+    "source": "pes160_-_311421_alimentação_e_saúde_cardiovascular.pdf",
+    "metadata": {}
+  },
+  {
+    "question": "Como eu monto o prato na hora de comer?",
+    "answer": "Metade do prato deve ser de legumes e vegetais, um quarto de cereais e o outro um quarto de proteínas e leguminosas.",
+    "contexts": [
+      "Metade do prato deve ser composto por legumes e vegetais, um quarto por cereais e o outro um quarto por proteínas e leguminosas."
+    ],
+    "ground_truth": "Metade do prato deve ser de legumes e vegetais, um quarto de cereais e o outro um quarto de proteínas e leguminosas.",
+    "source": "pes160_-_311421_alimentação_e_saúde_cardiovascular.pdf",
+    "metadata": {}
+  },
+  {
+    "question": "O que eu devo comer mais: comida fresca ou comida pronta da indústria?",
+    "answer": "A base da alimentação deve ser de alimentos in natura ou minimamente processados.",
+    "contexts": [
+      "A base da alimentação deve ser composta por alimentos in natura ou minimamente processados."
+    ],
+    "ground_truth": "A base da alimentação deve ser de alimentos in natura ou minimamente processados.",
+    "source": "pes160_-_311421_alimentação_e_saúde_cardiovascular.pdf",
+    "metadata": {}
+  },
+  {
+    "question": "O que são alimentos in natura ou minimamente processados?",
+    "answer": "São alimentos que não sofreram qualquer alteração após deixar a natureza ou que sofreram alterações mínimas.",
+    "contexts": [
+      "São alimentos que não sofreram qualquer alteração após deixar a natureza ou que sofreram alterações mínimas."
+    ],
+    "ground_truth": "São alimentos que não sofreram qualquer alteração após deixar a natureza ou que sofreram alterações mínimas.",
+    "source": "pes160_-_311421_alimentação_e_saúde_cardiovascular.pdf",
+    "metadata": {}
+  },
+  {
+    "question": "Quais alimentos entram como in natura ou minimamente processados?",
+    "answer": "Frutas, verduras, legumes, leite, iogurte natural, feijões, cereais, raízes, tubérculos, ovos, carnes resfriadas ou congeladas, farinhas, castanhas, sucos integrais naturais, chás e café.",
+    "contexts": [
+      "Exemplos: frutas, verduras, legumes, leite, iogurte natural, feijões, cereais, raízes, tubérculos, ovos, carnes resfriadas ou congeladas, farinhas, castanhas, sucos integrais naturais, chás, café."
+    ],
+    "ground_truth": "Frutas, verduras, legumes, leite, iogurte natural, feijões, cereais, raízes, tubérculos, ovos, carnes resfriadas ou congeladas, farinhas, castanhas, sucos integrais naturais, chás e café.",
+    "source": "pes160_-_311421_alimentação_e_saúde_cardiovascular.pdf",
+    "metadata": {}
+  },
+  {
+    "question": "Quais alimentos eu devo evitar porque são muito cheios de ingredientes?",
+    "answer": "Evite alimentos com lista muito grande de ingredientes ou com nomes estranhos, como biscoitos doces e salgados, sucos em pó, refrigerantes, temperos prontos, embutidos, salgadinhos e sorvetes.",
+    "contexts": [
+      "Esses alimentos geralmente são ricos em aditivos químicos, gorduras trans e saturadas, sódio e corantes.",
+      "Exemplos: biscoitos doces e salgados, sucos em pó, refrigerantes, temperos prontos, embutidos, salgadinhos, sorvetes.",
+      "Evite consumir alimentos que possuem uma lista muito grande de ingredientes ou que possuam nomes estranhos como os descritos acima."
+    ],
+    "ground_truth": "Evite alimentos com lista muito grande de ingredientes ou com nomes estranhos, como biscoitos doces e salgados, sucos em pó, refrigerantes, temperos prontos, embutidos, salgadinhos e sorvetes.",
+    "source": "pes160_-_311421_alimentação_e_saúde_cardiovascular.pdf",
+    "metadata": {}
+  },
+  {
+    "question": "Se eu beber vinho, quanto tem em 1 cálice?",
+    "answer": "1 cálice de vinho tinto tem 11g de álcool.",
+    "contexts": [
+      "Vinho tinto",
+      "90ml (1 cálice)",
+      "11g"
+    ],
+    "ground_truth": "1 cálice de vinho tinto tem 11g de álcool.",
+    "source": "pes160_-_311421_alimentação_e_saúde_cardiovascular.pdf",
+    "metadata": {}
+  },
+  {
+    "question": "Se eu tomar cerveja, quanto tem em 1 lata?",
+    "answer": "1 lata de cerveja tem 17g de álcool.",
+    "contexts": [
+      "Cerveja",
+      "350ml (1 lata)",
+      "17g"
+    ],
+    "ground_truth": "1 lata de cerveja tem 17g de álcool.",
+    "source": "pes160_-_311421_alimentação_e_saúde_cardiovascular.pdf",
+    "metadata": {}
+  },
+  {
+    "question": "Se eu tomar destilado, quanto tem em 1 dose?",
+    "answer": "1 dose de destilado tem 20g de álcool.",
+    "contexts": [
+      "Destilado",
+      "50ml (1 dose)",
+      "20g"
+    ],
+    "ground_truth": "1 dose de destilado tem 20g de álcool.",
+    "source": "pes160_-_311421_alimentação_e_saúde_cardiovascular.pdf",
+    "metadata": {}
+  },
+  {
+    "question": "Para homem saudável, qual é o máximo de álcool por dia?",
+    "answer": "O consumo de no máximo 30g de álcool por dia para homens, quando saudáveis, parece oferecer menor risco.",
+    "contexts": [
+      "O consumo de no máximo 30g de álcool por dia para homens e 20g por dia para mulheres, quando saudáveis, parece oferecer menor risco."
+    ],
+    "ground_truth": "O consumo de no máximo 30g de álcool por dia para homens, quando saudáveis, parece oferecer menor risco.",
+    "source": "pes160_-_311421_alimentação_e_saúde_cardiovascular.pdf",
+    "metadata": {}
+  },
+  {
+    "question": "Quais alimentos eu devo preferir nos cereais?",
+    "answer": "Alimentos integrais, como pães, arroz, massas, e aveia.",
+    "contexts": [
+      "Alimentos",
+      "integrais (pães,",
+      "arroz, massas),",
+      "aveia"
+    ],
+    "ground_truth": "Alimentos integrais, como pães, arroz, massas, e aveia.",
+    "source": "pes160_-_311421_alimentação_e_saúde_cardiovascular.pdf",
+    "metadata": {}
+  },
+  {
+    "question": "Quais cereais eu posso comer, mas com moderação?",
+    "answer": "Pão branco, arroz e massas.",
+    "contexts": [
+      "Pão branco, arroz,",
+      "massas"
+    ],
+    "ground_truth": "Pão branco, arroz e massas.",
+    "source": "pes160_-_311421_alimentação_e_saúde_cardiovascular.pdf",
+    "metadata": {}
   }
 ]
